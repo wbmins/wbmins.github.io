@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>微服务 on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</link>
+    <description>Recent content in 微服务 on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 14 Mar 2020 15:57:32 +0800</lastBuildDate><atom:link href="https://wbmins.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Config 和 Bus</title>
+      <link>https://wbmins.github.io/2020/024/</link>
+      <pubDate>Sat, 14 Mar 2020 15:57:32 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/024/</guid>
+      <description>Config 简介 一套集中式的动态的配置管理设施是必不可少的 Config为为服务架构中的为服务提供集中化的外部配置支持,配置服务器为各个微服务应用的所有</description>
+    </item>
+    
+    <item>
+      <title>Gateway</title>
+      <link>https://wbmins.github.io/2020/023/</link>
+      <pubDate>Sat, 14 Mar 2020 14:54:03 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/023/</guid>
+      <description>简介 提供统一的路由方式且基于Filter链的方式提供网关的基本功能,例如安全 监控指标和限流.使用webflux中的reactor-netty</description>
+    </item>
+    
+    <item>
+      <title>Hystrix</title>
+      <link>https://wbmins.github.io/2020/022/</link>
+      <pubDate>Sat, 14 Mar 2020 12:37:48 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/022/</guid>
+      <description>概述 处理分布式系统的延迟和容错的开源库,许多依赖不可避免的会调用失败 异常.Hystrix能够保证一个依赖出问题的情况下,不会导致整体服务失败</description>
+    </item>
+    
+    <item>
+      <title>Ribbon 和 OpenFeign</title>
+      <link>https://wbmins.github.io/2020/021/</link>
+      <pubDate>Sat, 14 Mar 2020 10:46:09 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/021/</guid>
+      <description>Ribbon 简介 ribbon提供客户端软件负载均衡算法和服务调用. Load Balance将用户的请求分配到多个服务上,从而达到系统哦你的HA高可用.常见负载</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper 和 Consul</title>
+      <link>https://wbmins.github.io/2020/020/</link>
+      <pubDate>Sat, 14 Mar 2020 10:08:54 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/020/</guid>
+      <description>Zookeeper 引pom &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-cloud-starter-zookeeper-discovery&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 改yml server: port: 80 spring: application: name: cloud-consumer-order cloud: #注册到zookeeper地址 zookeeper: connect-string: 192.168.111.144:2181 主启动 @EnableDiscoveryClient(注册中心注</description>
+    </item>
+    
+    <item>
+      <title>Eureka</title>
+      <link>https://wbmins.github.io/2020/019/</link>
+      <pubDate>Fri, 13 Mar 2020 14:43:28 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/019/</guid>
+      <description>服务治理 SpringCloud封装Netflix公司开发的Eureka模块来实现服务治理 在传统的rpc(远程过程调用,也就是说俩台服务器A,</description>
+    </item>
+    
+    <item>
+      <title>微服务初识</title>
+      <link>https://wbmins.github.io/2020/016/</link>
+      <pubDate>Wed, 11 Mar 2020 23:08:22 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/016/</guid>
+      <description>微服务架构是一种架构模式,它提倡将单一的应用程序划分成一组小的服务,服务之间相互协调,为用户提供最终价值.每一个服务运行在i其独立的进程中,</description>
+    </item>
+    
+  </channel>
+</rss>

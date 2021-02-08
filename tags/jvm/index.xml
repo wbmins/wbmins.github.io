@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jvm on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/jvm/</link>
+    <description>Recent content in jvm on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 20 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 动态代理</title>
+      <link>https://wbmins.github.io/2020/041/</link>
+      <pubDate>Thu, 20 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/041/</guid>
+      <description>1、类加载器 1.1、预定义类型 启动（Bootstrap）类加载器，负责将 &amp;lt;Java_Runtime_Home&amp;gt;/lib 下面的类库加载到内存中 扩展（Extension）类加载器 ExtCl</description>
+    </item>
+    
+  </channel>
+</rss>

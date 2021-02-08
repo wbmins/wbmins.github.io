@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2019/013/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2019/001/" />
+  <link rel="canonical" href="https://wbmins.github.io/2019/011/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    分布式 ID | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="分布式 ID | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "分布式 ID",
+    "headline" : "分布式 ID",
+    "description" : "分布式ID** 在我们业务数据量不大的时候,单库单表完全可以支撑现有业务,数据再大一点搞个MySQL主从同步读写分离也能对付. 但随着数据日渐增",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-02-15 00:00:00 \u002b0000 UTC",
+    "dateModified" : "2019-02-15 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/wbmins.github.io\/2019\/011\/",
+    "wordCount" : "2197",
+    "keywords" : [ "分布式","Java","数据库", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#分布式id">分布式ID**</a>
+      <ul>
+        <li><a href="#uuid"><strong>UUID</strong></a></li>
+        <li><a href="#数据库自增id"><strong>数据库自增ID</strong></a></li>
+        <li><a href="#数据库多主模式"><strong>数据库多主模式</strong></a></li>
+        <li><a href="#号段模式"><strong>号段模式</strong></a></li>
+        <li><a href="#redis-利用redis的-incr命令实现id的原子性自增"><strong>Redis</strong> 利用redis的 incr命令实现ID的原子性自增</a></li>
+        <li><a href="#雪花算法snowflake-是twitter公司内部分布式项目采用的id生成算法"><strong>雪花算法（SnowFlake）</strong> 是twitter公司内部分布式项目采用的ID生成算法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">分布式 ID</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2019-02-15
+                    itemprop="datePublished">February 15, 2019</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E9%9B%B6%E7%A2%8E/"> 零碎 </a>
+                
+            </span>
+            <span class="post-word-count">,2197 words</span>
+            <span class="post-read-time">,read need 5 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="分布式id">分布式ID**</h2>
+<ul>
+<li>
+<p>在我们业务数据量不大的时候,单库单表完全可以支撑现有业务,数据再大一点搞个MySQL主从同步读写分离也能对付.</p>
+</li>
+<li>
+<p>但随着数据日渐增长,主从同步也扛不住了,就需要对数据库进行分库分表,但<strong>分库分表后需要有一个唯一ID来标识一条数据</strong>,数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识.此时一个能够生成全局唯一ID的系统是非常必要的.那么这个全局唯一ID就叫分布式ID</p>
+</li>
+<li>
+<p>满足的条件</p>
+<ul>
+<li>
+<p>全局唯一：必须保证ID是全局性唯一的,基本要求</p>
+</li>
+<li>
+<p>高性能：高可用低延时,ID生成响应要块,否则反倒会成为业务瓶颈</p>
+</li>
+<li>
+<p>高可用：100%的可用性是骗人的,但是也要无限接近于100%的可用性</p>
+</li>
+<li>
+<p>好接入：要秉着拿来即用的设计原则,在系统设计和实现上要尽可能的简单</p>
+</li>
+<li>
+<p>趋势递增：最好趋势递增,这个要求就得看具体业务场景了,一般不严格要求</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="uuid"><strong>UUID</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String uuid <span style="color:#f92672">=</span> UUID<span style="color:#f92672">.</span><span style="color:#a6e22e">randomUUID</span><span style="color:#f92672">().</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">().</span><span style="color:#a6e22e">replaceAll</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;-&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">);</span>
+</code></pre></div><ul>
+<li>
+<p>优点：生成足够简单,本地生成无网络消耗,具有唯一性</p>
+</li>
+<li>
+<p>缺点：</p>
+<ul>
+<li>
+<p>无序的字符串,不具备趋势自增特性</p>
+</li>
+<li>
+<p>没有具体的业务含义</p>
+</li>
+<li>
+<p>长度过长16 字节128位,36位长度的字符串,存储以及查询对MySQL的性能消耗较大,MySQL官方明确建议主键要尽量越短越好,作为数据库主键 UUID 的无序性会导致数据位置频繁变动,严重影响性能</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据库自增id"><strong>数据库自增ID</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> <span style="color:#f92672">`</span>SEQ_ID<span style="color:#f92672">`</span>;<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> SEQID.SEQUENCE_ID (
+    id bigint(<span style="color:#ae81ff">20</span>) unsigned <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> auto_increment,
+    value char(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;&#39;</span>,
+    <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (id),) ENGINE<span style="color:#f92672">=</span>MyISAM;
+    <span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> SEQUENCE_ID(value)  <span style="color:#66d9ef">VALUES</span> (<span style="color:#e6db74">&#39;values&#39;</span>);
+</code></pre></div><ul>
+<li>
+<p>优点：实现简单,ID单调自增,数值类型查询速度快</p>
+</li>
+<li>
+<p>缺点：DB单点存在宕机风险,无法扛住高并发场景</p>
+</li>
+</ul>
+<h3 id="数据库多主模式"><strong>数据库多主模式</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">set</span> <span style="color:#f92672">@@</span>auto_increment_offset <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;     <span style="color:#75715e">-- 起始值
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">set</span> <span style="color:#f92672">@@</span>auto_increment_increment <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;  <span style="color:#75715e">-- 步长
+</span></code></pre></div><ul>
+<li>
+<p>优点：解决DB单点问题</p>
+</li>
+<li>
+<p>缺点：不利于后续扩容,而且实际上单个数据库自身压力还是大,依旧无法满足高并发场景.</p>
+</li>
+</ul>
+<h3 id="号段模式"><strong>号段模式</strong></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> id_generator (  
+id int(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,  
+max_id bigint(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;当前最大id&#39;</span>,  
+step int(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;号段的布长&#39;</span>,  
+biz_typeint(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;业务类型&#39;</span>,  
+<span style="color:#66d9ef">version</span> int(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">COMMENT</span> <span style="color:#e6db74">&#39;版本号&#39;</span>,  <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> (<span style="color:#f92672">`</span>id<span style="color:#f92672">`</span>))
+</code></pre></div><ul>
+<li>由于多业务端可能同时操作,所以采用版本号version乐观锁方式更新,这种分布式ID生成方式不强依赖于数据库,不会频繁的访问数据库,对数据库的压力小很多</li>
+</ul>
+<h3 id="redis-利用redis的-incr命令实现id的原子性自增"><strong>Redis</strong> 利用redis的 incr命令实现ID的原子性自增</h3>
+<ul>
+<li>
+<p>要考虑到redis持久化的问题.redis有两种持久化方式RDB和AOF</p>
+<ul>
+<li>
+<p>RDB会定时打一个快照进行持久化,假如连续自增但redis没及时持久化,而这会Redis挂掉了,重启Redis后会出现ID重复的情况.</p>
+</li>
+<li>
+<p>AOF会对每条写命令进行持久化,即使Redis挂掉了也不会出现ID重复的情况,但由于incr命令的特殊性,会导致Redis重启恢复的数据时间过长</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="雪花算法snowflake-是twitter公司内部分布式项目采用的id生成算法"><strong>雪花算法（SnowFlake）</strong> 是twitter公司内部分布式项目采用的ID生成算法</h3>
+<ul>
+<li>
+<p>Snowflake生成的是Long类型的ID,一个Long类型占8个字节,每个字节占8比特,也就是说一个Long类型占64个比特.</p>
+</li>
+<li>
+<p>Snowflake ID组成结构：正数位（占1比特）- 时间戳（占41比特）- 机器ID（占5比特）- 数据中心（占5比特）- 自增值（占12比特）,总共64比特组成的一个Long类型.</p>
+<ul>
+<li>
+<p>第一个bit位（1bit）：Java中long的最高位是符号位代表正负,正数是0,负数是1,一般生成ID都为正数,所以默认为0.</p>
+</li>
+<li>
+<p>时间戳部分（41bit）：毫秒级的时间,不建议存当前时间戳,而是用（当前时间戳 - 固定开始时间戳）的差值,可以使产生的ID从更小的值开始；41位的时间戳可以使用69年,(1L &laquo; 41) / (1000L <em>60</em>60<em>24</em> 365) = 69年</p>
+</li>
+<li>
+<p>工作机器id（10bit）：也被叫做workId,这个可以灵活配置,机房或者机器号组合都可以.</p>
+</li>
+<li>
+<p>序列号部分（12bit）,自增值支持同一毫秒内同一个节点可以生成4096个ID</p>
+</li>
+</ul>
+</li>
+<li>
+<p>根据这个算法的逻辑,只需要将这个算法用Java语言实现出来,封装为一个工具方法,那么各个业务应用可以直接使用该工具方法来获取分布式ID,只需保证每个业务应用有自己的工作机器id即可,而不需要单独去搭建一个获取分布式ID的应用</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/** * Twitter的SnowFlake算法,使用SnowFlake算法生成一个整数,然后转化为62进制变成一个短地址URL * * https://github.com/beyondfengyu/SnowFlake */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SnowFlakeShortUrl</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">/**     * 起始的时间戳     */</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> START_TIMESTAMP <span style="color:#f92672">=</span> 1480166465631L<span style="color:#f92672">;</span>    <span style="color:#75715e">/**     * 每一部分占用的位数     */</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> SEQUENCE_BIT <span style="color:#f92672">=</span> 12<span style="color:#f92672">;</span>   <span style="color:#75715e">//序列号占用的位数
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> MACHINE_BIT <span style="color:#f92672">=</span> 5<span style="color:#f92672">;</span>     <span style="color:#75715e">//机器标识占用的位数
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> DATA_CENTER_BIT <span style="color:#f92672">=</span> 5<span style="color:#f92672">;</span> <span style="color:#75715e">//数据中心占用的位数    /**     * 每一部分的最大值     */
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> MAX_SEQUENCE <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1L <span style="color:#f92672">^</span> <span style="color:#f92672">(-</span>1L <span style="color:#f92672">&lt;&lt;</span> SEQUENCE_BIT<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> MAX_MACHINE_NUM <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1L <span style="color:#f92672">^</span> <span style="color:#f92672">(-</span>1L <span style="color:#f92672">&lt;&lt;</span> MACHINE_BIT<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> MAX_DATA_CENTER_NUM <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1L <span style="color:#f92672">^</span> <span style="color:#f92672">(-</span>1L <span style="color:#f92672">&lt;&lt;</span> DATA_CENTER_BIT<span style="color:#f92672">);</span>    <span style="color:#75715e">/**     * 每一部分向左的位移     */</span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> MACHINE_LEFT <span style="color:#f92672">=</span> SEQUENCE_BIT<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> DATA_CENTER_LEFT <span style="color:#f92672">=</span> SEQUENCE_BIT <span style="color:#f92672">-</span> MACHINE_BIT<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> TIMESTAMP_LEFT <span style="color:#f92672">=</span> DATA_CENTER_LEFT <span style="color:#f92672">-</span> DATA_CENTER_BIT<span style="color:#f92672">;</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> dataCenterId<span style="color:#f92672">;</span>  <span style="color:#75715e">//数据中心
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> machineId<span style="color:#f92672">;</span>     <span style="color:#75715e">//机器标识
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> sequence <span style="color:#f92672">=</span> 0L<span style="color:#f92672">;</span> <span style="color:#75715e">//序列号
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> lastTimeStamp <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>1L<span style="color:#f92672">;</span>  <span style="color:#75715e">//上一次时间戳
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">getNextMill</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">long</span> mill <span style="color:#f92672">=</span> getNewTimeStamp<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>mill <span style="color:#f92672">&lt;=</span> lastTimeStamp<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            mill <span style="color:#f92672">=</span> getNewTimeStamp<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> mill<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">getNewTimeStamp</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">currentTimeMillis</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">/**
+</span><span style="color:#75715e">* 根据指定的数据中心ID和机器标志ID生成指定的序列号
+</span><span style="color:#75715e">*
+</span><span style="color:#75715e">* @param dataCenterId 数据中心ID
+</span><span style="color:#75715e">* @param machineId    机器标志ID
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">public</span> <span style="color:#a6e22e">SnowFlakeShortUrl</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> dataCenterId<span style="color:#f92672">,</span> <span style="color:#66d9ef">long</span> machineId<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>  
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>dataCenterId <span style="color:#f92672">&gt;</span> MAX_DATA_CENTER_NUM <span style="color:#f92672">||</span> dataCenterId <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;DtaCenterId can&#39;t be greater than MAX_DATA_CENTER_NUM or less than 0！&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>machineId <span style="color:#f92672">&gt;</span> MAX_MACHINE_NUM <span style="color:#f92672">||</span> machineId <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;MachineId can&#39;t be greater than MAX_MACHINE_NUM or less than 0！&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">dataCenterId</span> <span style="color:#f92672">=</span> dataCenterId<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">machineId</span> <span style="color:#f92672">=</span> machineId<span style="color:#f92672">;</span>  
+<span style="color:#f92672">}</span>  
+<span style="color:#75715e">/**
+</span><span style="color:#75715e">* 产生下一个ID
+</span><span style="color:#75715e">*
+</span><span style="color:#75715e">* @return
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">nextId</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">long</span> currTimeStamp <span style="color:#f92672">=</span> getNewTimeStamp<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>currTimeStamp <span style="color:#f92672">&lt;</span> lastTimeStamp<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Clock moved backwards.  Refusing to generate id&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>currTimeStamp <span style="color:#f92672">==</span> lastTimeStamp<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//相同毫秒内,序列号自增
+</span><span style="color:#75715e"></span>        sequence <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>sequence <span style="color:#f92672">-</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">&amp;</span> MAX_SEQUENCE<span style="color:#f92672">;</span>
+        <span style="color:#75715e">//同一毫秒的序列数已经达到最大
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>sequence <span style="color:#f92672">==</span> 0L<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        currTimeStamp <span style="color:#f92672">=</span> getNextMill<span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//不同毫秒内,序列号置为0
+</span><span style="color:#75715e"></span>    sequence <span style="color:#f92672">=</span> 0L<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    lastTimeStamp <span style="color:#f92672">=</span> currTimeStamp<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>currTimeStamp <span style="color:#f92672">-</span> START_TIMESTAMP<span style="color:#f92672">)</span> <span style="color:#f92672">&lt;&lt;</span> TIMESTAMP_LEFT <span style="color:#75715e">//时间戳部分                | dataCenterId &lt;&lt; DATA_CENTER_LEFT       //数据中心部分                | machineId &lt;&lt; MACHINE_LEFT             //机器标识部分                | sequence;                             //序列号部分  
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            SnowFlakeShortUrl snowFlake <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SnowFlakeShortUrl<span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> 3<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> <span style="color:#f92672">(</span>1 <span style="color:#f92672">&lt;&lt;</span> 4<span style="color:#f92672">);</span> i<span style="color:#f92672">--)</span> <span style="color:#f92672">{</span>
+                <span style="color:#75715e">//10进制
+</span><span style="color:#75715e"></span>                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>snowFlake<span style="color:#f92672">.</span><span style="color:#a6e22e">nextId</span><span style="color:#f92672">());</span>  
+            <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2019/011/>https://wbmins.github.io/2019/011/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                    #分布式</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/java/">
+                    #Java</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                    #数据库</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2019/013/" class="prev" rel="prev" title="了解Mybatis"><i
+                class="iconfont icon-left"></i>&nbsp;了解Mybatis</a>
+        
+        
+        <a href="https://wbmins.github.io/2019/001/" class="next" rel="next"
+            title="Java基础整理">Java基础整理&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

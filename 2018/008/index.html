@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2018/007/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2018/009/" />
+  <link rel="canonical" href="https://wbmins.github.io/2018/008/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    SQL 基础 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="SQL 基础 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SQL 基础",
+    "headline" : "SQL 基础",
+    "description" : "SQL 准备工作 常用函数 count() 计数 sum() 求和 avg() 平均数 max() 最大值 min() 最小值 round(传入数值,保留位数) --建表 --学生表 CREATE TABLE `Student`( `s_id` VARCHAR(20), `s_name` VARCHAR(20) NOT NULL DEFAULT \u0026#39;\u0026#39;, `s_birth` VARCHAR(20) NOT NULL DEFAULT \u0026#39;\u0026#39;, `s_sex`",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2018",
+    "datePublished": "2018-02-16 00:00:00 \u002b0000 UTC",
+    "dateModified" : "2018-02-16 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/wbmins.github.io\/2018\/008\/",
+    "wordCount" : "3400",
+    "keywords" : [ "SQL","数据库", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#sql">SQL</a>
+      <ul>
+        <li><a href="#准备工作">准备工作</a></li>
+        <li><a href="#具体情况">具体情况</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SQL 基础</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2018-02-16
+                    itemprop="datePublished">February 16, 2018</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,3400 words</span>
+            <span class="post-read-time">,read need 7 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="sql">SQL</h2>
+<h3 id="准备工作">准备工作</h3>
+<ul>
+<li>
+<p>常用函数</p>
+<ul>
+<li>
+<p>count() 计数</p>
+</li>
+<li>
+<p>sum() 求和</p>
+</li>
+<li>
+<p>avg() 平均数</p>
+</li>
+<li>
+<p>max() 最大值</p>
+</li>
+<li>
+<p>min() 最小值</p>
+</li>
+<li>
+<p>round(传入数值,保留位数)</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">--建表
+</span><span style="color:#75715e">--学生表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Student<span style="color:#f92672">`</span>(
+	<span style="color:#f92672">`</span>s_id<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>),
+	<span style="color:#f92672">`</span>s_name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+	<span style="color:#f92672">`</span>s_birth<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+	<span style="color:#f92672">`</span>s_sex<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+	<span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>(<span style="color:#f92672">`</span>s_id<span style="color:#f92672">`</span>)
+);
+<span style="color:#75715e">--课程表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Course<span style="color:#f92672">`</span>(
+	<span style="color:#f92672">`</span>c_id<span style="color:#f92672">`</span>  VARCHAR(<span style="color:#ae81ff">20</span>),
+	<span style="color:#f92672">`</span>c_name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+	<span style="color:#f92672">`</span>t_id<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+	<span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>(<span style="color:#f92672">`</span>c_id<span style="color:#f92672">`</span>)
+);
+<span style="color:#75715e">--教师表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Teacher<span style="color:#f92672">`</span>(
+	<span style="color:#f92672">`</span>t_id<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>),
+	<span style="color:#f92672">`</span>t_name<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">DEFAULT</span> <span style="color:#e6db74">&#39;&#39;</span>,
+	<span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>(<span style="color:#f92672">`</span>t_id<span style="color:#f92672">`</span>)
+);
+<span style="color:#75715e">--成绩表
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">`</span>Score<span style="color:#f92672">`</span>(
+	<span style="color:#f92672">`</span>s_id<span style="color:#f92672">`</span> VARCHAR(<span style="color:#ae81ff">20</span>),
+	<span style="color:#f92672">`</span>c_id<span style="color:#f92672">`</span>  VARCHAR(<span style="color:#ae81ff">20</span>),
+	<span style="color:#f92672">`</span>s_score<span style="color:#f92672">`</span> INT(<span style="color:#ae81ff">3</span>),
+	<span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span>(<span style="color:#f92672">`</span>s_id<span style="color:#f92672">`</span>,<span style="color:#f92672">`</span>c_id<span style="color:#f92672">`</span>)
+);
+<span style="color:#75715e">--插入学生表测试数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#e6db74">&#39;赵雷&#39;</span> , <span style="color:#e6db74">&#39;1990-01-01&#39;</span> , <span style="color:#e6db74">&#39;男&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#e6db74">&#39;钱电&#39;</span> , <span style="color:#e6db74">&#39;1990-12-21&#39;</span> , <span style="color:#e6db74">&#39;男&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#e6db74">&#39;孙风&#39;</span> , <span style="color:#e6db74">&#39;1990-05-20&#39;</span> , <span style="color:#e6db74">&#39;男&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;04&#39;</span> , <span style="color:#e6db74">&#39;李云&#39;</span> , <span style="color:#e6db74">&#39;1990-08-06&#39;</span> , <span style="color:#e6db74">&#39;男&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;05&#39;</span> , <span style="color:#e6db74">&#39;周梅&#39;</span> , <span style="color:#e6db74">&#39;1991-12-01&#39;</span> , <span style="color:#e6db74">&#39;女&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;06&#39;</span> , <span style="color:#e6db74">&#39;吴兰&#39;</span> , <span style="color:#e6db74">&#39;1992-03-01&#39;</span> , <span style="color:#e6db74">&#39;女&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;07&#39;</span> , <span style="color:#e6db74">&#39;郑竹&#39;</span> , <span style="color:#e6db74">&#39;1989-07-01&#39;</span> , <span style="color:#e6db74">&#39;女&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Student <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;08&#39;</span> , <span style="color:#e6db74">&#39;王菊&#39;</span> , <span style="color:#e6db74">&#39;1990-01-20&#39;</span> , <span style="color:#e6db74">&#39;女&#39;</span>);
+<span style="color:#75715e">--课程表测试数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Course <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#e6db74">&#39;语文&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Course <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#e6db74">&#39;数学&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Course <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#e6db74">&#39;英语&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span>);
+
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> Course
+
+<span style="color:#75715e">--教师表测试数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Teacher <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#e6db74">&#39;张三&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Teacher <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#e6db74">&#39;李四&#39;</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Teacher <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#e6db74">&#39;王五&#39;</span>);
+
+<span style="color:#75715e">--成绩表测试数据
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#ae81ff">80</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#ae81ff">90</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#ae81ff">99</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#ae81ff">70</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#ae81ff">60</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#ae81ff">80</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#ae81ff">80</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#ae81ff">80</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#ae81ff">80</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;04&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#ae81ff">50</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;04&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#ae81ff">30</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;04&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#ae81ff">20</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;05&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#ae81ff">76</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;05&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#ae81ff">87</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;06&#39;</span> , <span style="color:#e6db74">&#39;01&#39;</span> , <span style="color:#ae81ff">31</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;06&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#ae81ff">34</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;07&#39;</span> , <span style="color:#e6db74">&#39;02&#39;</span> , <span style="color:#ae81ff">89</span>);
+<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> Score <span style="color:#66d9ef">values</span>(<span style="color:#e6db74">&#39;07&#39;</span> , <span style="color:#e6db74">&#39;03&#39;</span> , <span style="color:#ae81ff">98</span>);
+</code></pre></div><h3 id="具体情况">具体情况</h3>
+<ul>
+<li>1、查询&quot;01&quot;课程比&quot;02&quot;课程成绩高的学生的信息及课程分数</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span>,
+    sca.s_score <span style="color:#66d9ef">as</span> <span style="color:#ae81ff">01</span>_score,
+    scb.s_score <span style="color:#66d9ef">as</span> <span style="color:#ae81ff">02</span>_score
+<span style="color:#66d9ef">from</span>
+    Student  stu ,
+    Score sca ,
+    Score scb
+<span style="color:#66d9ef">where</span>
+    stu.s_id <span style="color:#f92672">=</span> sca.s_id
+    <span style="color:#66d9ef">and</span> stu.s_id <span style="color:#f92672">=</span> scb.s_id
+    <span style="color:#66d9ef">and</span> sca.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;01&#39;</span>
+    <span style="color:#66d9ef">and</span> scb.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;02&#39;</span>
+    <span style="color:#66d9ef">and</span> sca.s_score <span style="color:#f92672">&gt;</span> scb.s_score
+</code></pre></div><ul>
+<li>2、查询&quot;01&quot;课程比&quot;02&quot;课程成绩低的学生的信息及课程分数</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span> ,
+    sca.s_score <span style="color:#66d9ef">as</span> sa,
+    scb.s_score <span style="color:#66d9ef">as</span> sb
+<span style="color:#66d9ef">from</span>
+    Student stu,
+    Score sca,
+    Score scb
+<span style="color:#66d9ef">where</span>
+    stu.s_id <span style="color:#f92672">=</span> sca.s_id
+    <span style="color:#66d9ef">and</span> stu.s_id <span style="color:#f92672">=</span> scb.s_id
+    <span style="color:#66d9ef">and</span> sca.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;01&#39;</span>
+    <span style="color:#66d9ef">and</span> scb.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;02&#39;</span>
+    <span style="color:#66d9ef">and</span> sca.s_score <span style="color:#f92672">&lt;</span> scb.s_score
+</code></pre></div><ul>
+<li>3、查询平均成绩大于等于60分的同学的学生编号和学生姓名和平均成绩</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_id,
+    stu.s_name,
+    round(<span style="color:#66d9ef">avg</span>(sc.s_score),<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">as</span> avg_score
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    stu.s_id,
+    stu.s_name
+<span style="color:#66d9ef">having</span>
+    avg_score <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">60</span>
+</code></pre></div><ul>
+<li>4、查询平均成绩小于60分的同学的学生编号和学生姓名和平均成绩
+(包括有成绩的和无成绩的)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_id, <span style="color:#75715e">--查有成绩的
+</span><span style="color:#75715e"></span>    stu.s_name,
+    round(<span style="color:#66d9ef">avg</span>(sc.s_score),<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">as</span> avg_score
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    stu.s_name,
+    stu.s_id
+<span style="color:#66d9ef">having</span>
+    avg_score <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span> <span style="color:#75715e">--查平均分小与60的
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">union</span>
+<span style="color:#66d9ef">select</span>
+    stu1.s_id, <span style="color:#75715e">--查没有成绩的
+</span><span style="color:#75715e"></span>    stu1.s_name,
+    <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">as</span> avg_score
+<span style="color:#66d9ef">from</span>
+    Student stu1
+<span style="color:#66d9ef">where</span>
+    stu1.s_id <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">in</span>(
+        <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">distinct</span>
+            s_id
+        <span style="color:#66d9ef">from</span>
+            Score
+    )
+</code></pre></div><ul>
+<li>5、查询所有同学的学生编号、学生姓名、选课总数、所有课程的总成绩</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_id,
+    stu.s_name,
+    <span style="color:#66d9ef">count</span>(sc.c_id) <span style="color:#66d9ef">as</span> c_count,
+    <span style="color:#66d9ef">sum</span>(sc.s_score) <span style="color:#66d9ef">as</span> c_coure
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    stu.s_id,
+    stu.s_name
+</code></pre></div><ul>
+<li>6、查询&quot;李&quot;姓老师的数量</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(t_id) <span style="color:#66d9ef">from</span> Teacher <span style="color:#66d9ef">where</span> t_name <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;李%&#39;</span>
+</code></pre></div><ul>
+<li>7、查询学过&quot;张三&quot;老师授课的同学的信息</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">where</span>
+    sc.c_id <span style="color:#66d9ef">in</span>( <span style="color:#75715e">--查询张三教授课id
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">select</span>
+            c_id
+        <span style="color:#66d9ef">from</span>
+            Course
+        <span style="color:#66d9ef">where</span>
+            t_id <span style="color:#f92672">=</span> ( <span style="color:#75715e">--查询张三id
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">select</span>
+                t_id
+            <span style="color:#66d9ef">from</span>
+                Teacher
+            <span style="color:#66d9ef">where</span>
+                t_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;张三&#39;</span>
+            )
+    )
+</code></pre></div><ul>
+<li>
+<p>8、查询没学过&quot;张三&quot;老师授课的同学的信息(同上)</p>
+</li>
+<li>
+<p>9、查询学过编号为&quot;01&quot;并且也学过编号为&quot;02&quot;的课程的同学的信息</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    Student stu,
+    Score sca,
+    Score scb
+<span style="color:#66d9ef">where</span>
+    stu.s_id <span style="color:#f92672">=</span> sca.s_id
+    <span style="color:#66d9ef">and</span> stu.s_id <span style="color:#f92672">=</span> scb.s_id
+    <span style="color:#66d9ef">and</span> sca.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;01&#39;</span>
+    <span style="color:#66d9ef">and</span> scb.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;02&#39;</span>
+</code></pre></div><ul>
+<li>10、查询学过编号为&quot;01&quot;但是没有学过编号为&quot;02&quot;的课程的同学的信息</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">where</span>
+    stu.s_id <span style="color:#66d9ef">in</span> ( <span style="color:#75715e">--学过01学生id
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">select</span>
+            s_id
+        <span style="color:#66d9ef">from</span>
+            Score
+        <span style="color:#66d9ef">where</span> c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;01&#39;</span>
+    )
+    <span style="color:#66d9ef">and</span> stu.s_id <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">in</span>( <span style="color:#75715e">--没学过02学生id
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">select</span>
+            s_id
+        <span style="color:#66d9ef">from</span>
+            Score
+        <span style="color:#66d9ef">where</span> c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;02&#39;</span>
+    )
+</code></pre></div><ul>
+<li>11、查询没有学全所有课程的同学的信息</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    stu.s_id
+<span style="color:#66d9ef">having</span>
+    <span style="color:#66d9ef">count</span>(sc.c_id) <span style="color:#f92672">&lt;</span> (
+        <span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">from</span> Score <span style="color:#75715e">--课程数目
+</span><span style="color:#75715e"></span>    )
+</code></pre></div><ul>
+<li>
+<p>12、查询至少有一门课与学号为&quot;01&quot;的同学所学相同的同学的信息</p>
+</li>
+<li>
+<p>13、查询和&quot;01&quot;号的同学学习的课程完全相同的其他同学的信息</p>
+</li>
+<li>
+<p>14、查询没学过&quot;张三&quot;老师讲授的任一门课程的学生姓名</p>
+</li>
+<li>
+<p>15、查询两门及其以上不及格课程的同学的学号,姓名及其平均成绩</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_id,
+    stu.s_name,
+    round(<span style="color:#66d9ef">avg</span>(sc.s_score),<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">as</span> avg_score
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">where</span>
+    stu.s_id <span style="color:#66d9ef">in</span>( <span style="color:#75715e">--查询两门及其以上不及格课程的同学的学号
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">select</span>
+            s_id
+        <span style="color:#66d9ef">from</span>
+            Score
+        <span style="color:#66d9ef">where</span>
+            s_score <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span>
+        <span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+            s_id
+        <span style="color:#66d9ef">having</span>
+            <span style="color:#66d9ef">count</span>(c_id)) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">2</span>
+    )
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    stu.s_id,
+    stu.s_name
+</code></pre></div><ul>
+<li>16、检索&quot;01&quot;课程分数小于60,按分数降序排列的学生信息</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">where</span>
+    sc.c_id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;01&#39;</span>
+    <span style="color:#66d9ef">and</span>  sc.s_score <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span>
+<span style="color:#66d9ef">order</span> <span style="color:#66d9ef">by</span>
+    sc.s_score <span style="color:#66d9ef">desc</span>
+</code></pre></div><ul>
+<li>
+<p>17、按平均成绩从高到低显示所有学生的所有课程的成绩以及平均成绩</p>
+</li>
+<li>
+<p>18.查询各科成绩最高分、最低分和平均分：以如下形式显示：课程ID,课程name,最高分,最低分,平均分,及格率,中等率,优良率,优秀率
+及格为&gt;=60,中等为：70-80,优良为：80-90,优秀为：&gt;=90</p>
+</li>
+<li>
+<p>19、按各科成绩进行排序,并显示排名</p>
+</li>
+<li>
+<p>20、查询学生的总成绩并进行排名</p>
+</li>
+<li>
+<p>21、查询不同老师所教不同课程平均分从高到低显示</p>
+</li>
+<li>
+<p>22、查询所有课程的成绩第2名到第3名的学生信息及该课程成绩</p>
+</li>
+<li>
+<p>23、统计各科成绩各分数段人数：课程编号,课程名称,[100-85],[85-70],[70-60],[0-60]及所占百分比</p>
+</li>
+<li>
+<p>24、查询学生平均成绩及其名次</p>
+</li>
+<li>
+<p>25、查询各科成绩前三名的记录</p>
+<ul>
+<li>
+<p>1.选出b表比a表成绩大的所有组</p>
+</li>
+<li>
+<p>2.选出比当前id成绩大的 小于三个的</p>
+</li>
+</ul>
+</li>
+<li>
+<p>26、查询每门课程被选修的学生数</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> cid ,<span style="color:#66d9ef">count</span>(s_id) <span style="color:#66d9ef">from</span> Score <span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span> cid
+</code></pre></div><ul>
+<li>27、查询出只有两门课程的全部学生的学号和姓名</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_id ,
+    stu.s_name
+    <span style="color:#66d9ef">from</span>
+    Student stu
+    <span style="color:#66d9ef">where</span>
+    s_id <span style="color:#66d9ef">in</span> ( <span style="color:#75715e">--只选修俩们课程学生id
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">select</span>
+            s_id
+        <span style="color:#66d9ef">from</span>
+            Score
+        <span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+            s_id
+        <span style="color:#66d9ef">having</span>
+            <span style="color:#66d9ef">count</span>(cid) <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+    )
+</code></pre></div><ul>
+<li>28、查询男生、女生人数</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> s_sex,<span style="color:#66d9ef">count</span>(s_sex) <span style="color:#66d9ef">as</span> num <span style="color:#66d9ef">from</span> Student <span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span> s_sex
+</code></pre></div><ul>
+<li>29、查询名字中含有&quot;风&quot;字的学生信息</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> Student <span style="color:#66d9ef">where</span> s_name <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%风%&#39;</span>
+</code></pre></div><ul>
+<li>30、查询同名同性学生名单,并统计同名人数</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stua.s_name,
+    stua.s_sex,
+    <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>)
+<span style="color:#66d9ef">from</span>
+    Student stua
+<span style="color:#66d9ef">join</span>
+    Student stub
+<span style="color:#66d9ef">on</span>
+    stua.s_id <span style="color:#f92672">!=</span> stub.s_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    stua.s_name,
+    stua.s_sex
+</code></pre></div><ul>
+<li>31、查询1990年出生的学生名单</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> s_name <span style="color:#66d9ef">from</span> Student <span style="color:#66d9ef">where</span> s_birth <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;1990%&#39;</span>
+</code></pre></div><ul>
+<li>32、查询每门课程的平均成绩,结果按平均成绩降序排列,平均成绩相同时,按课程编号升序排列</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    c_id ,
+    round(<span style="color:#66d9ef">avg</span>(s_score),<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">as</span> ac
+<span style="color:#66d9ef">from</span>
+    Score
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    c_id
+<span style="color:#66d9ef">order</span> <span style="color:#66d9ef">by</span>
+    ac <span style="color:#66d9ef">desc</span>,
+    c_id <span style="color:#66d9ef">asc</span>
+</code></pre></div><ul>
+<li>33、查询平均成绩大于等于85的所有学生的学号、姓名和平均成绩</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_id,
+    stu.s_name,
+    round(<span style="color:#66d9ef">avg</span>(sco.s_score),<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">as</span> sc
+<span style="color:#66d9ef">from</span>
+    Score sco
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Student stu
+<span style="color:#66d9ef">on</span>
+    sco.s_id <span style="color:#f92672">=</span> stu.s_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    s_id
+<span style="color:#66d9ef">having</span>
+    sc <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">85</span>
+</code></pre></div><ul>
+<li>34、查询课程名称为&quot;数学&quot;,且分数低于60的学生姓名和分数</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    stu.s_name,
+    sc.s_score
+<span style="color:#66d9ef">from</span>
+    Student stu
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score sc
+<span style="color:#66d9ef">on</span>
+    stu.s_id <span style="color:#f92672">=</span> sc.s_id
+<span style="color:#66d9ef">where</span>
+    sc.c_id  <span style="color:#f92672">=</span> (
+        <span style="color:#66d9ef">select</span>
+            c_id
+        <span style="color:#66d9ef">from</span>
+            Course
+        <span style="color:#66d9ef">where</span>
+            c_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;数学&#39;</span>
+        )
+    <span style="color:#66d9ef">and</span> sc.s_score <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span>
+</code></pre></div><ul>
+<li>35、查询所有学生的课程及分数情况</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    a.s_id,
+    a.s_name,
+    <span style="color:#66d9ef">SUM</span>(<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">c</span>.c_name <span style="color:#66d9ef">when</span> <span style="color:#e6db74">&#39;语文&#39;</span> <span style="color:#66d9ef">then</span> b.s_score <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">end</span>) <span style="color:#66d9ef">as</span> <span style="color:#e6db74">&#39;语文&#39;</span>,
+    <span style="color:#66d9ef">SUM</span>(<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">c</span>.c_name <span style="color:#66d9ef">when</span> <span style="color:#e6db74">&#39;数学&#39;</span> <span style="color:#66d9ef">then</span> b.s_score <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">end</span>) <span style="color:#66d9ef">as</span> <span style="color:#e6db74">&#39;数学&#39;</span>,
+    <span style="color:#66d9ef">SUM</span>(<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">c</span>.c_name <span style="color:#66d9ef">when</span> <span style="color:#e6db74">&#39;英语&#39;</span> <span style="color:#66d9ef">then</span> b.s_score <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">end</span>) <span style="color:#66d9ef">as</span> <span style="color:#e6db74">&#39;英语&#39;</span>,
+    <span style="color:#66d9ef">SUM</span>(b.s_score) <span style="color:#66d9ef">as</span>  <span style="color:#e6db74">&#39;总分&#39;</span>
+<span style="color:#66d9ef">from</span>
+    Student a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Score b
+<span style="color:#66d9ef">on</span>
+    a.s_id <span style="color:#f92672">=</span> b.s_id
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Course <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">on</span>
+    b.c_id <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>.c_id
+<span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span>
+    a.s_id,a.s_name
+</code></pre></div><ul>
+<li>
+<p>36、查询任何一门课程成绩在70分以上的姓名、课程名称和分数</p>
+</li>
+<li>
+<p>37、查询不及格的课程</p>
+</li>
+<li>
+<p>38、查询课程编号为01且课程成绩在80分以上的学生的学号和姓名</p>
+</li>
+<li>
+<p>39、求每门课程的学生人数</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    co.c_name,
+    <span style="color:#66d9ef">count</span>(sc.c_id)
+<span style="color:#66d9ef">from</span>
+    Score sc
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+    Course co
+<span style="color:#66d9ef">on</span>
+    sc.c_id <span style="color:#f92672">=</span> co.c_id
+<span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span>
+    co.c_name,
+    co.c_id
+</code></pre></div><ul>
+<li>
+<p>40、查询选修&quot;张三&quot;老师所授课程的学生中,成绩最高的学生信息及其成绩</p>
+</li>
+<li>
+<p>41、查询不同课程成绩相同的学生的学生编号、课程编号、学生成绩</p>
+</li>
+<li>
+<p>42、查询每门功成绩最好的前两名</p>
+</li>
+<li>
+<p>43、统计每门课程的学生选修人数（超过5人的课程才统计）.要求输出课程</p>
+</li>
+<li>
+<p>号和选修人数,查询结果按人数降序排列,若人数相同,按课程号升序排列</p>
+</li>
+<li>
+<p>44、检索至少选修两门课程的学生学号</p>
+</li>
+<li>
+<p>45、查询选修了全部课程的学生信息</p>
+</li>
+<li>
+<p>46、查询各学生的年龄</p>
+<ul>
+<li>按照出生日期来算,当前月日 &lt; 出生年月的月日则,年龄减一</li>
+</ul>
+</li>
+<li>
+<p>47、查询本周过生日的学生</p>
+</li>
+<li>
+<p>48、查询下周过生日的学生</p>
+</li>
+<li>
+<p>49、查询本月过生日的学生</p>
+</li>
+<li>
+<p>50、查询下月过生日的学生</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    Student
+<span style="color:#66d9ef">where</span>
+    <span style="color:#66d9ef">MONTH</span>(DATE_FORMAT(NOW(),<span style="color:#e6db74">&#39;%Y%m%d&#39;</span>))<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span><span style="color:#66d9ef">MONTH</span>(s_birth)
+</code></pre></div><ul>
+<li>
+<p>51、去除重复的学生</p>
+</li>
+<li>
+<p>根据重复的列聚合去最小的id集合,八部数据这个集合的删除即可</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">delete</span>
+<span style="color:#66d9ef">from</span>
+    Student
+<span style="color:#66d9ef">where</span>
+    id <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">in</span>(
+        <span style="color:#66d9ef">select</span>
+            mid
+        <span style="color:#66d9ef">from</span> (
+            <span style="color:#66d9ef">select</span> mid(id) <span style="color:#66d9ef">from</span> Student <span style="color:#66d9ef">group</span> <span style="color:#66d9ef">by</span> s_birth
+            )
+    )
+</code></pre></div><ul>
+<li>52、mod函数用法</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+    cinema
+<span style="color:#66d9ef">where</span>
+    <span style="color:#66d9ef">mod</span>(id, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">and</span> description <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;boring&#39;</span>
+<span style="color:#66d9ef">order</span> <span style="color:#66d9ef">by</span>
+    rating <span style="color:#66d9ef">DESC</span>
+</code></pre></div><ul>
+<li>53、交换相邻两行</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 使用 (id+1)^1-1 计算交换后每个学生的座位 id.
+</span><span style="color:#75715e">-- 然后连接原来的座位表和更新 id 后的座位表.
+</span><span style="color:#75715e">-- COALESCE()依次参考输入的表达式,直至为非null则返回
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span>
+    s1.id, COALESCE(s2.student, s1.student) <span style="color:#66d9ef">AS</span> student
+<span style="color:#66d9ef">FROM</span>
+    seat s1
+<span style="color:#66d9ef">LEFT</span> <span style="color:#66d9ef">JOIN</span>
+    seat s2
+<span style="color:#66d9ef">ON</span>
+    ((s1.id <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">^</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> s2.id
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span>
+    s1.id;
+<span style="color:#75715e">------------------------------------
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span>
+    (<span style="color:#66d9ef">CASE</span>
+        <span style="color:#66d9ef">WHEN</span> <span style="color:#66d9ef">MOD</span>(id, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">AND</span> counts <span style="color:#f92672">!=</span> id <span style="color:#66d9ef">THEN</span> id <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">WHEN</span> <span style="color:#66d9ef">MOD</span>(id, <span style="color:#ae81ff">2</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">AND</span> counts <span style="color:#f92672">=</span> id <span style="color:#66d9ef">THEN</span> id
+        <span style="color:#66d9ef">ELSE</span> id <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">END</span>) <span style="color:#66d9ef">AS</span> id,
+    student
+<span style="color:#66d9ef">FROM</span>
+    seat,
+    (<span style="color:#66d9ef">SELECT</span>
+        <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">AS</span> counts
+    <span style="color:#66d9ef">FROM</span>
+        seat) <span style="color:#66d9ef">AS</span> seat_counts
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span>
+    id <span style="color:#66d9ef">ASC</span>;
+</code></pre></div><ul>
+<li>54、动态更新某一列的值case的用法不要忘记end</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">update</span>
+    salary
+<span style="color:#66d9ef">set</span>
+    sex <span style="color:#f92672">=</span> <span style="color:#66d9ef">case</span> sex
+        <span style="color:#66d9ef">when</span> <span style="color:#e6db74">&#39;m&#39;</span> <span style="color:#66d9ef">then</span> <span style="color:#e6db74">&#39;f&#39;</span>
+        <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;m&#39;</span> <span style="color:#66d9ef">end</span>
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2018/008/>https://wbmins.github.io/2018/008/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/sql/">
+                    #SQL</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                    #数据库</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2018/007/" class="prev" rel="prev" title="SpringBoot缓存"><i
+                class="iconfont icon-left"></i>&nbsp;SpringBoot缓存</a>
+        
+        
+        <a href="https://wbmins.github.io/2018/009/" class="next" rel="next"
+            title="SpringBoot事物">SpringBoot事物&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

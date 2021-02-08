@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ORM on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/orm/</link>
+    <description>Recent content in ORM on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 15 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/tags/orm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>了解Mybatis</title>
+      <link>https://wbmins.github.io/2019/013/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/013/</guid>
+      <description>Mybatis Mybatis是一个半ORM(对象关系映射)框架,它内部封装了JDBC,开发时只需要关注SQL语句本身,不需要花费精力去处理加载驱动、创建</description>
+    </item>
+    
+  </channel>
+</rss>

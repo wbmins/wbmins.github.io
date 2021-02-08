@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Github on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/github/</link>
+    <description>Recent content in Github on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Aug 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo &#43; Github 搭建博客</title>
+      <link>https://wbmins.github.io/2017/002/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/002/</guid>
+      <description>本着好奇搭建了一个自己的博客！本文主要记录一下我搭建静态博客的过程. 1、前言 Hugo 是一个静态模板生成引擎,可以把 Markdown 文档渲染成 Html . Github Pages 一个静态页面</description>
+    </item>
+    
+  </channel>
+</rss>

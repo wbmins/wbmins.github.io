@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/035/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2020/037/" />
+  <link rel="canonical" href="https://wbmins.github.io/2020/036/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    SpringBoot 常用注解 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="SpringBoot 常用注解 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "SpringBoot 常用注解",
+    "headline" : "SpringBoot 常用注解",
+    "description" : "1. @SpringBootApplication 项目的基石 @SpringBootApplication public class DemoApplication { public static void main(java.lang.String[] args) { SpringApplication.run(DemoApplication.class, args); } } 等价与 @Configuration、@EnableAutoConfiguration、@Comp",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-02 09:25:56 \u002b0800 \u002b0800",
+    "dateModified" : "2020-05-02 09:25:56 \u002b0800 \u002b0800",
+    "url" : "https:\/\/wbmins.github.io\/2020\/036\/",
+    "wordCount" : "3168",
+    "keywords" : [ "Spring","SpringBoot", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-springbootapplication-项目的基石">1. <code>@SpringBootApplication</code> 项目的基石</a></li>
+    <li><a href="#2-spring-bean-相关">2. Spring Bean 相关</a>
+      <ul>
+        <li><a href="#autowired"><code>@Autowired</code></a></li>
+        <li><a href="#component-repository-service-controller"><code>@Component</code>, <code>@Repository</code>, <code>@Service</code>, <code>@Controller</code></a></li>
+        <li><a href="#restcontroller"><code>@RestController</code></a></li>
+        <li><a href="#scope-声明-bean-作用域"><code>@Scope</code> 声明 bean 作用域</a></li>
+        <li><a href="#configuration"><code>@Configuration</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#3-http处理">3. Http处理</a>
+      <ul>
+        <li><a href="#get-请求从服务器获取特定资源">GET 请求从服务器获取特定资源</a></li>
+        <li><a href="#post在服务器上创建一个新的资源">POST：在服务器上创建一个新的资源</a></li>
+        <li><a href="#put更新服务器上的资源客户端提供更新后的整个资源">PUT：更新服务器上的资源(客户端提供更新后的整个资源)</a></li>
+        <li><a href="#delete从服务器删除特定的资源">DELETE：从服务器删除特定的资源</a></li>
+        <li><a href="#patch更新服务器上的资源客户端提供更改的属性可以看做作是部分更新">PATCH：更新服务器上的资源(客户端提供更改的属性,可以看做作是部分更新)</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-传值">4. 传值</a>
+      <ul>
+        <li><a href="#pathvariable-获取路径参数和-requestparam-获取查询参数"><code>@PathVariable</code> 获取路径参数和 <code>@RequestParam</code> 获取查询参数</a></li>
+        <li><a href="#requestbody"><code>@RequestBody</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#5-配置">5. 配置</a>
+      <ul>
+        <li><a href="#value-使用-valueproperty读取配置信息"><code>@value</code> 使用 <code>@Value(&quot;${property}&quot;)</code>读取配置信息</a></li>
+        <li><a href="#configurationproperties-读取配置并与-bean-绑定"><code>@ConfigurationProperties</code> 读取配置并与 bean 绑定</a></li>
+        <li><a href="#propertysource-读取指定的-properties-文件"><code>PropertySource</code> 读取指定的 properties 文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-校验">6. 校验</a>
+      <ul>
+        <li><a href="#常用的验证注解">常用的验证注解</a></li>
+        <li><a href="#验证请求体">验证请求体</a></li>
+        <li><a href="#验证请求参数">验证请求参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-全局异常">7. 全局异常</a></li>
+    <li><a href="#8-transactional-事物">8. <code>@Transactional</code> 事物</a></li>
+    <li><a href="#9-json-数据">9. json 数据</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SpringBoot 常用注解</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-05-02
+                    itemprop="datePublished">May 2, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,3168 words</span>
+            <span class="post-read-time">,read need 7 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="1-springbootapplication-项目的基石">1. <code>@SpringBootApplication</code> 项目的基石</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@SpringBootApplication</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DemoApplication</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>java<span style="color:#f92672">.</span><span style="color:#a6e22e">lang</span><span style="color:#f92672">.</span><span style="color:#a6e22e">String</span><span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        SpringApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">(</span>DemoApplication<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>等价与 <code>@Configuration</code>、<code>@EnableAutoConfiguration</code>、<code>@ComponentScan</code> 注解的集合</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> org.springframework.boot.autoconfigure<span style="color:#f92672">;</span>
+<span style="color:#a6e22e">@Target</span><span style="color:#f92672">(</span>ElementType<span style="color:#f92672">.</span><span style="color:#a6e22e">TYPE</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@Retention</span><span style="color:#f92672">(</span>RetentionPolicy<span style="color:#f92672">.</span><span style="color:#a6e22e">RUNTIME</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@Documented</span>
+<span style="color:#a6e22e">@Inherited</span>
+<span style="color:#a6e22e">@SpringBootConfiguration</span>
+<span style="color:#a6e22e">@EnableAutoConfiguration</span>
+<span style="color:#a6e22e">@ComponentScan</span><span style="color:#f92672">(</span>excludeFilters <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+  <span style="color:#a6e22e">@Filter</span><span style="color:#f92672">(</span>type <span style="color:#f92672">=</span> FilterType<span style="color:#f92672">.</span><span style="color:#a6e22e">CUSTOM</span><span style="color:#f92672">,</span> classes <span style="color:#f92672">=</span> TypeExcludeFilter<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">),</span>
+  <span style="color:#a6e22e">@Filter</span><span style="color:#f92672">(</span>type <span style="color:#f92672">=</span> FilterType<span style="color:#f92672">.</span><span style="color:#a6e22e">CUSTOM</span><span style="color:#f92672">,</span> classes <span style="color:#f92672">=</span> AutoConfigurationExcludeFilter<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span> <span style="color:#f92672">})</span>
+<span style="color:#66d9ef">public</span> <span style="color:#a6e22e">@interface</span> SpringBootApplication <span style="color:#f92672">{</span>
+   <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">package</span> org.springframework.boot<span style="color:#f92672">;</span>
+<span style="color:#a6e22e">@Target</span><span style="color:#f92672">(</span>ElementType<span style="color:#f92672">.</span><span style="color:#a6e22e">TYPE</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@Retention</span><span style="color:#f92672">(</span>RetentionPolicy<span style="color:#f92672">.</span><span style="color:#a6e22e">RUNTIME</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@Documented</span>
+<span style="color:#a6e22e">@Configuration</span>
+<span style="color:#66d9ef">public</span> <span style="color:#a6e22e">@interface</span> SpringBootConfiguration <span style="color:#f92672">{</span>
+
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>注解分别作用:</p>
+<ul>
+<li>
+<p><code>@EnableAutoConfiguration</code>: 启用 SpringBoot 的自动配置机制</p>
+</li>
+<li>
+<p><code>@ComponentScan</code>: 扫描被@Component (@Service,@Controller)注解的 bean,注解默认会扫描该类所在的包下所有的类</p>
+</li>
+<li>
+<p><code>@Configuration</code>: 允许在 Spring 上下文中注册额外的 bean 或导入其他配置类</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-spring-bean-相关">2. Spring Bean 相关</h2>
+<h3 id="autowired"><code>@Autowired</code></h3>
+<blockquote>
+<p>自动导入对象到类中(让 Spring 帮我们自动装配 bean),被注入的类要被 Spring 管理</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Service</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserService</span> <span style="color:#f92672">{</span>
+  <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#a6e22e">@RestController</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/users&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserController</span> <span style="color:#f92672">{</span>
+   <span style="color:#a6e22e">@Autowired</span>
+   <span style="color:#66d9ef">private</span> UserService userService<span style="color:#f92672">;</span>
+   <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="component-repository-service-controller"><code>@Component</code>, <code>@Repository</code>, <code>@Service</code>, <code>@Controller</code></h3>
+<ul>
+<li>
+<p><code>@Component</code>: 通用的注解,可标注任意类为 Spring 组件,如果一个 Bean 不知道属于哪个层,可以使用 <code>@Component</code> 注解标注</p>
+</li>
+<li>
+<p><code>@Repository</code>: 对应持久层即 Dao 层,主要用于数据库相关操作</p>
+</li>
+<li>
+<p><code>@Service</code>: 对应服务层,主要涉及一些复杂的逻辑,需要用到 Dao 层</p>
+</li>
+<li>
+<p><code>@Controller</code>: 对应 Spring MVC 控制层,主要用户接受用户请求并调用 Service 层返回数据给前端页面</p>
+</li>
+</ul>
+<h3 id="restcontroller"><code>@RestController</code></h3>
+<ul>
+<li>
+<p><code>@RestController</code> 注解是 <code>@Controller</code> 和 <code>@ResponseBody</code> 的合集,表示这是个控制器 bean,并且是将函数的返回值直 接填入 HTTP 响应体中,是 REST 风格的控制器</p>
+</li>
+<li>
+<p>单独使用 <code>@Controller</code> 不加 <code>@ResponseBody</code> 的话一般使用在要返回一个视图的情况,这种情况属于比较传统的 Spring MVC 的应用,对应于前后端不分离的情况。<code>@Controller</code> +  <code>@ResponseBody</code> 返回 JSON 或 XML 形式数据</p>
+</li>
+</ul>
+<h3 id="scope-声明-bean-作用域"><code>@Scope</code> 声明 bean 作用域</h3>
+<ul>
+<li>
+<p>singleton : 唯一 bean 实例,Spring 中的 bean 默认都是单例的</p>
+</li>
+<li>
+<p>prototype : 每次请求都会创建一个新的 bean 实例</p>
+</li>
+<li>
+<p>request : 每一次 HTTP 请求都会产生一个新的 bean,该 bean 仅在当前 HTTP request 内有效</p>
+</li>
+<li>
+<p>session : 每一次 HTTP 请求都会产生一个新的 bean,该 bean 仅在当前 HTTP session 内有效</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Bean</span>
+<span style="color:#a6e22e">@Scope</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;singleton&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> Person <span style="color:#a6e22e">personSingleton</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Person<span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="configuration"><code>@Configuration</code></h3>
+<blockquote>
+<p>一般用来声明配置类,可以使用 <code>@Component</code> 注解替代,不过使用 <code>@Configuration</code> 注解声明配置类更加语义化</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AppConfig</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Bean</span>
+    <span style="color:#66d9ef">public</span> TransferService <span style="color:#a6e22e">transferService</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> TransferServiceImpl<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="3-http处理">3. Http处理</h2>
+<h3 id="get-请求从服务器获取特定资源">GET 请求从服务器获取特定资源</h3>
+<ul>
+<li><code>@GetMapping(&quot;users&quot;)</code> 等价于 <code>@RequestMapping(value=&quot;/users&quot;,method=RequestMethod.GET)</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/users&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>List<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;&gt;</span> <span style="color:#a6e22e">getAllUsers</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+ <span style="color:#66d9ef">return</span> userRepository<span style="color:#f92672">.</span><span style="color:#a6e22e">findAll</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="post在服务器上创建一个新的资源">POST：在服务器上创建一个新的资源</h3>
+<ul>
+<li><code>@PostMapping(&quot;users&quot;)</code> 等价于 <code>@RequestMapping(value=&quot;/users&quot;,method=RequestMethod.POST)</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/users&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">createUser</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Valid</span> <span style="color:#a6e22e">@RequestBody</span> UserCreateRequest userCreateRequest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+ <span style="color:#66d9ef">return</span> userRespository<span style="color:#f92672">.</span><span style="color:#a6e22e">save</span><span style="color:#f92672">(</span>user<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="put更新服务器上的资源客户端提供更新后的整个资源">PUT：更新服务器上的资源(客户端提供更新后的整个资源)</h3>
+<ul>
+<li><code>@PutMapping(&quot;/users/{userId}&quot;)</code> 等价于 <code>@RequestMapping(value=&quot;/users/{userId}&quot;,method=RequestMethod.PUT)</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@PutMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/users/{userId}&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">updateUser</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;userId&#34;</span><span style="color:#f92672">)</span> Long userId<span style="color:#f92672">,</span>
+  <span style="color:#a6e22e">@Valid</span> <span style="color:#a6e22e">@RequestBody</span> UserUpdateRequest userUpdateRequest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="delete从服务器删除特定的资源">DELETE：从服务器删除特定的资源</h3>
+<ul>
+<li><code>@DeleteMapping(&quot;/users/{userId}&quot;)</code> 等价于 <code>@RequestMapping(value=&quot;/users/{userId}&quot;,method=RequestMethod.DELETE)</code></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@DeleteMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/users/{userId}&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity <span style="color:#a6e22e">deleteUser</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;userId&#34;</span><span style="color:#f92672">)</span> Long userId<span style="color:#f92672">){</span>
+  <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="patch更新服务器上的资源客户端提供更改的属性可以看做作是部分更新">PATCH：更新服务器上的资源(客户端提供更改的属性,可以看做作是部分更新)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@PatchMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/profile&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity <span style="color:#a6e22e">updateStudent</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@RequestBody</span> StudentUpdateRequest studentUpdateRequest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      studentRepository<span style="color:#f92672">.</span><span style="color:#a6e22e">updateDetail</span><span style="color:#f92672">(</span>studentUpdateRequest<span style="color:#f92672">);</span>
+      <span style="color:#66d9ef">return</span> ResponseEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="4-传值">4. 传值</h2>
+<h3 id="pathvariable-获取路径参数和-requestparam-获取查询参数"><code>@PathVariable</code> 获取路径参数和 <code>@RequestParam</code> 获取查询参数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/klasses/{klassId}/teachers&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>Teacher<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getKlassRelatedTeachers</span><span style="color:#f92672">(</span>
+         <span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;klassId&#34;</span><span style="color:#f92672">)</span> Long klassId<span style="color:#f92672">,</span>
+         <span style="color:#a6e22e">@RequestParam</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">,</span> required <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">)</span> String type <span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+<span style="color:#f92672">...</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">//url: /klasses/{123456}/teachers?type=web
+</span><span style="color:#75715e">//data: klassId=123456,type=web
+</span></code></pre></div><h3 id="requestbody"><code>@RequestBody</code></h3>
+<blockquote>
+<p>用于读取 Request 请求(可能是 POST,PUT,DELETE,GET 请求)的 body 部分并且Content-Type 为 application/json 格式的数据,接收到数据之后会自动将数据绑定到 Java 对象上去。系统会使用HttpMessageConverter或者自定义的 HttpMessageConverter 将请求的 body 中的 json 字符串转换为 java 对象</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Data</span>
+<span style="color:#a6e22e">@AllArgsConstructor</span>
+<span style="color:#a6e22e">@NoArgsConstructor</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserRegisterRequest</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@NotBlank</span>
+    <span style="color:#66d9ef">private</span> String userName<span style="color:#f92672">;</span>
+    <span style="color:#a6e22e">@NotBlank</span>
+    <span style="color:#66d9ef">private</span> String password<span style="color:#f92672">;</span>
+    <span style="color:#a6e22e">@FullName</span>
+    <span style="color:#a6e22e">@NotBlank</span>
+    <span style="color:#66d9ef">private</span> String fullName<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#a6e22e">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/sign&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> ResponseEntity <span style="color:#a6e22e">signUp</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@RequestBody</span> <span style="color:#a6e22e">@Valid</span> UserRegisterRequest userRegisterRequest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  userService<span style="color:#f92672">.</span><span style="color:#a6e22e">save</span><span style="color:#f92672">(</span>userRegisterRequest<span style="color:#f92672">);</span>
+  <span style="color:#66d9ef">return</span> ResponseEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p>一个请求方法只可以有一个@RequestBody,但是可以有多个@RequestParam和@PathVariable</p>
+</blockquote>
+<h2 id="5-配置">5. 配置</h2>
+<ul>
+<li>配置文件</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">wuhan2020</span>: <span style="color:#ae81ff">2020年初武汉爆发了新型冠状病毒,疫情严重,但是,我相信一切都会过去！武汉加油！中国加油！</span>
+
+<span style="color:#f92672">my-profile</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">wbmins</span>
+  <span style="color:#f92672">email</span>: <span style="color:#ae81ff">koushuangbwcx@163.com</span>
+
+<span style="color:#f92672">library</span>:
+  <span style="color:#f92672">location</span>: <span style="color:#ae81ff">湖北武汉加油中国加油</span>
+  <span style="color:#f92672">books</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">天才基本法</span>
+      <span style="color:#f92672">description</span>: <span style="color:#ae81ff">二十二岁的林朝夕在父亲确诊阿尔茨海默病这天,得知自己暗恋多年的校园男神裴之即将出国深造的消息——对方考取的学校,恰是父亲当年为她放弃的那所。</span>
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">时间的秩序</span>
+      <span style="color:#f92672">description</span>: <span style="color:#ae81ff">为什么我们记得过去,而非未来？时间“流逝”意味着什么？是我们存在于时间之内,还是时间存在于我们之中？卡洛·罗韦利用诗意的文字,邀请我们思考这一亘古难题——时间的本质。</span>
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">了不起的我</span>
+      <span style="color:#f92672">description</span>: <span style="color:#ae81ff">如何养成一个新习惯？如何让心智变得更成熟？如何拥有高质量的关系？ 如何走出人生的艰难时刻？</span>
+</code></pre></div><h3 id="value-使用-valueproperty读取配置信息"><code>@value</code> 使用 <code>@Value(&quot;${property}&quot;)</code>读取配置信息</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Value</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;${wuhan2020}&#34;</span><span style="color:#f92672">)</span>
+String wuhan2020<span style="color:#f92672">;</span>
+</code></pre></div><h3 id="configurationproperties-读取配置并与-bean-绑定"><code>@ConfigurationProperties</code> 读取配置并与 bean 绑定</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@ConfigurationProperties</span><span style="color:#f92672">(</span>prefix <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;library&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LibraryProperties</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@NotEmpty</span>
+    <span style="color:#66d9ef">private</span> String location<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>Book<span style="color:#f92672">&gt;</span> books<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Setter</span>
+    <span style="color:#a6e22e">@Getter</span>
+    <span style="color:#a6e22e">@ToString</span>
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Book</span> <span style="color:#f92672">{</span>
+        String name<span style="color:#f92672">;</span>
+        String description<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+  省略getter<span style="color:#f92672">/</span>setter
+  <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="propertysource-读取指定的-properties-文件"><code>PropertySource</code> 读取指定的 properties 文件</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@PropertySource</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;classpath:website.properties&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebSite</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Value</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;${url}&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> String url<span style="color:#f92672">;</span>
+    <span style="color:#75715e">//省略getter/setter
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="6-校验">6. 校验</h2>
+<blockquote>
+<p>数据的校验的重要性就不用说了,即使在前端对数据进行校验的情况下,我们还是要对传入后端的数据再进行一遍校验,避免用户绕过浏览器直接通过一些 HTTP 工具直接向后端请求一些违法数据</p>
+</blockquote>
+<ul>
+<li>
+<p>JSR(Java Specification Requests) 是一套 JavaBean 参数校验的标准,它定义了很多常用的校验注解,我们可以直接将这些注解加在我们 JavaBean 的属性上面,这样就可以在需要校验的时候进行校验了,非常方便</p>
+</li>
+<li>
+<p>校验的时候我们实际用的是 Hibernate Validator 框架。Hibernate Validator 是 Hibernate 团队最初的数据校验框架,Hibernate Validator 4.x 是 Bean Validation 1.0(JSR 303)的参考实现,Hibernate Validator 5.x 是 Bean Validation 1.1(JSR 349)的参考实现,目前最新版的 Hibernate Validator 6.x 是 Bean Validation 2.0(JSR 380)的参考实现</p>
+</li>
+<li>
+<p>所有的注解,推荐使用 JSR 注解,即 <code>javax.validation.constraints</code> ,而不是 <code>org.hibernate.validator.constraints</code></p>
+</li>
+</ul>
+<h3 id="常用的验证注解">常用的验证注解</h3>
+<ul>
+<li><code>@NotEmpty</code> 被注释的字符串的不能为 null 也不能为空</li>
+<li><code>@NotBlank</code> 被注释的字符串非 null,并且必须包含一个非空白字符</li>
+<li><code>@Null</code> 被注释的元素必须为 null</li>
+<li><code>@NotNull</code> 被注释的元素必须不为 null</li>
+<li><code>@AssertTrue</code> 被注释的元素必须为 true</li>
+<li><code>@AssertFalse</code> 被注释的元素必须为 false</li>
+<li><code>@Pattern(regex=,flag=)</code> 被注释的元素必须符合指定的正则表达式</li>
+<li><code>@Email</code> 被注释的元素必须是 Email 格式。</li>
+<li><code>@Min(value)</code> 被注释的元素必须是一个数字,其值必须大于等于指定的最小值</li>
+<li><code>@Max(value)</code> 被注释的元素必须是一个数字,其值必须小于等于指定的最大值</li>
+<li><code>@DecimalMin(value)</code> 被注释的元素必须是一个数字,其值必须大于等于指定的最小值</li>
+<li><code>@DecimalMax(value)</code> 被注释的元素必须是一个数字,其值必须小于等于指定的最大值</li>
+<li><code>@Size(max=, min=)</code> 被注释的元素的大小必须在指定的范围内</li>
+<li><code>@Digits (integer, fraction)</code> 被注释的元素必须是一个数字,其值必须在可接受的范围内</li>
+<li><code>@Past</code> 被注释的元素必须是一个过去的日期</li>
+<li><code>@Future</code> 被注释的元素必须是一个将来的日期</li>
+</ul>
+<h3 id="验证请求体">验证请求体</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Data</span>
+<span style="color:#a6e22e">@AllArgsConstructor</span>
+<span style="color:#a6e22e">@NoArgsConstructor</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@NotNull</span><span style="color:#f92672">(</span>message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;classId 不能为空&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> String classId<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Size</span><span style="color:#f92672">(</span>max <span style="color:#f92672">=</span> 33<span style="color:#f92672">)</span>
+    <span style="color:#a6e22e">@NotNull</span><span style="color:#f92672">(</span>message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;name 不能为空&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Pattern</span><span style="color:#f92672">(</span>regexp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;((^Man$|^Woman$|^UGM$))&#34;</span><span style="color:#f92672">,</span> message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sex 值不在可选范围&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#a6e22e">@NotNull</span><span style="color:#f92672">(</span>message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sex 不能为空&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> String sex<span style="color:#f92672">;</span>
+
+    <span style="color:#a6e22e">@Email</span><span style="color:#f92672">(</span>message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;email 格式不正确&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#a6e22e">@NotNull</span><span style="color:#f92672">(</span>message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;email 不能为空&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">private</span> String email<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">//我们在需要验证的参数上加上了 @Valid 注解,如果验证失败,它将抛出MethodArgumentNotValidException
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@RestController</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/api&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PersonController</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@PostMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/person&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>Person<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getPerson</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@RequestBody</span> <span style="color:#a6e22e">@Valid</span> Person person<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> ResponseEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">body</span><span style="color:#f92672">(</span>person<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="验证请求参数">验证请求参数</h3>
+<blockquote>
+<p>一定一定不要忘记在类上加上 Validated 注解了,这个参数可以告诉 Spring 去校验方法参数</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RestController</span>
+<span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/api&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#a6e22e">@Validated</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PersonController</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@GetMapping</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/person/{id}&#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">getPersonByID</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Valid</span> <span style="color:#a6e22e">@PathVariable</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">)</span> <span style="color:#a6e22e">@Max</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> 5<span style="color:#f92672">,</span>message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;超过 id 的范围了&#34;</span><span style="color:#f92672">)</span> Integer id<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> ResponseEntity<span style="color:#f92672">.</span><span style="color:#a6e22e">ok</span><span style="color:#f92672">().</span><span style="color:#a6e22e">body</span><span style="color:#f92672">(</span>id<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="7-全局异常">7. 全局异常</h2>
+<ul>
+<li><code>@ControllerAdvice</code>: 注解定义全局异常处理类</li>
+<li><code>@ExceptionHandler</code>: 注解声明异常处理方法</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@ControllerAdvice</span>
+<span style="color:#a6e22e">@ResponseBody</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GlobalExceptionHandler</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//请求参数异常处理
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@ExceptionHandler</span><span style="color:#f92672">(</span>MethodArgumentNotValidException<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+    <span style="color:#66d9ef">public</span> ResponseEntity<span style="color:#f92672">&lt;?&gt;</span> handleMethodArgumentNotValidException<span style="color:#f92672">(</span>MethodArgumentNotValidException ex<span style="color:#f92672">,</span> HttpServletRequest request<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+       <span style="color:#f92672">......</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="8-transactional-事物">8. <code>@Transactional</code> 事物</h2>
+<blockquote>
+<p>我们知道 Exception 分为运行时异常 RuntimeException 和非运行时异常。在<code>@Transactional</code> 注解中如果不配置 rollbackFor 属性,那么事物只会在遇到RuntimeException的时候才会回滚,加上 rollbackFor=Exception.class,可以让事物在遇到非运行时异常时也回滚</p>
+</blockquote>
+<ul>
+<li>
+<p>作用于类：当把@Transactional 注解放在类上时,表示所有该类的public 方法都配置相同的事务属性信息</p>
+</li>
+<li>
+<p>作用于方法：当类配置了@Transactional,方法也配置了@Transactional,方法的事务会覆盖类的事务配置信息</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Transactional</span><span style="color:#f92672">(</span>rollbackFor <span style="color:#f92672">=</span> Exception<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">save</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#f92672">......</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="9-json-数据">9. json 数据</h2>
+<ul>
+<li><code>@JsonIgnoreProperties</code> 作用在类上用于过滤掉特定字段不返回或者不解析</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//生成json时将userRoles属性过滤
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">@JsonIgnoreProperties</span><span style="color:#f92672">({</span><span style="color:#e6db74">&#34;userRoles&#34;</span><span style="color:#f92672">})</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> String userName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String fullName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String password<span style="color:#f92672">;</span>
+    <span style="color:#a6e22e">@JsonIgnore</span>
+    <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>UserRole<span style="color:#f92672">&gt;</span> userRoles <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li><code>@JsonIgnore</code> 一般用于类的属性上,作用和上面的 <code>@JsonIgnoreProperties</code> 一样</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String userName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String fullName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String password<span style="color:#f92672">;</span>
+   <span style="color:#75715e">//生成json时将userRoles属性过滤
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@JsonIgnore</span>
+    <span style="color:#66d9ef">private</span> List<span style="color:#f92672">&lt;</span>UserRole<span style="color:#f92672">&gt;</span> userRoles <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li><code>@JsonFormat</code> 一般用来格式化 json 数据</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@JsonFormat</span><span style="color:#f92672">(</span>shape<span style="color:#f92672">=</span>JsonFormat<span style="color:#f92672">.</span><span style="color:#a6e22e">Shape</span><span style="color:#f92672">.</span><span style="color:#a6e22e">STRING</span><span style="color:#f92672">,</span> pattern<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSS&#39;Z&#39;&#34;</span><span style="color:#f92672">,</span> timezone<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GMT&#34;</span><span style="color:#f92672">)</span>
+<span style="color:#66d9ef">private</span> Date date
+</code></pre></div><ul>
+<li><code>@JsonUnwrapped</code> 扁平对象</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Getter</span>
+<span style="color:#a6e22e">@Setter</span>
+<span style="color:#a6e22e">@ToString</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Account</span> <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@JsonUnwrapped</span>
+    <span style="color:#66d9ef">private</span> Location location<span style="color:#f92672">;</span>
+    <span style="color:#a6e22e">@JsonUnwrapped</span>
+    <span style="color:#66d9ef">private</span> PersonInfo personInfo<span style="color:#f92672">;</span>
+
+  <span style="color:#a6e22e">@Getter</span>
+  <span style="color:#a6e22e">@Setter</span>
+  <span style="color:#a6e22e">@ToString</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Location</span> <span style="color:#f92672">{</span>
+     <span style="color:#66d9ef">private</span> String provinceName<span style="color:#f92672">;</span>
+     <span style="color:#66d9ef">private</span> String countyName<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#a6e22e">@Getter</span>
+  <span style="color:#a6e22e">@Setter</span>
+  <span style="color:#a6e22e">@ToString</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PersonInfo</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String userName<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String fullName<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>未扁平</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;location&#34;</span>: {
+        <span style="color:#f92672">&#34;provinceName&#34;</span>:<span style="color:#e6db74">&#34;湖北&#34;</span>,
+        <span style="color:#f92672">&#34;countyName&#34;</span>:<span style="color:#e6db74">&#34;武汉&#34;</span>
+    },
+    <span style="color:#f92672">&#34;personInfo&#34;</span>: {
+        <span style="color:#f92672">&#34;userName&#34;</span>: <span style="color:#e6db74">&#34;coder1234&#34;</span>,
+        <span style="color:#f92672">&#34;fullName&#34;</span>: <span style="color:#e6db74">&#34;shaungkou&#34;</span>
+    }
+}
+</code></pre></div></li>
+<li>
+<p>扁平后</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#f92672">&#34;provinceName&#34;</span>:<span style="color:#e6db74">&#34;湖北&#34;</span>,
+  <span style="color:#f92672">&#34;countyName&#34;</span>:<span style="color:#e6db74">&#34;武汉&#34;</span>,
+  <span style="color:#f92672">&#34;userName&#34;</span>: <span style="color:#e6db74">&#34;coder1234&#34;</span>,
+  <span style="color:#f92672">&#34;fullName&#34;</span>: <span style="color:#e6db74">&#34;shaungkou&#34;</span>
+}
+</code></pre></div></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/036/>https://wbmins.github.io/2020/036/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/spring/">
+                    #Spring</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/springboot/">
+                    #SpringBoot</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/035/" class="prev" rel="prev" title="为什么要努力读书?"><i
+                class="iconfont icon-left"></i>&nbsp;为什么要努力读书?</a>
+        
+        
+        <a href="https://wbmins.github.io/2020/037/" class="next" rel="next"
+            title="ArchLinux 传记">ArchLinux 传记&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

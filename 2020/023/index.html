@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/022/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2020/024/" />
+  <link rel="canonical" href="https://wbmins.github.io/2020/023/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    Gateway | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="Gateway | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Gateway",
+    "headline" : "Gateway",
+    "description" : "简介 提供统一的路由方式且基于Filter链的方式提供网关的基本功能,例如安全 监控指标和限流.使用webflux中的reactor-netty",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-14 14:54:03 \u002b0800 \u002b0800",
+    "dateModified" : "2020-03-14 14:54:03 \u002b0800 \u002b0800",
+    "url" : "https:\/\/wbmins.github.io\/2020\/023\/",
+    "wordCount" : "766",
+    "keywords" : [ "微服务","SpringCloud", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#使用">使用</a></li>
+        <li><a href="#动态路由上yml">动态路由(上yml)</a></li>
+        <li><a href="#断言实现一组匹配规则">断言(实现一组匹配规则)</a></li>
+        <li><a href="#自定义过滤器">自定义过滤器</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Gateway</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-03-14
+                    itemprop="datePublished">March 14, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,766 words</span>
+            <span class="post-read-time">,read need 2 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h3 id="简介">简介</h3>
+<p>提供统一的路由方式且基于Filter链的方式提供网关的基本功能,例如安全 监控指标和限流.使用webflux中的reactor-netty响应式组建,底层使用了netty通讯框架</p>
+<ul>
+<li>
+<p>功能</p>
+<p>-反向代理</p>
+<ul>
+<li>
+<p>鉴权</p>
+</li>
+<li>
+<p>流量监控</p>
+</li>
+<li>
+<p>熔断</p>
+</li>
+<li>
+<p>日志监控</p>
+</li>
+</ul>
+</li>
+<li>
+<p>概念</p>
+<ul>
+<li>
+<p>路由Route 路由是构建网关的基本模块,它由ID,目标URL,一些列的断言和过滤器组成,如果断言为true则匹配该路由</p>
+</li>
+<li>
+<p>断言Predicate 匹配http请求的所有内容,如请求与断言相匹配则路由</p>
+</li>
+<li>
+<p>过滤Filter 是spring框架中gatewayFilter的实例,使用过滤器,可以在请求被路由前或之后对请求进行修改</p>
+</li>
+</ul>
+</li>
+<li>
+<p>核心逻辑 路由u转发和执行过滤链</p>
+</li>
+</ul>
+<h3 id="使用">使用</h3>
+<ul>
+<li>引入</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!--gateway--&gt;</span>
+<span style="color:#f92672">&lt;dependency&gt;</span>
+    <span style="color:#f92672">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#f92672">&lt;/groupId&gt;</span>
+    <span style="color:#f92672">&lt;artifactId&gt;</span>spring-cloud-starter-gateway<span style="color:#f92672">&lt;/artifactId&gt;</span>
+<span style="color:#f92672">&lt;/dependency&gt;</span>
+</code></pre></div><ul>
+<li>yml配置(方式1)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">server</span>:
+  <span style="color:#f92672">port</span>: <span style="color:#ae81ff">9527</span>
+<span style="color:#f92672">spring</span>:
+  <span style="color:#f92672">application</span>:
+    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cloud-gateway</span>
+  <span style="color:#f92672">cloud</span>:
+    <span style="color:#f92672">gateway</span>:
+      <span style="color:#f92672">discovery</span>:
+        <span style="color:#f92672">locator</span>:
+          <span style="color:#f92672">enabled</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e">#开启从注册中心动态创建路由的功能,利用微服务名进行路由</span>
+      <span style="color:#f92672">routes</span>:
+        - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">payment_routh #payment_route   </span> <span style="color:#75715e">#路由的ID,没有固定规则但要求唯一,建议配合服务名</span>
+          <span style="color:#75715e">#uri: http://localhost:8001          #匹配后提供服务的路由地址</span>
+          <span style="color:#f92672">uri</span>: <span style="color:#ae81ff">lb://cloud-payment-service</span> <span style="color:#75715e">#匹配后提供服务的路由地址</span>
+          <span style="color:#f92672">predicates</span>:
+            - <span style="color:#ae81ff">Path=/payment/get/**        </span> <span style="color:#75715e"># 断言,路径相匹配的进行路由</span>
+
+        - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">payment_routh2 #payment_route   </span> <span style="color:#75715e">#路由的ID,没有固定规则但要求唯一,建议配合服务名</span>
+          <span style="color:#75715e">#uri: http://localhost:8001          #匹配后提供服务的路由地址</span>
+          <span style="color:#f92672">uri</span>: <span style="color:#ae81ff">lb://cloud-payment-service</span> <span style="color:#75715e">#匹配后提供服务的路由地址</span>
+          <span style="color:#f92672">predicates</span>:
+            - <span style="color:#ae81ff">Path=/payment/lb/**        </span> <span style="color:#75715e"># 断言,路径相匹配的进行路由</span>
+            <span style="color:#75715e">#- After=2020-02-21T15:51:37.485+08:00[Asia/Shanghai]</span>
+            <span style="color:#75715e">#- Cookie=username,zzyy</span>
+            <span style="color:#75715e">#- Header=X-Request-Id, \d+  # 请求头要有X-Request-Id属性并且值为整数的正则表达式</span>
+<span style="color:#f92672">eureka</span>:
+  <span style="color:#f92672">instance</span>:
+    <span style="color:#f92672">hostname</span>: <span style="color:#ae81ff">cloud-gateway-service</span>
+  <span style="color:#f92672">client</span>: <span style="color:#75715e">#服务提供者provider注册进eureka服务列表内</span>
+    <span style="color:#f92672">service-url</span>:
+      <span style="color:#f92672">register-with-eureka</span>: <span style="color:#66d9ef">true</span>
+      <span style="color:#f92672">fetch-registry</span>: <span style="color:#66d9ef">true</span>
+      <span style="color:#f92672">defaultZone</span>: <span style="color:#ae81ff">http://eureka7001.com:7001/eureka</span>
+</code></pre></div><ul>
+<li>
+<p>代码注入RouteLocator的Bean(方式2)</p>
+</li>
+<li>
+<p>新建配置类</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GateWayConfig</span>
+<span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Bean</span>
+    <span style="color:#66d9ef">public</span> RouteLocator <span style="color:#a6e22e">customRouteLocator</span><span style="color:#f92672">(</span>RouteLocatorBuilder routeLocatorBuilder<span style="color:#f92672">)</span>
+    <span style="color:#f92672">{</span>
+        RouteLocatorBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">Builder</span> routes <span style="color:#f92672">=</span> routeLocatorBuilder<span style="color:#f92672">.</span><span style="color:#a6e22e">routes</span><span style="color:#f92672">();</span>
+
+        routes<span style="color:#f92672">.</span><span style="color:#a6e22e">route</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;path_route_atguigu&#34;</span><span style="color:#f92672">,</span>
+                r <span style="color:#f92672">-&gt;</span> r<span style="color:#f92672">.</span><span style="color:#a6e22e">path</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/guonei&#34;</span><span style="color:#f92672">)</span>
+                        <span style="color:#f92672">.</span><span style="color:#a6e22e">uri</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;http://news.baidu.com/guonei&#34;</span><span style="color:#f92672">)).</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+
+        <span style="color:#66d9ef">return</span> routes<span style="color:#f92672">.</span><span style="color:#a6e22e">build</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="动态路由上yml">动态路由(上yml)</h3>
+<h3 id="断言实现一组匹配规则">断言(实现一组匹配规则)</h3>
+<ul>
+<li>在对应的路由上加上条件限制</li>
+</ul>
+<h3 id="自定义过滤器">自定义过滤器</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@Slf4j</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyLogGateWayFilter</span> <span style="color:#66d9ef">implements</span> GlobalFilter<span style="color:#f92672">,</span>Ordered
+<span style="color:#f92672">{</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Mono<span style="color:#f92672">&lt;</span>Void<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>ServerWebExchange exchange<span style="color:#f92672">,</span> GatewayFilterChain chain<span style="color:#f92672">)</span>
+    <span style="color:#f92672">{</span>
+        log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;***********come in MyLogGateWayFilter:  &#34;</span><span style="color:#f92672">+</span><span style="color:#66d9ef">new</span> Date<span style="color:#f92672">());</span>
+
+        String uname <span style="color:#f92672">=</span> exchange<span style="color:#f92672">.</span><span style="color:#a6e22e">getRequest</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getQueryParams</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getFirst</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;uname&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>uname <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+        <span style="color:#f92672">{</span>
+            log<span style="color:#f92672">.</span><span style="color:#a6e22e">info</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;*******用户名为null,非法用户,o(╥﹏╥)o&#34;</span><span style="color:#f92672">);</span>
+            exchange<span style="color:#f92672">.</span><span style="color:#a6e22e">getResponse</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setStatusCode</span><span style="color:#f92672">(</span>HttpStatus<span style="color:#f92672">.</span><span style="color:#a6e22e">NOT_ACCEPTABLE</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">return</span> exchange<span style="color:#f92672">.</span><span style="color:#a6e22e">getResponse</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setComplete</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">return</span> chain<span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>exchange<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getOrder</span><span style="color:#f92672">()</span>
+    <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> 0<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/023/>https://wbmins.github.io/2020/023/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
+                    #微服务</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/springcloud/">
+                    #SpringCloud</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/022/" class="prev" rel="prev" title="Hystrix"><i
+                class="iconfont icon-left"></i>&nbsp;Hystrix</a>
+        
+        
+        <a href="https://wbmins.github.io/2020/024/" class="next" rel="next"
+            title="Config 和 Bus">Config 和 Bus&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/025/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2020/026/" />
+  <link rel="canonical" href="https://wbmins.github.io/2020/028/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    Java 集合 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="Java 集合 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Java 集合",
+    "headline" : "Java 集合",
+    "description" : "集合 集合包最常用的有Collection和Map两个接口的实现类,Colleciton用于存放多个单对象,Map用于存放Key-Value形",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-16 15:46:20 \u002b0800 \u002b0800",
+    "dateModified" : "2020-03-16 15:46:20 \u002b0800 \u002b0800",
+    "url" : "https:\/\/wbmins.github.io\/2020\/028\/",
+    "wordCount" : "3890",
+    "keywords" : [ "Programing","Java", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#集合">集合</a></li>
+    <li><a href="#架构图">架构图</a></li>
+    <li><a href="#listinterface-有序可重复">List(Interface 有序、可重复)</a>
+      <ul>
+        <li><a href="#1arraylist">1、ArrayList</a></li>
+        <li><a href="#2linkedlist">2、LinkedList</a></li>
+        <li><a href="#3vector">3、Vector</a></li>
+        <li><a href="#4stack">4、Stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#setinterface-无序不可重复">Set(Interface 无序、不可重复)</a>
+      <ul>
+        <li><a href="#１hashset">１、HashSet</a></li>
+        <li><a href="#2linkedhashset">2、LinkedHashSet</a></li>
+        <li><a href="#3treeset">3、TreeSet</a></li>
+      </ul>
+    </li>
+    <li><a href="#mapinterface-双列数据">Map(Interface 双列数据)</a>
+      <ul>
+        <li><a href="#7hashmap">7、HashMap</a></li>
+        <li><a href="#8treemap">8、TreeMap</a></li>
+        <li><a href="#jdk8-相对于-jdk7-比较">jdk8 相对于 jdk7 比较</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Java 集合</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-03-16
+                    itemprop="datePublished">March 16, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,3890 words</span>
+            <span class="post-read-time">,read need 8 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+        
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="集合">集合</h2>
+<ol>
+<li>
+<p>集合包最常用的有Collection和Map两个接口的实现类,Colleciton用于存放多个单对象,Map用于存放Key-Value形式的键值对.</p>
+</li>
+<li>
+<p>Collection中最常用的又分为两种类型的接口：List和Set,两者最明显的差别为List支持放入重复的元素,而Set不支持.</p>
+</li>
+<li>
+<p>List最常用的实现类有：ArrayList、LinkedList、Vector及Stack；Set接口常用的实现类有：HashSet、TreeSet.</p>
+</li>
+</ol>
+<h2 id="架构图">架构图</h2>
+<p><img src="/images/Java/collection.png" alt="图"></p>
+<h2 id="listinterface-有序可重复">List(Interface 有序、可重复)</h2>
+<h3 id="1arraylist">1、ArrayList</h3>
+<ul>
+<li>
+<p>ArrayList基于数组方式实现,默认构造器通过调用ArrayList(int)来完成创建,传入的值为10,实例化了一个Object数组,并将此数组赋给了当前实例的elementData属性,此Object数组的大小即为传入的initialCapacity,因此调用空构造器的情况下会创建一个大小为10的Object数组.</p>
+</li>
+<li>
+<p>总结：</p>
+<ol>
+<li>
+<p>ArrayList基于数组方式实现,无容量的限制；</p>
+</li>
+<li>
+<p>ArrayList在执行插入元素时可能要扩容,在删除元素时并不会减小数组的容量（如希望相应的缩小数组容量,可以调用ArrayList的trimToSize()）,在查找元素时要遍历数组,对于非null的元素采取equals的方式寻找；</p>
+</li>
+<li>
+<p>ArrayList是非线程安全的.</p>
+</li>
+<li>
+<p>当读远大于更新时 CopyOnWriteArrayList 优于同步的 ArrayList.</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="2linkedlist">2、LinkedList</h3>
+<ul>
+<li>
+<p>LinkedList基于双向链表机制,所谓双向链表机制,就是集合中的每个元素都知道其前一个元素及其后一个元素的位置.在LinkedList中,以一个内部的Entry类来代表集合中的元素,元素的值赋给element属性,Entry中的next属性指向元素的后一个元素,Entry中的previous属性指向元素的前一个元素,基于这样的机制可以快速实现集合中元素的移动.</p>
+</li>
+<li>
+<p>总结：</p>
+<ol>
+<li>
+<p>LinkedList基于双向链表机制实现；</p>
+</li>
+<li>
+<p>LinkedList在插入元素时,须创建一个新的Entry对象,并切换相应元素的前后元素的引用；在查找元素时,须遍历链表；在删除元素时,要遍历链表,找到要删除的元素,然后从链表上将此元素删除即可,此时原有的前后元素改变引用连在一起；</p>
+</li>
+<li>
+<p>LinkedList是非线程安全的.</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="3vector">3、Vector</h3>
+<ul>
+<li>
+<p>其add、remove、get(int)方法都加了synchronized关键字,默认创建一个大小为10的Object数组,并将capacityIncrement设置为0.容量扩充策略：如果capacityIncrement大于0,则将Object数组的大小扩大为现有size加上capacityIncrement的值；如果capacity等于或小于0,则将Object数组的大小扩大为现有size的两倍,这种容量的控制策略比ArrayList更为可控.</p>
+</li>
+<li>
+<p>Vector是基于Synchronized实现的线程安全的ArrayList,但在插入元素时容量扩充的机制和ArrayList稍有不同,并可通过传入capacityIncrement来控制容量的扩充.</p>
+</li>
+</ul>
+<h3 id="4stack">4、Stack</h3>
+<ul>
+<li>
+<p>Stack继承于Vector,在其基础上实现了Stack所要求的后进先出(LIFO)的弹出与压入操作,其提供了push、pop、peek三个主要的方法：</p>
+</li>
+<li>
+<p>push操作通过调用Vector中的addElement来完成；</p>
+</li>
+<li>
+<p>pop操作通过调用peek来获取元素,并同时删除数组中的最后一个元素；</p>
+</li>
+<li>
+<p>peek操作通过获取当前Object数组的大小,并获取数组上的最后一个元素.</p>
+</li>
+</ul>
+<h2 id="setinterface-无序不可重复">Set(Interface 无序、不可重复)</h2>
+<h3 id="１hashset">１、HashSet</h3>
+<ul>
+<li>
+<p>默认构造创建一个HashMap对象(用key做set,值是一个不变对象)</p>
+</li>
+<li>
+<p>HashSet不支持通过get(int)获取指定位置的元素,只能自行通过iterator方法来获取.</p>
+</li>
+<li>
+<p>总结：</p>
+<ol>
+<li>
+<p>HashSet基于HashMap实现,无容量限制；</p>
+</li>
+<li>
+<p>HashSet是非线程安全的.</p>
+</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Test</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+    HashSet<span style="color:#f92672">&lt;</span>Person<span style="color:#f92672">&gt;</span> hashSet <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashSet<span style="color:#f92672">&lt;</span>Person<span style="color:#f92672">&gt;();</span>
+    Person p1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Person<span style="color:#f92672">(</span>1001<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;AA&#34;</span><span style="color:#f92672">);</span>
+    Person p2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Person<span style="color:#f92672">(</span>1002<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;BB&#34;</span><span style="color:#f92672">);</span>
+    hashSet<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>p1<span style="color:#f92672">);</span>
+    hashSet<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>p2<span style="color:#f92672">);</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hashSet<span style="color:#f92672">);</span>
+    p1<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CC&#34;</span><span style="color:#f92672">;</span>
+    hashSet<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>p1<span style="color:#f92672">);</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hashSet<span style="color:#f92672">);</span>
+    hashSet<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Person<span style="color:#f92672">(</span>1001<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;CC&#34;</span><span style="color:#f92672">));</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hashSet<span style="color:#f92672">);</span>
+    hashSet<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Person<span style="color:#f92672">(</span>1001<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;AA&#34;</span><span style="color:#f92672">));</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>hashSet<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">//输出结果
+</span><span style="color:#75715e">// １．[Person{id=1002, name=&#39;BB&#39;}, Person{id=1001, name=&#39;AA&#39;}]
+</span><span style="color:#75715e">// ２．[Person{id=1002, name=&#39;BB&#39;}, Person{id=1001, name=&#39;CC&#39;}]
+</span><span style="color:#75715e">// ３．[Person{id=1002, name=&#39;BB&#39;}, Person{id=1001, name=&#39;CC&#39;}, Person{id=1001, name=&#39;CC&#39;}]
+</span><span style="color:#75715e">// ４．[Person{id=1002, name=&#39;BB&#39;}, Person{id=1001, name=&#39;CC&#39;}, Person{id=1001, name=&#39;CC&#39;}, Person{id=1001, name=&#39;AA&#39;}]
+</span></code></pre></div><h3 id="2linkedhashset">2、LinkedHashSet</h3>
+<ul>
+<li>HashSet 子类,可以按照添加的顺讯遍历内部数据.</li>
+</ul>
+<h3 id="3treeset">3、TreeSet</h3>
+<ul>
+<li>TreeSet和HashSet的主要不同在于TreeSet对于排序的支持,TreeSet基于TreeMap实现.</li>
+</ul>
+<h2 id="mapinterface-双列数据">Map(Interface 双列数据)</h2>
+<h3 id="7hashmap">7、HashMap</h3>
+<ul>
+<li>
+<p>HashMap空构造,将loadFactor设为默认的0.75,threshold设置为12,并创建一个大小为16的Entry对象数组.</p>
+</li>
+<li>
+<p>基于数组+链表的结合体(链表散列)实现,将key-value看成一个整体,存放于Entity[]数组,put的时候根据key hash后的hashcode和数组length-1按位与的结果值判断放在数组的哪个位置,如果该数组位置上若已经存放其他元素,则在这个位置上的元素以链表的形式存放.如果该位置上没有元素则直接存放.</p>
+</li>
+<li>
+<p>当系统决定存储HashMap中的key-value对时,完全没有考虑Entry中的value,仅仅只是根据key来计算并决定每个Entry的存储位置.我们完全可以把Map集合中的value当成key的附属,当系统决定了key的存储位置之后,value随之保存在那里即可.get取值也是根据key的hashCode确定在数组的位置,在根据key的equals确定在链表处的位置.</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>capacity <span style="color:#f92672">&lt;</span> initialCapacity<span style="color:#f92672">)</span>
+     capacity <span style="color:#f92672">&lt;&lt;=</span> 1<span style="color:#f92672">;</span>
+</code></pre></div><ul>
+<li>
+<p>以上代码保证了初始化时HashMap的容量总是2的n次方,即底层数组的长度总是为2的n次方.它通过h &amp; (table.length -1) 来得到该对象的保存位,若length为奇数值,则与运算产生相同结果,便会形成链表,尽可能的少出现链表才能提升hashMap的效率,所以这是hashMap速度上的优化.</p>
+</li>
+<li>
+<p>扩容resize():
+当HashMap中的元素越来越多的时候,hash冲突的几率也就越来越高,因为数组的长度是固定的.所以为了提高查询的效率,就要对HashMap的数组进行扩容,而在HashMap数组扩容之后,最消耗性能的点就出现了：原数组中的数据必须重新计算其在新数组中的位置,并放进去,这就是resize.那么HashMap什么时候进行扩容呢？当HashMap中的元素个数超过数组大小*loadFactor时,就会进行数组扩容,loadFactor的默认值为0.75,这是一个折中的取值.</p>
+</li>
+<li>
+<p>负载因子衡量的是一个散列表的空间的使用程度,负载因子越大表示散列表的装填程度越高,反之愈小.负载因子越大,对空间的利用更充分,然而后果是查找效率的降低；如果负载因子太小,那么散列表的数据将过于稀疏,对空间造成严重浪费.</p>
+</li>
+<li>
+<p>HashMap的实现中,通过threshold字段来判断HashMap的最大容量.threshold就是在此loadFactor和capacity对应下允许的最大元素数目,超过这个数目就重新resize,以降低实际的负载因子.默认的的负载因子0.75是对空间和时间效率的一个平衡选择.</p>
+</li>
+<li>
+<p>initialCapacity*2,成倍扩大容量,HashMap(int initialCapacity, float loadFactor)：以指定初始容量、指定的负载因子创建一个 HashMap.不设定参数,则初始容量值为16,默认的负载因子为0.75,不宜过大也不宜过小,过大影响效率,过小浪费空间.扩容后需要重新计算每个元素在数组中的位置,是一个非常消耗性能的操作,所以如果我们已经预知HashMap中元素的个数,那么预设元素的个数能够有效的提高HashMap的性能.</p>
+</li>
+<li>
+<p>HashTable数据结构的原理大致一样,区别在于put、get时加了同步关键字,而且HashTable不可存放null值.</p>
+</li>
+<li>
+<p>在高并发时可以使用ConcurrentHashMap,其内部使用锁分段技术,维持这锁Segment的数组,在数组中又存放着Entity[]数组,内部hash算法将数据较均匀分布在不同锁中.</p>
+</li>
+<li>
+<p>总结：</p>
+<ol>
+<li>
+<p>HashMap采用数组方式存储key、value构成的Entry对象,无容量限制；</p>
+</li>
+<li>
+<p>HashMap基于key hash寻找Entry对象存放到数组的位置,对于hash冲突采用链表的方式解决；</p>
+</li>
+<li>
+<p>HashMap在插入元素时可能会扩大数组的容量,在扩大容量时须要重新计算hash,并复制对象到新的数组中；</p>
+</li>
+<li>
+<p>HashMap是非线程安全的.</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="8treemap">8、TreeMap</h3>
+<ul>
+<li>TreeMap基于红黑树的实现,因此它要求一定要有key比较的方法,要么传入Comparator实现,要么key对象实现Comparable接口.在put操作时,基于红黑树的方式遍历,基于comparator来比较key应放在树的左边还是右边,如找到相等的key,则直接替换掉value.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> <span style="color:#66d9ef">implements</span> Comparable<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> String name<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> age<span style="color:#f92672">;</span>
+    <span style="color:#75715e">// setter、getter、toString
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>Student another<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">int</span> flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">.</span><span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>another<span style="color:#f92672">.</span><span style="color:#a6e22e">name</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>flag <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">age</span> <span style="color:#f92672">-</span> another<span style="color:#f92672">.</span><span style="color:#a6e22e">age</span><span style="color:#f92672">;</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> flag<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    List<span style="color:#f92672">&lt;</span>Student<span style="color:#f92672">&gt;</span> students <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+    students<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Student<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;a&#34;</span><span style="color:#f92672">,</span> 4<span style="color:#f92672">));</span>
+    students<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Student<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;d&#34;</span><span style="color:#f92672">,</span> 2<span style="color:#f92672">));</span>
+    students<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Student<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c&#34;</span><span style="color:#f92672">,</span> 5<span style="color:#f92672">));</span>
+    students<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Student<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c&#34;</span><span style="color:#f92672">,</span> 3<span style="color:#f92672">));</span>
+    <span style="color:#75715e">//实现Comparable接口
+</span><span style="color:#75715e"></span>    Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>students<span style="color:#f92672">);</span>
+    <span style="color:#75715e">//传入Comparator实现
+</span><span style="color:#75715e"></span>    students<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span>  Comparator<span style="color:#f92672">&lt;</span>Person<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+        <span style="color:#a6e22e">@Override</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">compare</span><span style="color:#f92672">(</span>Person o1<span style="color:#f92672">,</span> Person o2<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">int</span> flag <span style="color:#f92672">=</span> o1<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">().</span><span style="color:#a6e22e">compareTo</span><span style="color:#f92672">(</span>o2<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">());</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>flag <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                flag <span style="color:#f92672">=</span> o1<span style="color:#f92672">.</span><span style="color:#a6e22e">getAge</span><span style="color:#f92672">()</span> <span style="color:#f92672">-</span> o2<span style="color:#f92672">.</span><span style="color:#a6e22e">getAge</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">return</span> flag<span style="color:#f92672">;</span>
+        <span style="color:#f92672">});</span>
+    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Student student <span style="color:#f92672">:</span> students<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>student<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="jdk8-相对于-jdk7-比较">jdk8 相对于 jdk7 比较</h3>
+<ul>
+<li>
+<p>new HashMap() 底层没创建长为16数组</p>
+</li>
+<li>
+<p>首次调用put() 时创建的长度为16数组</p>
+</li>
+<li>
+<p>jdk8底层数组是 <code>Node[]</code>,非 <code>Entry[]</code></p>
+</li>
+<li>
+<p>jdk7 底层只有数组+链表.jdk8 中数组+链表+红黑树(用到条件如下)</p>
+<ul>
+<li>
+<p>当数组某个索引位置上的元素以链表形式存储数据个数 &gt; 8</p>
+</li>
+<li>
+<p>当前数组长度 &gt; 64,此时此索引位置所有元素转为红黑树存储</p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/028/>https://wbmins.github.io/2020/028/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/programing/">
+                    #Programing</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/java/">
+                    #Java</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/025/" class="prev" rel="prev" title="单例模式"><i
+                class="iconfont icon-left"></i>&nbsp;单例模式</a>
+        
+        
+        <a href="https://wbmins.github.io/2020/026/" class="next" rel="next"
+            title="JUC 入门">JUC 入门&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+<link href="https://cdn.bootcss.com/lightgallery/1.6.11/css/lg-fb-comment-box.min.css" rel="stylesheet">
+
+<script src="/js/vendor_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

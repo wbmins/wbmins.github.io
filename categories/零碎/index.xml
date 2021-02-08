@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>零碎 on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/categories/%E9%9B%B6%E7%A2%8E/</link>
+    <description>Recent content in 零碎 on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 23 Mar 2020 15:27:23 +0800</lastBuildDate><atom:link href="https://wbmins.github.io/categories/%E9%9B%B6%E7%A2%8E/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Emoji 使用</title>
+      <link>https://wbmins.github.io/2020/032/</link>
+      <pubDate>Mon, 23 Mar 2020 15:27:23 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/032/</guid>
+      <description>使用 git commit -m &amp;quot;🎉 Initialize Repo&amp;quot; 指南 emoji 代码 说明 emoji 代码 说明 🎉 (庆祝) tada 初次提交 🆕 (全新) new 引入新功能 🔖 (书签) bookmark 发行/版本标签 🐛 (bug) bug 修复 bug 🚑 (急救</description>
+    </item>
+    
+    <item>
+      <title>IDEA 配置</title>
+      <link>https://wbmins.github.io/2020/030/</link>
+      <pubDate>Wed, 18 Mar 2020 11:58:57 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/030/</guid>
+      <description>1、配置 方法间加分割线 File | Settings | Editor | General | Appearance | Show method separators 2、模板 类模板 File | Settings | Editor | File and Code Templates | File Header /** * @Classname ${NAME} * @Description TODO * @Date ${DATE} ${TIME} * @Created by ${USER} */ 方法模板 File | Settings | Editor |</description>
+    </item>
+    
+    <item>
+      <title>Github Actions</title>
+      <link>https://wbmins.github.io/2019/012/</link>
+      <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/012/</guid>
+      <description>Github Actions 本文主要演示使用 GitHub Actions 发布博客到 GitHub Pages 1、前言 GitHub Actions 是 GitHub 的持续集成服务,于2018年10月推出.相比 Travis CI 功能更多,毕竟是自家的东西. 2、简介 大</description>
+    </item>
+    
+    <item>
+      <title>分布式 ID</title>
+      <link>https://wbmins.github.io/2019/011/</link>
+      <pubDate>Fri, 15 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/011/</guid>
+      <description>分布式ID** 在我们业务数据量不大的时候,单库单表完全可以支撑现有业务,数据再大一点搞个MySQL主从同步读写分离也能对付. 但随着数据日渐增</description>
+    </item>
+    
+    <item>
+      <title>Git 和 Github</title>
+      <link>https://wbmins.github.io/2017/000/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/000/</guid>
+      <description>1、标识 HEAD ： 表示当前版本 HEAD^ : 表示上一个版本 HEAD^^ : 表示上俩个版本 HEAD～100 ： 表示往前100个版本 master ： 指向最新提交 2、命令 2.1、创建 git clone git@github.com:wbmins/xxx.git</description>
+    </item>
+    
+    <item>
+      <title>Hugo &#43; Github 搭建博客</title>
+      <link>https://wbmins.github.io/2017/002/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/002/</guid>
+      <description>本着好奇搭建了一个自己的博客！本文主要记录一下我搭建静态博客的过程. 1、前言 Hugo 是一个静态模板生成引擎,可以把 Markdown 文档渲染成 Html . Github Pages 一个静态页面</description>
+    </item>
+    
+  </channel>
+</rss>

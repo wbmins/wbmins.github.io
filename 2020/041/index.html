@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/040/" />
+  
+  <link rel="canonical" href="https://wbmins.github.io/2020/041/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    Java 动态代理 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="Java 动态代理 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Java 动态代理",
+    "headline" : "Java 动态代理",
+    "description" : "1、类加载器 1.1、预定义类型 启动（Bootstrap）类加载器，负责将 \u0026lt;Java_Runtime_Home\u0026gt;\/lib 下面的类库加载到内存中 扩展（Extension）类加载器 ExtCl",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-08-20 00:00:00 \u002b0000 UTC",
+    "dateModified" : "2020-08-20 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/wbmins.github.io\/2020\/041\/",
+    "wordCount" : "3053",
+    "keywords" : [ "java","jvm", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1类加载器">1、类加载器</a>
+      <ul>
+        <li><a href="#11预定义类型">1.1、预定义类型</a></li>
+        <li><a href="#12结构">1.2、结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#2类的加载">2、类的加载</a>
+      <ul>
+        <li><a href="#21模拟">2.1、模拟</a></li>
+        <li><a href="#22过程">2.2、过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#3动态代理">3、动态代理</a>
+      <ul>
+        <li><a href="#31jdk">3.1、jdk</a></li>
+        <li><a href="#32cglib">3.2、cglib</a></li>
+        <li><a href="#33javassist">3.3、javassist</a></li>
+        <li><a href="#34asm">3.4、ASM</a></li>
+      </ul>
+    </li>
+    <li><a href="#4总结">4、总结</a></li>
+    <li><a href="#5引用">5、引用</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Java 动态代理</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-08-20
+                    itemprop="datePublished">August 20, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,3053 words</span>
+            <span class="post-read-time">,read need 7 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="1类加载器">1、类加载器</h2>
+<h3 id="11预定义类型">1.1、预定义类型</h3>
+<ul>
+<li>
+<p>启动（Bootstrap）类加载器，负责将 &lt;Java_Runtime_Home&gt;/lib 下面的类库加载到内存中</p>
+</li>
+<li>
+<p>扩展（Extension）类加载器 ExtClassLoader：负责将 &lt; Java_Runtime_Home &gt;/lib/ext 或者由系统变量 java.ext.dir 指定位置中的类库加载到内存中</p>
+</li>
+<li>
+<p>系统（System）类加载器 AppClassLoader：负责将系统类路径（CLASSPATH）中指定的类库加载到内存中</p>
+</li>
+<li>
+<p>线程上下文类加载器 ThreadContextClassLoader（TCCL）：用于解决双亲委托模型的缺陷，可以实现核心库接口加载系统类</p>
+</li>
+</ul>
+<h3 id="12结构">1.2、结构</h3>
+<ul>
+<li>
+<p>jvm 加载的顺序：BoopStrapClassLoder –&gt; ExtClassLoader –&gt; AppClassLoder</p>
+</li>
+<li>
+<p>类加载器之间的关系：AppClassLoader 的父加载器为 ExtClassLoader，ExtClassLoader 的父加载器为 null，BoopStrap ClassLoader 为顶级加载器</p>
+</li>
+</ul>
+<h2 id="2类的加载">2、类的加载</h2>
+<blockquote>
+<p>Java 编译器编译好 Java 文件之后，会产生.class 文件在磁盘中。这种 class 文件是二进制文件，内容是只有 JVM 虚拟机能够识别的机器码。JVM 虚拟机读取字节码文件，取出二进制数据，加载到内存中，解析.class 文件内的信息，生成对应的 Class 对象</p>
+</blockquote>
+<h3 id="21模拟">2.1、模拟</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Programmer</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">code</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;I&#39;m a Programmer,Just Coding.....&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 自定义一个类加载器，用于将字节码转换为class对象
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClassLoader</span> <span style="color:#66d9ef">extends</span> ClassLoader <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> Class<span style="color:#f92672">&lt;?&gt;</span> defineMyClass<span style="color:#f92672">(</span><span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> b<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> off<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> len<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//TODO SOURCE CODE
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">defineClass</span><span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">,</span>b<span style="color:#f92672">,</span> off<span style="color:#f92672">,</span> len<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyTest</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException<span style="color:#f92672">,</span> IOException <span style="color:#f92672">{</span>
+        <span style="color:#75715e">//读取本地的class文件内的字节码，转换成字节码数组
+</span><span style="color:#75715e"></span>        File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">);</span>
+        InputStream input <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileInputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">.</span><span style="color:#a6e22e">getCanonicalPath</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span>
+                <span style="color:#e6db74">&#34;\\target\\classes\\com\\example\\test\\Programmer.class&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[</span>1024<span style="color:#f92672">];</span><span style="color:#75715e">//字节型
+</span><span style="color:#75715e"></span>
+        <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span><span style="color:#a6e22e">read</span><span style="color:#f92672">(</span>result<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 使用自定义的类加载器将 byte字节码数组转换为对应的class对象
+</span><span style="color:#75715e"></span>        MyClassLoader loader <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyClassLoader<span style="color:#f92672">();</span>
+        Class clazz <span style="color:#f92672">=</span> loader<span style="color:#f92672">.</span><span style="color:#a6e22e">defineMyClass</span><span style="color:#f92672">(</span>result<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> count<span style="color:#f92672">);</span>
+        <span style="color:#75715e">//测试加载是否成功，打印class 对象的名称
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>clazz<span style="color:#f92672">.</span><span style="color:#a6e22e">getCanonicalName</span><span style="color:#f92672">());</span>
+
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#75715e">//实例化一个Programmer对象
+</span><span style="color:#75715e"></span>            Object o <span style="color:#f92672">=</span> clazz<span style="color:#f92672">.</span><span style="color:#a6e22e">newInstance</span><span style="color:#f92672">();</span>
+            <span style="color:#75715e">//调用Programmer的code方法
+</span><span style="color:#75715e"></span>            clazz<span style="color:#f92672">.</span><span style="color:#a6e22e">getMethod</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;code&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">).</span><span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>o<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IllegalArgumentException <span style="color:#f92672">|</span> InvocationTargetException <span style="color:#f92672">|</span> NoSuchMethodException <span style="color:#f92672">|</span> SecurityException <span style="color:#f92672">|</span> IllegalAccessException <span style="color:#f92672">|</span> InstantiationException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="22过程">2.2、过程</h3>
+<ul>
+<li>
+<p>java 编译期：Java 代码 -&gt; java 编译器 -&gt;java 字节码</p>
+</li>
+<li>
+<p>java 运行期：classloader -&gt; jvm -&gt; 操作系统 -&gt; 硬件</p>
+</li>
+</ul>
+<h2 id="3动态代理">3、动态代理</h2>
+<ul>
+<li>
+<p>静态代理：手动编写代理类代理目标类方法。缺点：手动创建；代理类越来越多，系统规模增大，不易维护</p>
+</li>
+<li>
+<p>动态代理：由于 JVM 通过字节码的二进制（byte-code）信息加载类的，那么，如果我们在运行期系统中，遵循 Java 编译系统组织.class 文件的格式和结构，生成相应的二进制数据，然后再把这个二进制数据加载转换成对应的类，这样，就完成了在代码中，动态创建一个类的能力了</p>
+</li>
+</ul>
+<h3 id="31jdk">3.1、jdk</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">drive</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Rechargable</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">recharge</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ElectricCar</span> <span style="color:#66d9ef">implements</span> Rechargable<span style="color:#f92672">,</span> Vehicle <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">drive</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Electric Car is Moving silently...&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">recharge</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Electric Car is Recharging...&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">InvocationHandlerImpl</span> <span style="color:#66d9ef">implements</span> InvocationHandler <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> ElectricCar car<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">InvocationHandlerImpl</span><span style="color:#f92672">(</span>ElectricCar car<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">car</span> <span style="color:#f92672">=</span> car<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>Object paramObject<span style="color:#f92672">,</span> Method paramMethod<span style="color:#f92672">,</span> Object<span style="color:#f92672">[]</span> paramArrayOfObject<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Throwable <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;You are going to invoke &#34;</span> <span style="color:#f92672">+</span> paramMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; ...&#34;</span><span style="color:#f92672">);</span>
+        paramMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>car<span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>paramMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; invocation Has Been finished...&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        ElectricCar car <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ElectricCar<span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 1.获取对应的ClassLoader
+</span><span style="color:#75715e"></span>        ClassLoader classLoader <span style="color:#f92672">=</span> car<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getClassLoader</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 2.获取ElectricCar 所实现的所有接口
+</span><span style="color:#75715e"></span>        Class<span style="color:#f92672">[]</span> interfaces <span style="color:#f92672">=</span> car<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getInterfaces</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 3.设置一个来自代理传过来的方法调用请求处理器，处理所有的代理对象上的方法调用
+</span><span style="color:#75715e"></span>        InvocationHandler handler <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> InvocationHandlerImpl<span style="color:#f92672">(</span>car<span style="color:#f92672">);</span>
+        <span style="color:#75715e">/*
+</span><span style="color:#75715e">          4.根据上面提供的信息，创建代理对象 在这个过程中，
+</span><span style="color:#75715e">          a.JDK会通过根据传入的参数信息动态地在内存中创建和.class文件等同的字节码
+</span><span style="color:#75715e">          b.然后根据相应的字节码转换成对应的class，
+</span><span style="color:#75715e">          c.然后调用newInstance()创建实例
+</span><span style="color:#75715e">         */</span>
+        Object o <span style="color:#f92672">=</span> Proxy<span style="color:#f92672">.</span><span style="color:#a6e22e">newProxyInstance</span><span style="color:#f92672">(</span>classLoader<span style="color:#f92672">,</span> interfaces<span style="color:#f92672">,</span> handler<span style="color:#f92672">);</span>
+        Vehicle vehicle <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Vehicle<span style="color:#f92672">)</span> o<span style="color:#f92672">;</span>
+        vehicle<span style="color:#f92672">.</span><span style="color:#a6e22e">drive</span><span style="color:#f92672">();</span>
+        Rechargable rechargeable <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Rechargable<span style="color:#f92672">)</span> o<span style="color:#f92672">;</span>
+        rechargeable<span style="color:#f92672">.</span><span style="color:#a6e22e">recharge</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>newProxyInstance 过程做了 3 件事</p>
+<ul>
+<li>
+<p>通过传入的类信息（加载器、接口、处理器-增强方法）动态的在内存中创建和.class 文件同等的字节码（代理类字节码）</p>
+</li>
+<li>
+<p>将该字节码转换成对应类（生成代理类的步骤）</p>
+</li>
+<li>
+<p>通过 newInstance 创建类，而后调用 1 中传入的所有接口方法。</p>
+</li>
+<li>
+<p>对比类的加载过程</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>某个类必须有实现的接口，而生成的代理类也只能代理某个类接口定义的方法，比如：如果上面例子的 ElectricCar 实现了继承自两个接口的方法外，另外实现了方法 bee() ,则在产生的动态代理类中不会有这个方法了！更极端的情况是：如果某个类没有实现接口，那么这个类就不能同 JDK 产生动态代理了</p>
+</blockquote>
+<h3 id="32cglib">3.2、cglib</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Programmer</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">code</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;I&#39;m a Programmer,Just Coding.....&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">/*
+</span><span style="color:#75715e"> * 实现了方法拦截器接口 Spring AOP实现方式
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Hacker</span> <span style="color:#66d9ef">implements</span> MethodInterceptor <span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">intercept</span><span style="color:#f92672">(</span>Object obj<span style="color:#f92672">,</span> Method method<span style="color:#f92672">,</span> Object<span style="color:#f92672">[]</span> args<span style="color:#f92672">,</span> MethodProxy proxy<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Throwable <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;**** I am a hacker,Let&#39;s see what the poor programmer is doing Now...&#34;</span><span style="color:#f92672">);</span>
+        proxy<span style="color:#f92672">.</span><span style="color:#a6e22e">invokeSuper</span><span style="color:#f92672">(</span>obj<span style="color:#f92672">,</span> args<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;****  Oh,what a poor programmer.....&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Programmer progammer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Programmer<span style="color:#f92672">();</span>
+        Hacker hacker <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Hacker<span style="color:#f92672">();</span>
+        <span style="color:#75715e">//cglib 中加强器，用来创建动态代理
+</span><span style="color:#75715e"></span>        Enhancer enhancer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Enhancer<span style="color:#f92672">();</span>
+        <span style="color:#75715e">//设置要创建动态代理的类
+</span><span style="color:#75715e"></span>        enhancer<span style="color:#f92672">.</span><span style="color:#a6e22e">setSuperclass</span><span style="color:#f92672">(</span>progammer<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">());</span>
+        <span style="color:#75715e">// 设置回调，这里相当于是对于代理类上所有方法的调用，都会调用CallBack，而Callback则需要实行intercept()方法进行拦截
+</span><span style="color:#75715e"></span>        enhancer<span style="color:#f92672">.</span><span style="color:#a6e22e">setCallback</span><span style="color:#f92672">(</span>hacker<span style="color:#f92672">);</span>
+        Programmer proxy <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>Programmer<span style="color:#f92672">)</span> enhancer<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">();</span>
+        proxy<span style="color:#f92672">.</span><span style="color:#a6e22e">code</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="33javassist">3.3、javassist</h3>
+<blockquote>
+<p><a href="https://github.com/jboss-javassist/javassist">Javassist</a> 是一个开源的分析、编辑和创建 Java 字节码的类库。是由东京工业大学的数学和计算机科学系的 Shigeru Chiba （千叶 滋）所创建的。它已加入了开放源代码 JBoss 应用服务器项目,通过使用 Javassist 对字节码操作为 JBoss 实现动态 AOP 框架。javassist 是 jboss 的一个子项目，其主要的优点，在于简单，而且快速。直接使用 java 编码的形式，而不需要了解虚拟机指令，就能动态改变类的结构，或者动态生成类</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">test</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 创建一个Person 对象
+</span><span style="color:#75715e">     *
+</span><span style="color:#75715e">     * @throws Exception
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">createPerson</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        ClassPool pool <span style="color:#f92672">=</span> ClassPool<span style="color:#f92672">.</span><span style="color:#a6e22e">getDefault</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 创建一个空类
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// CtClass cc = pool.makeClass(&#34;com.example.test.Person&#34;);
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 在已经有的类的基础上修改产生一个新的类
+</span><span style="color:#75715e"></span>        CtClass cc <span style="color:#f92672">=</span> pool<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;com.example.model.Order&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 添加属性
+</span><span style="color:#75715e"></span>        CtField param <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CtField<span style="color:#f92672">(</span>pool<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;java.lang.String&#34;</span><span style="color:#f92672">),</span> <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">,</span> cc<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 访问级别是 private
+</span><span style="color:#75715e"></span>        param<span style="color:#f92672">.</span><span style="color:#a6e22e">setModifiers</span><span style="color:#f92672">(</span>Modifier<span style="color:#f92672">.</span><span style="color:#a6e22e">PRIVATE</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 属性上添加注解
+</span><span style="color:#75715e"></span>        ClassFile classFile <span style="color:#f92672">=</span> cc<span style="color:#f92672">.</span><span style="color:#a6e22e">getClassFile</span><span style="color:#f92672">();</span>
+        ConstPool constPool <span style="color:#f92672">=</span> classFile<span style="color:#f92672">.</span><span style="color:#a6e22e">getConstPool</span><span style="color:#f92672">();</span>
+        FieldInfo fieldInfo <span style="color:#f92672">=</span> param<span style="color:#f92672">.</span><span style="color:#a6e22e">getFieldInfo</span><span style="color:#f92672">();</span>
+        AnnotationsAttribute attribute <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AnnotationsAttribute<span style="color:#f92672">(</span>constPool<span style="color:#f92672">,</span> AnnotationsAttribute<span style="color:#f92672">.</span><span style="color:#a6e22e">invisibleTag</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 添加 @Resource 注解
+</span><span style="color:#75715e"></span>        Annotation annotation <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Annotation<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;javax.annotation.Resource&#34;</span><span style="color:#f92672">,</span> constPool<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 注解属性赋值
+</span><span style="color:#75715e"></span>        MemberValue memberValue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> StringMemberValue<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hello world!&#34;</span><span style="color:#f92672">,</span> constPool<span style="color:#f92672">);</span>
+        annotation<span style="color:#f92672">.</span><span style="color:#a6e22e">addMemberValue</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">,</span> memberValue<span style="color:#f92672">);</span>
+        attribute<span style="color:#f92672">.</span><span style="color:#a6e22e">addAnnotation</span><span style="color:#f92672">(</span>annotation<span style="color:#f92672">);</span>
+        fieldInfo<span style="color:#f92672">.</span><span style="color:#a6e22e">addAttribute</span><span style="color:#f92672">(</span>attribute<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 3. 生成 getter、setter 方法
+</span><span style="color:#75715e"></span>        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">addMethod</span><span style="color:#f92672">(</span>CtNewMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">setter</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;setName&#34;</span><span style="color:#f92672">,</span> param<span style="color:#f92672">));</span>
+        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">addMethod</span><span style="color:#f92672">(</span>CtNewMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">getter</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;getName&#34;</span><span style="color:#f92672">,</span> param<span style="color:#f92672">));</span>
+        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">addField</span><span style="color:#f92672">(</span>param<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 添加无参的构造函数
+</span><span style="color:#75715e"></span>        CtConstructor cons <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CtConstructor<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> CtClass<span style="color:#f92672">[]{},</span> cc<span style="color:#f92672">);</span>
+        cons<span style="color:#f92672">.</span><span style="color:#a6e22e">setBody</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{name = \&#34;xiaohong\&#34;;}&#34;</span><span style="color:#f92672">);</span>
+        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">addConstructor</span><span style="color:#f92672">(</span>cons<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 添加有参的构造函数
+</span><span style="color:#75715e"></span>        cons <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CtConstructor<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> CtClass<span style="color:#f92672">[]{</span>pool<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;java.lang.String&#34;</span><span style="color:#f92672">)},</span> cc<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// $0=this / $1,$2,$3... 代表方法参数
+</span><span style="color:#75715e"></span>        cons<span style="color:#f92672">.</span><span style="color:#a6e22e">setBody</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{$0.name = $1;}&#34;</span><span style="color:#f92672">);</span>
+        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">addConstructor</span><span style="color:#f92672">(</span>cons<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 创建一个名为printName方法，无参数，无返回值，输出name值
+</span><span style="color:#75715e"></span>        CtMethod ctMethod <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CtMethod<span style="color:#f92672">(</span>CtClass<span style="color:#f92672">.</span><span style="color:#a6e22e">voidType</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;printName&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> CtClass<span style="color:#f92672">[]{},</span> cc<span style="color:#f92672">);</span>
+        ctMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">setModifiers</span><span style="color:#f92672">(</span>Modifier<span style="color:#f92672">.</span><span style="color:#a6e22e">PUBLIC</span><span style="color:#f92672">);</span>
+        ctMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">setBody</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{System.out.println(name);}&#34;</span><span style="color:#f92672">);</span>
+        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">addMethod</span><span style="color:#f92672">(</span>ctMethod<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 如果需要生成 class 文件
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//cc.writeFile(&#34;./&#34;);
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// 这里不写入文件，直接实例化
+</span><span style="color:#75715e"></span>        Object person <span style="color:#f92672">=</span> cc<span style="color:#f92672">.</span><span style="color:#a6e22e">toClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">newInstance</span><span style="color:#f92672">();</span>
+        <span style="color:#75715e">// 设置值
+</span><span style="color:#75715e"></span>        Method setName <span style="color:#f92672">=</span> person<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getMethod</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;setName&#34;</span><span style="color:#f92672">,</span> String<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+        setName<span style="color:#f92672">.</span><span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>person<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;oh my god1&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 输出值
+</span><span style="color:#75715e"></span>        Method execute <span style="color:#f92672">=</span> person<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getMethod</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;printName&#34;</span><span style="color:#f92672">);</span>
+        execute<span style="color:#f92672">.</span><span style="color:#a6e22e">invoke</span><span style="color:#f92672">(</span>person<span style="color:#f92672">);</span>
+        <span style="color:#75715e">// 从ClassPool中删除
+</span><span style="color:#75715e"></span>        cc<span style="color:#f92672">.</span><span style="color:#a6e22e">detach</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            createPerson<span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="34asm">3.4、ASM</h3>
+<blockquote>
+<p><a href="https://asm.ow2.io/">ASM</a> 是一个 Java 字节码操控框架。它能够以二进制形式修改已有类或者动态生成类。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。ASM 从类文件中读入信息后，能够改变类行为，分析类信息，甚至能够根据用户要求生成新类,不过 ASM 在创建 class 字节码的过程中，操纵的级别是底层 JVM 的汇编指令级别，这要求 ASM 使用者要对 class 组织结构和 JVM 汇编指令有一定的了解</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyGenerator</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e">// 引用 https://blog.csdn.net/luanlouis/article/details/24589193?utm_medium=distribute.pc_relevant.none-task-blog-title-1&amp;spm=1001.2101.3001.4242
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> IOException <span style="color:#f92672">{</span>
+		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">();</span>
+		ClassWriter classWriter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClassWriter<span style="color:#f92672">(</span>0<span style="color:#f92672">);</span>
+		<span style="color:#75715e">// 通过visit方法确定类的头部信息
+</span><span style="color:#75715e"></span>		classWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">visit</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">V1_7</span><span style="color:#f92672">,</span><span style="color:#75715e">// java版本
+</span><span style="color:#75715e"></span>				Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">ACC_PUBLIC</span><span style="color:#f92672">,</span><span style="color:#75715e">// 类修饰符
+</span><span style="color:#75715e"></span>				<span style="color:#e6db74">&#34;Programmer&#34;</span><span style="color:#f92672">,</span> <span style="color:#75715e">// 类的全限定名
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;java/lang/Object&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+		<span style="color:#75715e">//创建构造函数
+</span><span style="color:#75715e"></span>		MethodVisitor mv <span style="color:#f92672">=</span> classWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">visitMethod</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">ACC_PUBLIC</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&lt;init&gt;&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;()V&#34;</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+		mv<span style="color:#f92672">.</span><span style="color:#a6e22e">visitCode</span><span style="color:#f92672">();</span>
+		mv<span style="color:#f92672">.</span><span style="color:#a6e22e">visitVarInsn</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">ALOAD</span><span style="color:#f92672">,</span> 0<span style="color:#f92672">);</span>
+		mv<span style="color:#f92672">.</span><span style="color:#a6e22e">visitMethodInsn</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">INVOKESPECIAL</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;java/lang/Object&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;&lt;init&gt;&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;()V&#34;</span><span style="color:#f92672">);</span>
+		mv<span style="color:#f92672">.</span><span style="color:#a6e22e">visitInsn</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">RETURN</span><span style="color:#f92672">);</span>
+		mv<span style="color:#f92672">.</span><span style="color:#a6e22e">visitMaxs</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 1<span style="color:#f92672">);</span>
+		mv<span style="color:#f92672">.</span><span style="color:#a6e22e">visitEnd</span><span style="color:#f92672">();</span>
+		<span style="color:#75715e">// 定义code方法
+</span><span style="color:#75715e"></span>		MethodVisitor methodVisitor <span style="color:#f92672">=</span> classWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">visitMethod</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">ACC_PUBLIC</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;code&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;()V&#34;</span><span style="color:#f92672">,</span>
+				<span style="color:#66d9ef">null</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitCode</span><span style="color:#f92672">();</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitFieldInsn</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">GETSTATIC</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;java/lang/System&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;out&#34;</span><span style="color:#f92672">,</span>
+				<span style="color:#e6db74">&#34;Ljava/io/PrintStream;&#34;</span><span style="color:#f92672">);</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitLdcInsn</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;I&#39;m a Programmer,Just Coding.....&#34;</span><span style="color:#f92672">);</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitMethodInsn</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">INVOKEVIRTUAL</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;java/io/PrintStream&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;println&#34;</span><span style="color:#f92672">,</span>
+				<span style="color:#e6db74">&#34;(Ljava/lang/String;)V&#34;</span><span style="color:#f92672">);</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitInsn</span><span style="color:#f92672">(</span>Opcodes<span style="color:#f92672">.</span><span style="color:#a6e22e">RETURN</span><span style="color:#f92672">);</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitMaxs</span><span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> 2<span style="color:#f92672">);</span>
+		methodVisitor<span style="color:#f92672">.</span><span style="color:#a6e22e">visitEnd</span><span style="color:#f92672">();</span>
+		classWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">visitEnd</span><span style="color:#f92672">();</span>
+		<span style="color:#75715e">// 使classWriter类已经完成
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// 将classWriter转换成字节数组写到文件里面去
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> data <span style="color:#f92672">=</span> classWriter<span style="color:#f92672">.</span><span style="color:#a6e22e">toByteArray</span><span style="color:#f92672">();</span>
+		File file <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> File<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;D://Programmer.class&#34;</span><span style="color:#f92672">);</span>
+		FileOutputStream fout <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FileOutputStream<span style="color:#f92672">(</span>file<span style="color:#f92672">);</span>
+		fout<span style="color:#f92672">.</span><span style="color:#a6e22e">write</span><span style="color:#f92672">(</span>data<span style="color:#f92672">);</span>
+		fout<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span>
+	<span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="4总结">4、总结</h2>
+<ul>
+<li>
+<p>JDK 代理是最简单方便的，只需要使用 Proxy 和 InvocationHandler 两个类，不过只能代理接口</p>
+</li>
+<li>
+<p>其次是 CGLIB，也很方便，不过需要引入 CGLIB 的 JAR 包</p>
+</li>
+<li>
+<p>Javassist 需要用用字符串拼接 Java 源代码，稍微会比较繁琐</p>
+</li>
+<li>
+<p>最麻烦的是 ASM，需要手工写字节码，一般人可能还写不出来</p>
+</li>
+</ul>
+<blockquote>
+<p>从上面的分析结果来看，性能上各种方式的差距不算太大,考虑到易用性，在对接口进行动态代理时，使用 JDK 代理应该是最合适的,在不能使用 JDK 代理的情况下，可以考虑使用 CGLIB 或者 Javassist,CGLIB 的缺点是创建代理对象的速度慢，Javassist 的缺点是需要手动编写 Java 源码,如果非要在这个两个中选择一个，那么只有在对性能要求非常高的情况下选择 Javassist，其他一般情况下，个人认为 CGLIB 是比较合适的</p>
+</blockquote>
+<h2 id="5引用">5、引用</h2>
+<ul>
+<li>
+<p><a href="https://www.cnblogs.com/rickiyang/p/11336268.html">Javassist 使用全解析</a></p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/bluemilk/p/11397367.html">JDK、CGLIB、Javassist 和 ASM 的动态代理使用对比</a></p>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/041/>https://wbmins.github.io/2020/041/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/java/">
+                    #java</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/jvm/">
+                    #jvm</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/040/" class="prev" rel="prev" title="Grub rescue 修复"><i
+                class="iconfont icon-left"></i>&nbsp;Grub rescue 修复</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

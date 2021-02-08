@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/033/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2020/035/" />
+  <link rel="canonical" href="https://wbmins.github.io/2020/034/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    MySQL 深入 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="MySQL 深入 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "MySQL 深入",
+    "headline" : "MySQL 深入",
+    "description" : "1、join查询(七种) A B -- 1. A B 表 共有 select * from tablea a inner join tableb b on a.id = b.id; -- 2.A B 表 全Ａ select * from tablea a left join tableb b on a.id = b.id; -- 3.A B 表 全Ｂ select * from tablea a right join tableb b on a.id",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-28 16:52:07 \u002b0800 \u002b0800",
+    "dateModified" : "2020-03-28 16:52:07 \u002b0800 \u002b0800",
+    "url" : "https:\/\/wbmins.github.io\/2020\/034\/",
+    "wordCount" : "2781",
+    "keywords" : [ "SQL","数据库","MYSQL", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1join查询七种-a-b">1、join查询(七种) A B</a></li>
+    <li><a href="#２索引是帮助mysql高效获取数据的数据结构">２、索引:是帮助MySQL高效获取数据的数据结构</a>
+      <ul>
+        <li><a href="#分类">分类</a></li>
+        <li><a href="#使用">使用</a></li>
+        <li><a href="#结构">结构</a></li>
+        <li><a href="#用法">用法</a></li>
+      </ul>
+    </li>
+    <li><a href="#３sql优化">３、SQL优化</a>
+      <ul>
+        <li><a href="#explain--sql语句">explain + sql语句</a></li>
+        <li><a href="#索引建立和优化">索引建立和优化</a></li>
+        <li><a href="#慢sql分析">慢sql分析</a></li>
+      </ul>
+    </li>
+    <li><a href="#4事物隔离级别">4、事物、隔离级别</a></li>
+    <li><a href="#5锁">5、锁</a></li>
+    <li><a href="#6主从复制">6、主从复制</a></li>
+    <li><a href="#7参考连接">7、参考连接</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL 深入</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-03-28
+                    itemprop="datePublished">March 28, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,2781 words</span>
+            <span class="post-read-time">,read need 6 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="1join查询七种-a-b">1、join查询(七种) A B</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 1. A B 表 共有
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id;
+<span style="color:#75715e">-- 2.A B 表 全Ａ
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id;
+<span style="color:#75715e">-- 3.A B 表 全Ｂ
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">right</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id;
+<span style="color:#75715e">-- 4.A B 表 A独有
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id
+<span style="color:#66d9ef">where</span>
+  b.id <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+<span style="color:#75715e">-- 5.A B 表 B独有
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id
+<span style="color:#66d9ef">where</span>
+  a.id <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+<span style="color:#75715e">-- 6.A B 表 A独有+B独有+AB共有
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id
+<span style="color:#66d9ef">union</span> <span style="color:#75715e">--合并加去重
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">right</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id;
+<span style="color:#75715e">-- 7.A B 表 A独有+B独有
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id
+<span style="color:#66d9ef">where</span>
+  b.id <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>
+<span style="color:#66d9ef">union</span>
+<span style="color:#66d9ef">select</span>
+  <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  tablea a
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  tableb b
+<span style="color:#66d9ef">on</span>
+  a.id <span style="color:#f92672">=</span> b.id
+ <span style="color:#66d9ef">where</span>
+  a.id <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</code></pre></div><h2 id="２索引是帮助mysql高效获取数据的数据结构">２、索引:是帮助MySQL高效获取数据的数据结构</h2>
+<blockquote>
+<p>数据库本身之外还维护着一个特定的查找算法数据结构,这些数据结构以某种方式指向数据,这样就可以在这些数据结构的基础上实现一些高级查找算法,这就是索引</p>
+</blockquote>
+<ol>
+<li>
+<p>排好序的快速查找的数据结构</p>
+</li>
+<li>
+<p>一般来说索引本身也很大,不能全部存储在内存中,以文件存储在磁盘上.</p>
+</li>
+<li>
+<p>通常是b树,聚集索引次要索引符合索引唯一索引默认使用的B+树,还有哈希索引</p>
+</li>
+</ol>
+<h3 id="分类">分类</h3>
+<ul>
+<li>
+<p>单值索引:一个索引只包含一个列,一个表可以有多个单值索引列</p>
+</li>
+<li>
+<p>唯一索引:索引值必须唯一,可以有空值</p>
+</li>
+<li>
+<p>复合索引:一个索引包含多个列</p>
+</li>
+</ul>
+<h3 id="使用">使用</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 创建
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">create</span>
+  [<span style="color:#66d9ef">unique</span>] <span style="color:#66d9ef">index</span> indexname
+<span style="color:#66d9ef">on</span>
+  mytable(columnname(<span style="color:#66d9ef">length</span>));
+<span style="color:#66d9ef">alter</span>
+  mtytable <span style="color:#66d9ef">add</span> [<span style="color:#66d9ef">unique</span>]
+<span style="color:#66d9ef">index</span>
+  [indexname]
+<span style="color:#66d9ef">on</span>
+  (columnname(<span style="color:#66d9ef">length</span>));
+<span style="color:#75715e">--　删除
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">drop</span>
+  insex [indexname]
+<span style="color:#66d9ef">on</span>
+  mytable;
+<span style="color:#75715e">--查看
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">show</span>
+  <span style="color:#66d9ef">index</span>
+<span style="color:#66d9ef">from</span>
+  mytable<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#66d9ef">G</span>
+</code></pre></div><h3 id="结构">结构</h3>
+<ul>
+<li>
+<p>Btree(B+树)</p>
+</li>
+<li>
+<p>Hash(哈希)</p>
+</li>
+<li>
+<p>full-text(全文)</p>
+</li>
+<li>
+<p>Rtree(R树)</p>
+</li>
+</ul>
+<h3 id="用法">用法</h3>
+<h4 id="需要用">需要用</h4>
+<ul>
+<li>
+<p>主键自动创建索引</p>
+</li>
+<li>
+<p>频繁查询的条件字段</p>
+</li>
+<li>
+<p>查询冲于其他表关联字段,外间关系建立索引</p>
+</li>
+<li>
+<p>经常更新字段不适合建索引</p>
+</li>
+<li>
+<p>where 条件用不到字段不建索引</p>
+</li>
+<li>
+<p>查询中排序字段,若有索引大大体块排序速度</p>
+</li>
+<li>
+<p>查询中统计或者分组字段</p>
+</li>
+</ul>
+<h4 id="不需要用">不需要用</h4>
+<ul>
+<li>
+<p>表记录太少</p>
+</li>
+<li>
+<p>经常增删改表字段</p>
+</li>
+<li>
+<p>如果数据重复字段比较多索引选择性低.而索引选择性越高性能越好</p>
+</li>
+</ul>
+<h2 id="３sql优化">３、SQL优化</h2>
+<h3 id="explain--sql语句">explain + sql语句</h3>
+<ul>
+<li>
+<p><strong>id</strong> (决定表的读取顺序) 相同执行顺序由上至下、id不同如果是子查询,id序号递增值越大优先级越高越先被执行、id相同不同同时存在</p>
+</li>
+<li>
+<p><strong>select_type</strong> (数据读取操作类型)</p>
+<ul>
+<li>
+<p><strong>simple</strong> 简单子查询不包含子查询或者union\primary查询包含任何复杂的子部分</p>
+</li>
+<li>
+<p><strong>subquery select</strong> 和where包含子查询</p>
+</li>
+<li>
+<p><strong>derived from</strong> 列表包含的子查询</p>
+</li>
+<li>
+<p><strong>union</strong> 查询第二个select在union之后</p>
+</li>
+<li>
+<p><strong>union result</strong> 从union表获取的结果</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>table</strong> (数据是那个表)</p>
+</li>
+<li>
+<p><strong>type</strong> (由好到差一般到range、ref级别) <code>system &gt; const &gt; eq_ref &gt; range &gt; index &gt; all</code></p>
+<ul>
+<li>
+<p><strong>system</strong> 表只有一行记录等于系统表,这是const类型特例</p>
+</li>
+<li>
+<p><strong>const</strong> 表示只通过一次索引就找到了,const用于比较primarykey　和 unique索引.因为只匹配一行,所以很快.如果主键置于where列表中,mysql就能蒋该查询转换位一个常量<code>select * from (select * from a where d=1) d;</code></p>
+</li>
+<li>
+<p><strong>eq_ref</strong> 唯一索引扫表,对于每个索引键,表中只有一条记录预支匹配,常见于主键和唯一索引扫描</p>
+</li>
+<li>
+<p><strong>ref</strong> 非唯一索引扫描,返回匹配某个单独之所有行</p>
+</li>
+<li>
+<p><strong>range</strong> 只检索给定范围的行,使用一个索引选择行.key列显示使用了那个索引一般存在where语句中的between &lt; &gt; in的等查询中</p>
+</li>
+<li>
+<p><strong>index</strong> 全索引扫描通常比all快</p>
+</li>
+<li>
+<p><strong>all</strong> 全表所有行扫描</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>possible_keys</strong> (可以被使用的索引) 显示可能应用到这张表的索引一个或多个,不一定实际使用</p>
+</li>
+<li>
+<p><strong>key</strong> (实际使用的索引) 实际使用的索引,若使用覆盖索引,则仅出现在key列表</p>
+</li>
+<li>
+<p><strong>key_len</strong> 表示所以你使用的字节数,越短越好,精度越高越长</p>
+</li>
+<li>
+<p><strong>ref</strong> 显示索引的那一列被使用了</p>
+</li>
+<li>
+<p><strong>rows</strong> (每张表有多少行被优化器查询) 大致估算出找到记录需要扫描的行数</p>
+</li>
+<li>
+<p><strong>extra</strong> (包含不适合在其它列显示的重要信息)</p>
+<ul>
+<li>
+<p><strong>using filesort</strong> 使用文件排序,没有使用索引的排序</p>
+</li>
+<li>
+<p><strong>using temporary</strong> 使用临时表保存中间结果,常见order by和group by</p>
+</li>
+<li>
+<p><strong>using index</strong> 表示select　使用了覆盖索引操作,避免访问表额数据行,如果同时出现using where　表明索引被用来执行索引键值查找,否则表明索引用来读取数据而非查找动作</p>
+</li>
+</ul>
+<blockquote>
+<p>索引覆盖:select数据列只用从索引中读取,不必读取数据列</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>using where</strong> 表使用where过滤</p>
+</li>
+<li>
+<p><strong>using join buffer</strong> 使用连接缓存</p>
+</li>
+<li>
+<p><strong>impossible where</strong> 自居怎是false不能获取任何元组</p>
+</li>
+<li>
+<p><strong>select tables optimized away</strong></p>
+</li>
+<li>
+<p><strong>distinct</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="索引建立和优化">索引建立和优化</h3>
+<ul>
+<li>
+<p>单表</p>
+</li>
+<li>
+<p>双表(左连接,左边全都有,索引要加在右边.右连接与之相反)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">explain</span> <span style="color:#66d9ef">select</span>
+<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">from</span>
+  <span style="color:#66d9ef">class</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span>
+  book
+<span style="color:#66d9ef">on</span>
+  <span style="color:#66d9ef">class</span>.card <span style="color:#f92672">=</span> book.card;
+
+<span style="color:#66d9ef">alter</span> <span style="color:#66d9ef">table</span> book <span style="color:#66d9ef">add</span> <span style="color:#66d9ef">index</span> y(card); <span style="color:#75715e">--左连接建右表
+</span></code></pre></div></li>
+<li>
+<p>永远用小的结果集驱动打的结果集</p>
+</li>
+<li>
+<p>优先优化 nestedloop 的内层循环</p>
+</li>
+<li>
+<p>保证 join 语句被驱动的表上 join 条件字段已经被索引</p>
+</li>
+<li>
+<p>当无法满足上面那个条件不要吝啬 <code>joinbuffer</code></p>
+</li>
+<li>
+<p>避免索引失效</p>
+<ul>
+<li>
+<p>全值匹配</p>
+</li>
+<li>
+<p>最佳左前缀法则(如果索引多列,查询时从最左开始且不跳过索引中的列)</p>
+</li>
+<li>
+<p>不在索引列上做任何计算</p>
+</li>
+<li>
+<p>存储引擎不能使用索引中范围条件右边的列</p>
+</li>
+<li>
+<p>劲量使用覆盖索引</p>
+</li>
+<li>
+<p>mysql在使用!=或者&lt;&gt;无法使用导致全表扫描</p>
+</li>
+<li>
+<p>is null,is not null也无法使用索引;</p>
+</li>
+<li>
+<p>like以通配符开头索引失效变全表扫描</p>
+</li>
+<li>
+<p>字符串不加单引号索引失效</p>
+</li>
+<li>
+<p>少用or用它连接索引失效</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="慢sql分析">慢sql分析</h3>
+<ul>
+<li>
+<p>慢查询的开启和捕获</p>
+</li>
+<li>
+<p>explain+sql 分析</p>
+</li>
+<li>
+<p>show profile 查 sql 在 mysql 服务器执行细节和生命周期</p>
+</li>
+<li>
+<p>sql 数据库参数调优</p>
+</li>
+<li>
+<p>小的数据集驱动打的数据集</p>
+<ul>
+<li>
+<p><code>select * from a where id in (select id from b);</code> 当b表数据集必须小于a表时,in优于exist;</p>
+</li>
+<li>
+<p><code>select * from a where exists (select 1 from b where a.id = b.id);</code> 当a表数据集必须小于b表时,exists优于in;</p>
+</li>
+</ul>
+</li>
+<li>
+<p>排序方式</p>
+<ul>
+<li>filesort 效率低,index 效率高</li>
+</ul>
+</li>
+</ul>
+<h2 id="4事物隔离级别">4、事物、隔离级别</h2>
+<ul>
+<li>
+<p>原子性(Atomicity)原子性是指事务是一个不可分割的工作单位,事务中的操作要么都发生,要么都不发生.</p>
+</li>
+<li>
+<p>一致性(Consistency)事务前后数据的完整性必须保持一致.</p>
+</li>
+<li>
+<p>隔离性(Isolation)事务的隔离性是多个用户并发访问数据库时,数据库为每一个用户开启的事务,不能被其他事务的操作数据所干扰,多个并发事务之间要相互隔离.</p>
+</li>
+<li>
+<p>持久性(Durability)持久性是指一个事务一旦被提交,它对数据库中数据的改变就是永久性的,接下来即使数据库发生故障也不应该对其有任何影响.</p>
+</li>
+<li>
+<p>MySQL 默认<strong>可重复读</strong></p>
+<table>
+<thead>
+<tr>
+<th>Isolation Level</th>
+<th>RU(脏读)</th>
+<th>RC(不可重复读)</th>
+<th>RR(幻读)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read Uncommitted</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Read Committed</td>
+<td>-</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Repeatable Read</td>
+<td>-</td>
+<td>-</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Serializable</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="5锁">5、锁</h2>
+<ul>
+<li>
+<p>操作</p>
+<ul>
+<li>
+<p>读锁(共享锁)针对同一份数据,读操作可以同时进行互不影响</p>
+</li>
+<li>
+<p>写锁(排它锁)当前写操作没有完成前,会排斥其他写锁和读锁</p>
+</li>
+</ul>
+</li>
+<li>
+<p>粒度</p>
+<ul>
+<li>
+<p>表锁(偏读) <strong>MyISAM</strong> 引擎,开销小加锁快无死锁,粒度大冲突高并发小</p>
+<ul>
+<li>
+<p>查看是否加锁<code>show open tables;</code></p>
+</li>
+<li>
+<p>a加读锁b加写锁<code>lock table a read, b write;</code></p>
+</li>
+<li>
+<p>解锁<code>unlock tables;</code></p>
+</li>
+<li>
+<p>读锁阻塞写,写锁阻塞读写</p>
+</li>
+</ul>
+</li>
+<li>
+<p>行锁(偏写) <strong>InnoDB</strong> (支持事物ACID)引擎,开销大加锁慢会死锁,力度小冲突低并发高.四个隔离级别(mysql默认可重复读)</p>
+<ul>
+<li>
+<p>无索引行锁升级为表锁(varchar值不加单引号可能会导致行锁变表锁)</p>
+</li>
+<li>
+<p>间隙锁当我们使用范围条件时并请求共享或排他锁时,对于符合条件记录加锁,也会对这个间隙(键值条件范围内并不存在的记录)加锁</p>
+</li>
+<li>
+<p>加行锁</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">begin</span>;
+<span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> a <span style="color:#66d9ef">where</span> id<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">update</span>;
+<span style="color:#66d9ef">commit</span>;
+</code></pre></div></li>
+<li>
+<p>小结</p>
+</li>
+<li>
+<p>尽可能所有检索数据通过索引完成变行锁变表锁</p>
+</li>
+<li>
+<p>合理设计索引</p>
+</li>
+<li>
+<p>尽可能少的检索条件避免间隙锁</p>
+</li>
+<li>
+<p>尽量控制事物大小,减少锁定资源量和时间</p>
+</li>
+<li>
+<p>尽可能低级别隔离事物</p>
+</li>
+</ul>
+</li>
+<li>
+<p>页锁(了解即可)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="6主从复制">6、主从复制</h2>
+<ul>
+<li>
+<p>master将改变记录变成二进制日志(binary log)</p>
+</li>
+<li>
+<p>slave将master的二进制日志拷贝到他的中继日志</p>
+</li>
+<li>
+<p>slave重做中继日志时间,将改变应用到自己的数据库.mysql复制是异步且串行化的</p>
+</li>
+</ul>
+<h2 id="7参考连接">7、参考连接</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1zE41197bw?p=532">MySql高级</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/034/>https://wbmins.github.io/2020/034/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/sql/">
+                    #SQL</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                    #数据库</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/mysql/">
+                    #MYSQL</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/033/" class="prev" rel="prev" title="NIO 学习"><i
+                class="iconfont icon-left"></i>&nbsp;NIO 学习</a>
+        
+        
+        <a href="https://wbmins.github.io/2020/035/" class="next" rel="next"
+            title="为什么要努力读书?">为什么要努力读书?&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

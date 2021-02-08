@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TCP/IP on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/tcp/ip/</link>
+    <description>Recent content in TCP/IP on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://wbmins.github.io/tags/tcp/ip/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCP/IP 理解</title>
+      <link>https://wbmins.github.io/2020/039/</link>
+      <pubDate>Thu, 28 May 2020 22:07:25 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/039/</guid>
+      <description>为什么要对入坑到入坟协议进行分层 简化问题难度和复杂度。由于各层之间独立，我们可以分割大问题为小问题 灵活性好。当其中一层的技术变化时，只要层间</description>
+    </item>
+    
+  </channel>
+</rss>

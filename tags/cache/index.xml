@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cache on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/cache/</link>
+    <description>Recent content in Cache on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 06 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/tags/cache/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SpringBoot缓存</title>
+      <link>https://wbmins.github.io/2018/007/</link>
+      <pubDate>Sat, 06 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/007/</guid>
+      <description>Redis Redis 是完全开源免费的,遵守BSD协议,是一个高性能的key-value数据库 redis keys del key :key存在时删除key dump key :序列化key,返回序列化值</description>
+    </item>
+    
+  </channel>
+</rss>

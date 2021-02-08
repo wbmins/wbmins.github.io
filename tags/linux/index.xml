@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 26 May 2020 20:49:23 +0800</lastBuildDate><atom:link href="https://wbmins.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nexus 搭建 maven 仓库</title>
+      <link>https://wbmins.github.io/2020/038/</link>
+      <pubDate>Tue, 26 May 2020 20:49:23 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/038/</guid>
+      <description>由于公司需要搭建一个 maven 私服，故记录一下 准备工作 搜索镜像 docker search nexus3 拉取镜像 docker pull sonatype/nexus3 创建文件 mkdir maven 启动仓库 docker run -d --name=nexus -p 8081:8081 -v /root/nexus-data:/var/nexus-data sonatype/nexus3:latest -d 容器后台运行 -p 容器端口和宿</description>
+    </item>
+    
+    <item>
+      <title>ArchLinux 传记</title>
+      <link>https://wbmins.github.io/2020/037/</link>
+      <pubDate>Thu, 14 May 2020 14:47:34 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/037/</guid>
+      <description>前言 仅以本文记录 win + arch 安装过程爬过的坑，当然最好的教程依然是 Arch Installation Guide。 准备 介质 Linux 使用dd 命令制作 Win 使用 rufus 磁盘 Linux 通过 fdisk 分出一块未分配的磁</description>
+    </item>
+    
+    <item>
+      <title>Centos7 配置</title>
+      <link>https://wbmins.github.io/2020/031/</link>
+      <pubDate>Fri, 20 Mar 2020 23:43:22 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/031/</guid>
+      <description>1、软件 yum install xxx //安装xxx yum search xxx //搜索xxx yum localinstall xxx.rpm //安装本地xxx(网络不好使) docker 查找镜像支持的版本 https://hub.docker.com 配置源 配置 /etc/docker/daemon.json 注册阿里源 https://cr.console.aliyun.com/cn-qingdao/mirrors 写入阿里</description>
+    </item>
+    
+    <item>
+      <title>人生苦短,我用 Manjaro</title>
+      <link>https://wbmins.github.io/2017/004/</link>
+      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/004/</guid>
+      <description>Manjaro是基于Arch的Linux发行版,因Arch完善的Wiki文档（通过Arch Wiki你甚至可以了解Linux的全貌,对使用其他</description>
+    </item>
+    
+    <item>
+      <title>Linux 初识</title>
+      <link>https://wbmins.github.io/2017/003/</link>
+      <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/003/</guid>
+      <description>1、命令 解压 tar 解包：tar xvf FileName.tar 打包：tar cvf FileName.tar DirName （注：tar是打包，不是压缩！） gz 解压1：gunzip FileName.gz 解压2：gzip -d FileName.gz 压缩：gzip FileName</description>
+    </item>
+    
+    <item>
+      <title>Git 和 Github</title>
+      <link>https://wbmins.github.io/2017/000/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/000/</guid>
+      <description>1、标识 HEAD ： 表示当前版本 HEAD^ : 表示上一个版本 HEAD^^ : 表示上俩个版本 HEAD～100 ： 表示往前100个版本 master ： 指向最新提交 2、命令 2.1、创建 git clone git@github.com:wbmins/xxx.git</description>
+    </item>
+    
+    <item>
+      <title>Hugo &#43; Github 搭建博客</title>
+      <link>https://wbmins.github.io/2017/002/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/002/</guid>
+      <description>本着好奇搭建了一个自己的博客！本文主要记录一下我搭建静态博客的过程. 1、前言 Hugo 是一个静态模板生成引擎,可以把 Markdown 文档渲染成 Html . Github Pages 一个静态页面</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/categories/</link>
+    <description>Recent content in Categories on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 20 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>入坟</title>
+      <link>https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/</link>
+      <pubDate>Thu, 20 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://wbmins.github.io/categories/linux/</link>
+      <pubDate>Sat, 27 Jun 2020 00:03:14 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>杂谈</title>
+      <link>https://wbmins.github.io/categories/%E6%9D%82%E8%B0%88/</link>
+      <pubDate>Mon, 13 Apr 2020 08:41:26 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/categories/%E6%9D%82%E8%B0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>零碎</title>
+      <link>https://wbmins.github.io/categories/%E9%9B%B6%E7%A2%8E/</link>
+      <pubDate>Mon, 23 Mar 2020 15:27:23 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/categories/%E9%9B%B6%E7%A2%8E/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

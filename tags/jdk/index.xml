@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jdk on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/jdk/</link>
+    <description>Recent content in jdk on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 10 Sep 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/tags/jdk/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 初识</title>
+      <link>https://wbmins.github.io/2017/003/</link>
+      <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/003/</guid>
+      <description>1、命令 解压 tar 解包：tar xvf FileName.tar 打包：tar cvf FileName.tar DirName （注：tar是打包，不是压缩！） gz 解压1：gunzip FileName.gz 解压2：gzip -d FileName.gz 压缩：gzip FileName</description>
+    </item>
+    
+  </channel>
+</rss>

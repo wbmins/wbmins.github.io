@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/028/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2020/027/" />
+  <link rel="canonical" href="https://wbmins.github.io/2020/026/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    JUC 入门 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="JUC 入门 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "JUC 入门",
+    "headline" : "JUC 入门",
+    "description" : "volatile 当多个线程操作共享数据时,保证内存数据是可见的.相较于 synchronized 是一种轻量级的同步策略 多个线程操作共享数据时彼此不可见 解决一(同步锁) synchronized (myThread) { if (myThread.isFlag()) {",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-03-16 20:08:40 \u002b0800 \u002b0800",
+    "dateModified" : "2020-03-16 20:08:40 \u002b0800 \u002b0800",
+    "url" : "https:\/\/wbmins.github.io\/2020\/026\/",
+    "wordCount" : "6947",
+    "keywords" : [ "Programing","Java", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#volatile">volatile</a>
+      <ul>
+        <li><a href="#多个线程操作共享数据时彼此不可见">多个线程操作共享数据时彼此不可见</a></li>
+        <li><a href="#原子变量保证变量的原子性">原子变量(保证变量的原子性)</a></li>
+      </ul>
+    </li>
+    <li><a href="#1互斥与同步">1、互斥与同步</a></li>
+    <li><a href="#2生产-消费">2、生产 消费</a>
+      <ul>
+        <li><a href="#api">API</a></li>
+      </ul>
+    </li>
+    <li><a href="#3线程创建">3、线程创建</a></li>
+    <li><a href="#3死锁定位分析">3、死锁定位分析</a>
+      <ul>
+        <li><a href="#juc-多线程并发库-javautilconcurrent">JUC 多线程并发库 (java.util.concurrent)</a></li>
+      </ul>
+    </li>
+    <li><a href="#4并发队列">4、并发队列</a>
+      <ul>
+        <li><a href="#阻塞队列blockingqueue">阻塞队列(BlockingQueue)</a></li>
+        <li><a href="#非阻塞队列">非阻塞队列</a></li>
+        <li><a href="#故障-javautilconcurrentmodificationexception">故障 java.util.ConcurrentModificationException</a></li>
+      </ul>
+    </li>
+    <li><a href="#5锁lock">5、锁(lock)</a>
+      <ul>
+        <li><a href="#synchronized和lock区别">synchronized和lock区别</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">JUC 入门</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-03-16
+                    itemprop="datePublished">March 16, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,6947 words</span>
+            <span class="post-read-time">,read need 14 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="volatile">volatile</h2>
+<blockquote>
+<p>当多个线程操作共享数据时,保证内存数据是可见的.相较于　synchronized　是一种轻量级的同步策略</p>
+</blockquote>
+<h3 id="多个线程操作共享数据时彼此不可见">多个线程操作共享数据时彼此不可见</h3>
+<ul>
+<li>解决一(同步锁)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>myThread<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>myThread<span style="color:#f92672">.</span><span style="color:#a6e22e">isFlag</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1212121212121&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">break</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>volatile　变量定义 <code>private volatile boolean flag = false;</code></li>
+</ul>
+<blockquote>
+<p>volatile 不具备互斥性,不保证变量的原子性</p>
+</blockquote>
+<h3 id="原子变量保证变量的原子性">原子变量(保证变量的原子性)</h3>
+<ol>
+<li>
+<p>volatile 保证内存可见性</p>
+</li>
+<li>
+<p>CAS 算法保证数据的原子性 <code>compare And Swap</code></p>
+</li>
+</ol>
+<h2 id="1互斥与同步">1、互斥与同步</h2>
+<ul>
+<li>
+<p>在引入多线程后,由于线程执行的异步性,会给系统造成混乱,特别是在急用临界资源时,如多个线程急用同一台打印机,会使打印结果交织在一起,难于区分.当多个线程急用共享变量,表格,链表时,可能会导致数据处理出错,因此线程同步的主要任务是使并发执行的各线程之间能够有效的共享资源和相互合作,从而使程序的执行具有可再现性.当线程并发执行时,由于资源共享和线程协作,使用线程之间会存在以下两种制约关系.</p>
+<ol>
+<li>
+<p>间接相互制约.一个系统中的多个线程必然要共享某种系统资源,如共享 CPU,共享 I/O 设备,所谓间接相互制约即源于这种资源共享,打印机就是最好的例子,线程 A 在使用打印机时,其它线程都要等待.</p>
+</li>
+<li>
+<p>直接相互制约.这种制约主要是因为线程之间的合作,如有线程 A 将计算结果提供给线程 B 作进一步处理,那么线程 B 在线程 A 将数据送达之前都将处于阻塞状态.</p>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>间接相互制约可以称为互斥,直接相互制约可以称为同步,对于互斥可以这样理解,线程 A 和线程 B 互斥访问某个资源则它们之间就会产个顺序问题——要么线程 A 等待线程 B 操作完毕,要么线程 B 等待线程操作完毕,这其实就是线程的同步了.因此同步包括互斥,互斥其实是一种特殊的同步.</p>
+</blockquote>
+<h2 id="2生产-消费">2、生产 消费</h2>
+<ol>
+<li>
+<p>sync wait notify(v1.0)</p>
+</li>
+<li>
+<p>lock await signal(v2.0)</p>
+</li>
+<li>
+<p>基于阻塞队列(v3.0)</p>
+</li>
+</ol>
+<ul>
+<li>传统(v1.0)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyData1</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">inc</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">!=</span> 0<span style="color:#f92672">){</span>
+                <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">wait</span><span style="color:#f92672">();</span> <span style="color:#75715e">//1. 等待不能生产
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">++;</span> <span style="color:#75715e">//2. 生产
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;我是生产者,正在生产&#34;</span><span style="color:#f92672">);</span>
+           <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">notifyAll</span><span style="color:#f92672">();</span> <span style="color:#75715e">//3. 通知
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dec</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">==</span> 0<span style="color:#f92672">){</span>
+                <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">wait</span><span style="color:#f92672">();</span> <span style="color:#75715e">//1.等待不能消费
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">--;</span> <span style="color:#75715e">//2. 消费
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;我是消费者,正在消费&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">notifyAll</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Lock_V1</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 传统的生产者消费者第一个版本
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">tradtional</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        MyData1 myData <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyData1<span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 5<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                        myData<span style="color:#f92672">.</span><span style="color:#a6e22e">inc</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;AA&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 5<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                        myData<span style="color:#f92672">.</span><span style="color:#a6e22e">dec</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;BB&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>传统(v2.0)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyData2</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> Lock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">private</span> Condition condition <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">inc</span><span style="color:#f92672">(){</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">!=</span> 0<span style="color:#f92672">){</span>
+                condition<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span> <span style="color:#75715e">//1. 等待不能生产
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">++;</span> <span style="color:#75715e">//2. 生产
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;我是生产者,正在生产&#34;</span><span style="color:#f92672">);</span>
+            condition<span style="color:#f92672">.</span><span style="color:#a6e22e">signalAll</span><span style="color:#f92672">();</span> <span style="color:#75715e">//3. 通知
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dec</span><span style="color:#f92672">(){</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">==</span> 0<span style="color:#f92672">){</span>
+                condition<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span> <span style="color:#75715e">//1.等待不能消费
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">--;</span> <span style="color:#75715e">//2. 消费
+</span><span style="color:#75715e"></span>            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;我是消费者,正在消费&#34;</span><span style="color:#f92672">);</span>
+            condition<span style="color:#f92672">.</span><span style="color:#a6e22e">signalAll</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Lock_V2</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * 传统的生产者消费者第二个版本
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">tradtional</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        MyData2 myData <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyData2<span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 5<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                        myData<span style="color:#f92672">.</span><span style="color:#a6e22e">inc</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;AA&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            <span style="color:#a6e22e">@Override</span>
+            <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 5<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                        myData<span style="color:#f92672">.</span><span style="color:#a6e22e">dec</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;BB&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>阻塞队列(v3.0)</li>
+</ul>
+<blockquote>
+<p>当队列为空,从队列取元素被阻塞,当队列满了,往队列放元素被阻塞;有点,不需要关心什么时候阻塞线程,什么时候唤醒线程.</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>ArrayBlockingQueue</strong>: 基于数组结构有界阻塞队列,按FIFO对元素排序</p>
+</li>
+<li>
+<p><strong>LinkedBlockingQueue</strong>: 基于链表结构的有界(默认Integer.MAX_VALUE)阻塞队列,按FIFO对元素排序吞吐量比数组高</p>
+</li>
+<li>
+<p><strong>SynchronousQueue</strong>: 不存储元素队列,每个插入必须等到另一个线程移除.否则一直阻塞</p>
+</li>
+<li>
+<p>LinkedBlocking<strong>Deque</strong>: 基于链表的双向阻塞队列</p>
+</li>
+<li>
+<p>PriorityBlockingQueue: 支持优先级排序无界阻塞队列</p>
+</li>
+<li>
+<p>DelayQueue: 使用优先级队列实现延迟无界阻塞队列</p>
+</li>
+<li>
+<p>LinkedTransferQueue: 基于链表的无界阻塞队列</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//这个方法必须在main线程里
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span><span style="color:#f92672">(){</span>
+    BlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> blockingQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> SynchronousQueue<span style="color:#f92672">&lt;&gt;();</span>
+    <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;------put 1&#34;</span><span style="color:#f92672">);</span>
+            blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;1&#34;</span><span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;------put 2&#34;</span><span style="color:#f92672">);</span>
+            blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;------put 3&#34;</span><span style="color:#f92672">);</span>
+            blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;3&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;AAA&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;------&#34;</span><span style="color:#f92672">+</span>blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">take</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;------&#34;</span><span style="color:#f92672">+</span>blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">take</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+                TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>3<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;------&#34;</span><span style="color:#f92672">+</span>blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">take</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;BBB&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="api">API</h3>
+<ul>
+<li>
+<p>抛异常: add(e) remove(e) element()(检查)</p>
+</li>
+<li>
+<p>特殊值: offer(e) poll() peek()(探测)</p>
+</li>
+<li>
+<p>阻塞: put() take()</p>
+</li>
+<li>
+<p>超时: offer(e,time,unit) take(e,time,unit)</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyDataN</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">volatile</span> <span style="color:#66d9ef">boolean</span> FLAG <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> AtomicInteger atomicInteger <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AtomicInteger<span style="color:#f92672">();</span>
+
+    BlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> blockingQueue <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">MyDataN</span><span style="color:#f92672">(</span>BlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> blockingQueue<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">blockingQueue</span> <span style="color:#f92672">=</span> blockingQueue<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">myProd</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception<span style="color:#f92672">{</span>
+        String data <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">boolean</span> retValue<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>FLAG<span style="color:#f92672">){</span>
+            data <span style="color:#f92672">=</span> atomicInteger<span style="color:#f92672">.</span><span style="color:#a6e22e">incrementAndGet</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">;</span>
+            retValue <span style="color:#f92672">=</span> blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">offer</span><span style="color:#f92672">(</span>data<span style="color:#f92672">,</span>2L<span style="color:#f92672">,</span>TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>retValue<span style="color:#f92672">){</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                        <span style="color:#e6db74">&#34;插入队列&#34;</span><span style="color:#f92672">+</span>data<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;成功&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span><span style="color:#66d9ef">else</span><span style="color:#f92672">{</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                        <span style="color:#e6db74">&#34;插入队列&#34;</span><span style="color:#f92672">+</span>data<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;失败&#34;</span><span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+            TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                <span style="color:#e6db74">&#34;大老板叫停&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">myConsumer</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception<span style="color:#f92672">{</span>
+        String result <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>FLAG<span style="color:#f92672">){</span>
+            result <span style="color:#f92672">=</span> blockingQueue<span style="color:#f92672">.</span><span style="color:#a6e22e">poll</span><span style="color:#f92672">(</span>2L<span style="color:#f92672">,</span>TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span><span style="color:#66d9ef">null</span> <span style="color:#f92672">==</span> result <span style="color:#f92672">||</span> result<span style="color:#f92672">.</span><span style="color:#a6e22e">equalsIgnoreCase</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">)){</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                        <span style="color:#e6db74">&#34;超过2秒钟没有渠道蛋糕,消费退出&#34;</span><span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">return</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                    <span style="color:#e6db74">&#34;消费数据&#34;</span><span style="color:#f92672">+</span>result<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;成功&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">stop</span><span style="color:#f92672">(){</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">FLAG</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 现在阻塞队列版生产消费
+</span><span style="color:#75715e"> */</span>
+<span style="color:#a6e22e">@Test</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">now</span><span style="color:#f92672">(){</span>
+    MyDataN myDataN <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyDataN<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> ArrayBlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;(</span>10<span style="color:#f92672">));</span>
+    <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            myDataN<span style="color:#f92672">.</span><span style="color:#a6e22e">myProd</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;AA&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            myDataN<span style="color:#f92672">.</span><span style="color:#a6e22e">myConsumer</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;BB&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+        TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>5<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;5秒结束,main打老板叫停&#34;</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="3线程创建">3、线程创建</h2>
+<ol>
+<li>继承<code>Thread</code>类</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyThread1</span> <span style="color:#66d9ef">extends</span> Thread<span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">();</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                <span style="color:#e6db74">&#34;我是继承Thread类创建线程&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//继承thread类重写run方法
+</span><span style="color:#75715e"></span>    MyThread1 myThread1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyThread1<span style="color:#f92672">();</span>
+    myThread1<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="2">
+<li>实现<code>Runnable</code>接口</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyThread2</span> <span style="color:#66d9ef">implements</span> Runnable<span style="color:#f92672">{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                <span style="color:#e6db74">&#34;我是实现Runnable接口创建线程&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test2</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//实现Runnable接口重写run方法
+</span><span style="color:#75715e"></span>    MyThread2 myThread2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyThread2<span style="color:#f92672">();</span>
+    myThread2<span style="color:#f92672">.</span><span style="color:#a6e22e">run</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="3">
+<li>实现<code>Callable&lt;T&gt;</code>接口,需要 FutureTasks 实体类接收运算结果</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyThread3</span> <span style="color:#66d9ef">implements</span> Callable<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;{</span>
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> Integer <span style="color:#a6e22e">call</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                <span style="color:#e6db74">&#34;我是实现Callable接口创建线程&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">valueOf</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;12&#34;</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test3</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//实现Callable接口重写call方法方法
+</span><span style="color:#75715e"></span>    MyThread3 myThread3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MyThread3<span style="color:#f92672">();</span>
+    FutureTask<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> futureTask <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FutureTask<span style="color:#f92672">&lt;&gt;(</span>myThread3<span style="color:#f92672">);</span>
+    Thread thread <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span>futureTask<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;futureTask&#34;</span><span style="color:#f92672">);</span>
+    thread<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(!</span>futureTask<span style="color:#f92672">.</span><span style="color:#a6e22e">isDone</span><span style="color:#f92672">()){</span> <span style="color:#75715e">//等算完再取值
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;********result+&#34;</span> <span style="color:#f92672">+</span> futureTask<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">());</span> <span style="color:#75715e">//方法尽量往后放
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="4">
+<li>线程池 (线程复用,控制最大线程数目,管理线程)</li>
+</ol>
+<ul>
+<li>
+<p>降低资源消耗.通过重复利用已创建的线程降低线程的创建和销毁造成的消耗</p>
+</li>
+<li>
+<p>提高响应速度.当任务达到时,任务可以不需要等线程的创建就能立即执行</p>
+</li>
+<li>
+<p>提高线程的可管性,使用线程池可以进行统一的分配,调优,监控.</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test4_1</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">//1. 一池单线程(底层 BlockingQueue&lt;Runnable&gt;) 优势: 一个任务一个任务执行场景
+</span><span style="color:#75715e"></span>    ExecutorService executorService1 <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newSingleThreadScheduledExecutor</span><span style="color:#f92672">();</span>
+    executorService1<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#a6e22e">@Override</span>
+        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span><span style="color:#e6db74">&#34;我是单线程池中的线程&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">});</span>
+    <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+        executorService1<span style="color:#f92672">.</span><span style="color:#a6e22e">execute</span><span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()+</span>
+                <span style="color:#e6db74">&#34;我是线程池Lambda创建线程&#34;</span><span style="color:#f92672">));</span>
+    <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+        e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        executorService1<span style="color:#f92672">.</span><span style="color:#a6e22e">shutdown</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#75715e">//2. 一池五个处理线程(固定数目的线程池 底层BlockingQueue&lt;Runnable&gt;) 优势: 执行长期任务性能比较好
+</span><span style="color:#75715e"></span>    ExecutorService executorService2 <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newFixedThreadPool</span><span style="color:#f92672">(</span>5<span style="color:#f92672">);</span>
+    <span style="color:#75715e">//3. 一池带缓冲的多线程(底层 SynchronousQueue&lt;Runnable&gt;()) 优势: 执行短期异步小程序或负载较轻的服务
+</span><span style="color:#75715e"></span>    ExecutorService executorService3 <span style="color:#f92672">=</span> Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">newCachedThreadPool</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>ThreadPoolExecutor七个参数</p>
+<ol>
+<li>
+<p><code>int corePoolSize</code>: 线程中常驻核心线程数</p>
+</li>
+<li>
+<p><code>int maximumPoolSize</code>: 线程池能够容纳通知执行最大线程数目,值必须大于0</p>
+</li>
+<li>
+<p><code>long keepAliveTime</code>: 多余空闲线程存活时间</p>
+</li>
+<li>
+<p><code>TimeUnit unit</code>: keepAliveTime的单位</p>
+</li>
+<li>
+<p><code>BlockingQueue&lt;Runnable&gt; workQueue</code>: 任务队列,已提交但尚未执行的任务</p>
+</li>
+<li>
+<p><code>ThreadFactory threadFactory</code>: 表示生成线程池中工作线程的线程工厂,用于创建线程<strong>一般默认即可</strong></p>
+</li>
+<li>
+<p><code>RejectedExecutionHandler handler</code>: 拒绝策略,表示当队列满了并且工作线程数大于等于线程池最大线程数目</p>
+</li>
+</ol>
+</li>
+<li>
+<p>线程池底层原理</p>
+<ol>
+<li>
+<p>创建线程池,等待提交过来的任务请求.</p>
+</li>
+<li>
+<p>当调用execute()添加一个任务请求时,线程池会作出如下判断</p>
+<ul>
+<li>
+<p>如果正在运行的线程数量小于corePoolSize,那么马上创建线程运行这个任务;</p>
+</li>
+<li>
+<p>如果正在运行的线程数量大于或者等于corePoolSize,那么将这个任务放入队列;</p>
+</li>
+<li>
+<p>如果队列满了且正在运行的数量还小于maximumPoolSize,那么还是要创建非核心线程立即运行这个任务;</p>
+</li>
+<li>
+<p>如果队列慢了且正在运行的数量还大于等于maximumPoolSize,线程池会启动饱和拒绝策略来执行.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>当一个县城完成任务时,它会从队列中取下一个任务来执行</p>
+</li>
+<li>
+<p>当一个县城无事可做超过一定时间keepAliveTime,线程池会做如下判断</p>
+<ul>
+<li>
+<p>如果当前运行的线程数大于corePoolSize,那么这个线程就会被停掉</p>
+</li>
+<li>
+<p>所以线程池所有任务完成后它最终会收缩到corePoolSize大小.</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>线程池拒绝策略</p>
+<ol>
+<li>
+<p>AbortPolicy: (默认)直接抛异常阻止系统运行;</p>
+</li>
+<li>
+<p>CallerRunsPolicy: 调用者运行一种调节机制,不抛弃不放弃.</p>
+</li>
+<li>
+<p>DiscardOldestPolicy: 抛弃队列等待最久的</p>
+</li>
+<li>
+<p>DiscardPolicy: 直接丢弃,不予以任何处理也不抛异常.如果让任务丢失的话</p>
+</li>
+</ol>
+<ul>
+<li>实际工作中需要自己通过ThreadPoolExecutor创建</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ExecutorService executorService <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ThreadPoolExecutor<span style="color:#f92672">(</span>2<span style="color:#f92672">,</span>
+                5<span style="color:#f92672">,</span>
+                2<span style="color:#f92672">,</span>
+                TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">MILLISECONDS</span><span style="color:#f92672">,</span>
+                <span style="color:#66d9ef">new</span> LinkedBlockingDeque<span style="color:#f92672">&lt;&gt;(</span>3<span style="color:#f92672">),</span>
+                Executors<span style="color:#f92672">.</span><span style="color:#a6e22e">defaultThreadFactory</span><span style="color:#f92672">(),</span>
+                <span style="color:#66d9ef">new</span> ThreadPoolExecutor<span style="color:#f92672">.</span><span style="color:#a6e22e">AbortPolicy</span><span style="color:#f92672">());</span>
+</code></pre></div><ul>
+<li>
+<p>合理配置</p>
+<ul>
+<li>
+<p>CPU密集型: cpu核数+1个线程的线程池</p>
+</li>
+<li>
+<p>I/O密集型</p>
+<ul>
+<li>
+<p>cpu核数*2</p>
+</li>
+<li>
+<p>cpu核数/(1 - 阻塞系数) 阻塞系数在0.8 - 0.9之间</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//获取cpu核数
+</span><span style="color:#75715e"></span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Runtime<span style="color:#f92672">.</span><span style="color:#a6e22e">getRuntime</span><span style="color:#f92672">().</span><span style="color:#a6e22e">availableProcessors</span><span style="color:#f92672">());</span>
+</code></pre></div><h2 id="3死锁定位分析">3、死锁定位分析</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">/**
+</span><span style="color:#75715e"> * 死锁是指两个或两个以上的进程在执行过程中,因争夺资源而造成的一种互相等待的现象,若无外力干涉那他们都将无法推进下去,
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeadLockDemo</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String lockA <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lockA&#34;</span><span style="color:#f92672">;</span>
+        String lockB <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lockB&#34;</span><span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> HoldThread<span style="color:#f92672">(</span>lockA<span style="color:#f92672">,</span>lockB<span style="color:#f92672">),</span><span style="color:#e6db74">&#34;Thread-AAA&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> HoldThread<span style="color:#f92672">(</span>lockB<span style="color:#f92672">,</span>lockA<span style="color:#f92672">),</span><span style="color:#e6db74">&#34;Thread-BBB&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+
+        <span style="color:#75715e">/**
+</span><span style="color:#75715e">         * linux ps -ef|grep xxxx
+</span><span style="color:#75715e">         * windows下的java运行程序也有类似ps的查看进程的命令,但是目前我们需要查看的
+</span><span style="color:#75715e">         */</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HoldThread</span> <span style="color:#66d9ef">implements</span> Runnable <span style="color:#f92672">{</span>
+
+    <span style="color:#66d9ef">private</span> String lockA<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">private</span> String lockB<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">HoldThread</span><span style="color:#f92672">(</span>String lockA<span style="color:#f92672">,</span> String lockB<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">lockA</span> <span style="color:#f92672">=</span> lockA<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">lockB</span> <span style="color:#f92672">=</span> lockB<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>lockA<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\t自己持有：&#34;</span> <span style="color:#f92672">+</span> lockA <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\t尝试获得：&#34;</span> <span style="color:#f92672">+</span> lockB<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+                TimeUnit<span style="color:#f92672">.</span><span style="color:#a6e22e">SECONDS</span><span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>InterruptedException e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">synchronized</span> <span style="color:#f92672">(</span>lockB<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getName</span><span style="color:#f92672">()</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\t自己持有：&#34;</span> <span style="color:#f92672">+</span> lockB <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\t尝试获得：&#34;</span> <span style="color:#f92672">+</span> lockA<span style="color:#f92672">);</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>java ps = jps -l(找到死锁进程id)</p>
+</li>
+<li>
+<p>jstack 进程id</p>
+</li>
+</ul>
+<h3 id="juc-多线程并发库-javautilconcurrent">JUC 多线程并发库 (java.util.concurrent)</h3>
+<h4 id="javautilconcurrentatomic-包-多线程的原子性操作提供的工具类">java.util.concurrent.atomic 包 (多线程的原子性操作提供的工具类)</h4>
+<ul>
+<li>
+<p>查看 atomic 包文档页下面的介绍,它可以对多线程的基本数据、数组中的基本数据和对象中的基本数据
+进行多线程的操作（AtomicInteger、AtomicIntegerArray、AtomicIntegerFieldUpDater…）</p>
+</li>
+<li>
+<p>通过如下两个方法快速理解 atomic 包的意义：</p>
+<ul>
+<li>
+<p>AtomicInteger 类的 boolean compareAndSet(expectedValue, updateValue);</p>
+</li>
+<li>
+<p>AtomicIntegerArray 类的 int addAndGet(int i, int delta);</p>
+</li>
+</ul>
+</li>
+<li>
+<p>顺带解释 volatile 类型的作用,需要查看 java 语言规范.</p>
+<ul>
+<li>
+<p>volatile 修饰的变量,线程在每次使用变量的时候,都会读取变量修改后的最的值.（具有可见性）</p>
+</li>
+<li>
+<p>volatile 没有原子性.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>这个包里面提供了一组原子类.其基本的特性就是在多线程环境下,当有多个线程同时执行这些类的实例包含的方法时,具有排他性,即当某个线程进入方法,执行其中的指令时,不会被其他线程打断,而别的线程就像自旋锁一样,一直等到该方法执行完成,才由 JVM 从等待队列中选择一个另一个线程进入,这只是一种逻辑上的理解.实际上是借助硬件的相关指令来实现的,不会阻塞线程(或者说只是在硬件级别上阻塞了).</p>
+</li>
+</ul>
+<h4 id="javautilconcurrentlock-包-多线程的锁机制">java.util.concurrent.lock 包 (多线程的锁机制)</h4>
+<ul>
+<li>
+<p>为锁和等待条件提供一个框架的接口和类,它不同于内置同步和监视器.该框架允许更灵活地使用锁和条件.本包下有三大接口,下面简单介绍下：</p>
+<ul>
+<li>
+<p>Lock 接口：支持那些语义不同（重入、公平等）的锁规则,可以在非阻塞式结构的上下文（包括 handover-hand 和锁重排算法）中使用这些规则.主要的实现是 ReentrantLock.</p>
+</li>
+<li>
+<p>ReadWriteLock 接口：以类似方式定义了一些读取者可以共享而写入者独占的锁.此包只提供了一个实现,即 ReentrantReadWriteLock,因为它适用于大部分的标准用法上下文.但程序员可以创建自己的、适用于非标准要求的实现.</p>
+</li>
+<li>
+<p>Condition 接口：描述了可能会与锁有关联的条件变量.这些变量在用法上与使用 Object.wait 访问的隐式监视器类似,但提供了更强大的功能.需要特别指出的是,单个 Lock 可能与多个 Condition 对象关联.为了避免兼容性问题,Condition 方法的名称与对应的 Object 版本中的不同.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4并发队列">4、并发队列</h2>
+<h3 id="阻塞队列blockingqueue">阻塞队列(BlockingQueue)</h3>
+<ul>
+<li>
+<p>ArrayBlockingQueue：ArrayBlockingQueue 是一个有界的阻塞队列,其内部实现是将对象放到一个数组里.有界也就意味着,它不能够存储无限多数量的元素.它有一个同一时间能够存储元素数量的上限.你可以在对其初始化的时候设定这个上限,但之后就无法对这个上限进行修改了(译者注：因为它是基于数组实现的,也就具有数组的特性：一旦初始化,大小就无法修改).</p>
+</li>
+<li>
+<p>DelayQueue：DelayQueue 对元素进行持有直到一个特定的延迟到期.注入其中的元素必须实现java.util.concurrent.Delayed 接口.</p>
+</li>
+<li>
+<p>LinkedBlockingQueue：LinkedBlockingQueue 内部以一个链式结构(链接节点)对其元素进行存储.如果需要的话,这一链式结构可以选择一个上限.如果没有定义上限,将使用 Integer.MAX_VALUE 作为上限.</p>
+</li>
+<li>
+<p>PriorityBlockingQueue ： PriorityBlockingQueue 是 一 个 无 界 的 并 发 队 列 . 它 使 用 了 和 类java.util.PriorityQueue 一 样 的 排 序 规 则 . 你 无 法 向 这 个 队 列 中 插 入 null 值 . 所 有 插 入 到
+PriorityBlockingQueue 的元素必须实现 java.lang.Comparable 接口.因此该队列中元素的排序就取决于你自己的 Comparable 实现.</p>
+</li>
+<li>
+<p>SynchronousQueue：SynchronousQueue 是一个特殊的队列,它的内部同时只能够容纳单个元素.如果该队列已有一元素的话,试图向队列中插入一个新元素的线程将会阻塞,直到另一个线程将该元素从队列中抽走.同样,如果该队列为空,试图向队列中抽取一个元素的线程将会阻塞,直到另一个线程向队列中插入了一条新的元素.据此,把这个类称作一个队列显然是夸大其词了.它更多像是一个汇合点.</p>
+</li>
+</ul>
+<h3 id="非阻塞队列">非阻塞队列</h3>
+<ul>
+<li>
+<p><strong>ConcurrentLinkedQueue</strong> 非阻塞无界链表队列 是一个线程安全的队列,基于链表结构实现,是一个无界队列,理论上来说队列的长度可以无限扩大.与其他队列相同,ConcurrentLinkedQueue 也采用的是先进先出（FIFO）入队规则,对元素进行排序.当
+我们向队列中添加元素时,新插入的元素会插入到队列的尾部；而当我们获取一个元素时,它会从队列的头部中取出.因为 ConcurrentLinkedQueue 是链表结构,所以当入队时,插入的元素依次向后延伸,形成链表；而出队时,则从链表的第一个元素开始获取,依次递增；</p>
+</li>
+<li>
+<p>ConcurrentLinkedQueue 使用 CAS 非阻塞算法实现使用 CAS 解决了当前节点与 next 节点之间的安全链接和对
+当前节点值的赋值.由于使用 CAS 没有使用锁,所以获取 size 的时候有可能进行 offer,poll 或者 remove 操作,导
+致获取的元素个数不精确,所以在并发情况下 size 函数不是很有用.另外第一次 peek 或者 first 时候会把 head 指向
+第一个真正的队列元素.</p>
+</li>
+<li>
+<p>下面总结下如何实现线程安全的,可知入队出队函数都是操作 volatile 变量：head,tail.所以要保证队列线程安
+全只需要保证对这两个 Node 操作的可见性和原子性,由于 volatile 本身保证可见性,所以只需要看下多线程下如果
+保证对着两个变量操作的原子性.对于 offer 操作是在 tail 后面添加元素,也就是调用 tail.casNext 方法,而这个方法是使用的 CAS 操作,只有一个线程会成功,然后失败的线程会循环一下,重新获取 tail,然后执行 casNext 方法.对于 poll 也是这样的.</p>
+</li>
+<li>
+<p><strong>ConcurrentHashMap</strong> 非阻塞 Hash 集合</p>
+</li>
+</ul>
+<blockquote>
+<p>作为一种线程安全且高效的哈希表的解决方案,尤其其中的&quot;分段锁&quot;的方案,相比HashTable 的全表锁在性能上的提升非常之大.</p>
+</blockquote>
+<ul>
+<li>ConcurrentSkipListMap 非阻塞 Hash 跳表集合</li>
+</ul>
+<h3 id="故障-javautilconcurrentmodificationexception">故障 java.util.ConcurrentModificationException</h3>
+<ul>
+<li>
+<p>导致原因 并发争抢修改导致</p>
+</li>
+<li>
+<p>解决方案</p>
+<ul>
+<li>
+<p><code>new Vector&lt;&gt;()</code>;</p>
+</li>
+<li>
+<p><code>Collections.synchronizedList(new ArrayList&lt;String&gt;())</code></p>
+</li>
+<li>
+<p><code>new CopyOnWriteArrayList&lt;&gt;();</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//CopyOnWriteArrayList&lt;&gt;();底层原理
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">final</span> ReentrantLock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">;</span>
+    lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+        Object<span style="color:#f92672">[]</span> elements <span style="color:#f92672">=</span> getArray<span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> elements<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span>
+        Object<span style="color:#f92672">[]</span> newElements <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>elements<span style="color:#f92672">,</span> len <span style="color:#f92672">+</span> 1<span style="color:#f92672">);</span>
+        newElements<span style="color:#f92672">[</span>len<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>
+        setArray<span style="color:#f92672">(</span>newElements<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="5锁lock">5、锁(lock)</h2>
+<ul>
+<li>
+<p>可重入锁(又名递归锁) 同一线程外层函数获得锁之后,内层递归函数仍能获取该锁代码.优势: 避免死锁 ReentrantLock/synchronized是可重入锁</p>
+</li>
+<li>
+<p>自旋锁 尝试获取锁的线程不会立即阻塞,而是采用循环的方式去尝试获取锁.优势:是减少上下文的切换的消耗,缺点是循环消耗cpu</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">AtomicReference<span style="color:#f92672">&lt;</span>Thread<span style="color:#f92672">&gt;</span> atomicReference <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AtomicReference<span style="color:#f92672">&lt;&gt;();</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">MyLock</span><span style="color:#f92672">(){</span>
+    Thread thread <span style="color:#f92672">=</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#f92672">(!</span>atomicReference<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSet</span><span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">,</span>thread<span style="color:#f92672">)){</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">UnMyLock</span><span style="color:#f92672">(){</span>
+    Thread thread <span style="color:#f92672">=</span> Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">currentThread</span><span style="color:#f92672">();</span>
+    atomicReference<span style="color:#f92672">.</span><span style="color:#a6e22e">compareAndSet</span><span style="color:#f92672">(</span>thread<span style="color:#f92672">,</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li>
+<p>独占锁 :锁只能被一个线程持有,其写是独占锁. ReentrantLock/synchronized都是独占锁.</p>
+</li>
+<li>
+<p>共享所(被多个线程持有) ReentrantReadWriteLock 其读锁是共享,写是独占的.</p>
+</li>
+<li>
+<p>静态锁是 <code>class</code>, <code>synchronized</code> 是　<code>this</code>.</p>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//自己实现一个读写安全的缓存
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyCache</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">volatile</span> Map<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">,</span>Object<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+    <span style="color:#66d9ef">private</span> ReentrantReadWriteLock rwlock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantReadWriteLock<span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>String key <span style="color:#f92672">,</span> Object value<span style="color:#f92672">){</span>
+        rwlock<span style="color:#f92672">.</span><span style="color:#a6e22e">writeLock</span><span style="color:#f92672">().</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            map<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>key<span style="color:#f92672">,</span>value<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            rwlock<span style="color:#f92672">.</span><span style="color:#a6e22e">writeLock</span><span style="color:#f92672">().</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>String key<span style="color:#f92672">){</span>
+        rwlock<span style="color:#f92672">.</span><span style="color:#a6e22e">readLock</span><span style="color:#f92672">().</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
+            Object temp <span style="color:#f92672">=</span> map<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>key<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            rwlock<span style="color:#f92672">.</span><span style="color:#a6e22e">readLock</span><span style="color:#f92672">().</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="synchronized和lock区别">synchronized和lock区别</h3>
+<ol>
+<li>
+<p>原始构成</p>
+<ul>
+<li>synchronized是关键字属于jvm方面(底层通过monitorenter/monitorexit)</li>
+</ul>
+<p>-Lock是具体的类java.util.concurrent.Locks.Lock是api层面的</p>
+</li>
+<li>
+<p>使用方法</p>
+<ul>
+<li>
+<p>synchronized不需要用户手动去释放锁的,当synchronized代码执行完毕后系统会自动让线程释放对锁的占用</p>
+</li>
+<li>
+<p>ReentrantLock则需要用户手动去释放锁若没没有主动去释放,就有可能导致死锁现象,需要lock()和unlock()方法配合try/finally语句块完成</p>
+</li>
+</ul>
+</li>
+<li>
+<p>等待是否可中断</p>
+<ul>
+<li>
+<p>synchronized不可中断,除非抛异常或者正常完成</p>
+</li>
+<li>
+<p>ReentrantLock可中断,设置超时方法调用interrupt()方法可中断</p>
+</li>
+</ul>
+</li>
+<li>
+<p>加锁是否公平</p>
+<ul>
+<li>
+<p>synchronized非公平锁</p>
+</li>
+<li>
+<p>ReentrantLock俩个都可以,默认非公平</p>
+</li>
+</ul>
+</li>
+<li>
+<p>锁绑定多个条件</p>
+<ul>
+<li>
+<p>synchronized没有</p>
+</li>
+<li>
+<p>ReentrantLock用来实现分组唤醒的线程们,可以精确唤醒,而不是像synchronized随机唤醒一个线程要么唤醒全部线程</p>
+</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">//题目:多线程之间按顺序调用A -&gt; B -&gt; C
+</span><span style="color:#75715e"></span>A打印五次<span style="color:#f92672">,</span>B打印5<span style="color:#f92672">,</span>C打印5次
+来十轮
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Resource</span><span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span> <span style="color:#75715e">//1:A 2:B 3:C
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> Lock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">();</span>
+    Condition c1 <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
+    Condition c2 <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
+    Condition c3 <span style="color:#f92672">=</span> lock<span style="color:#f92672">.</span><span style="color:#a6e22e">newCondition</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print5</span><span style="color:#f92672">(){</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">!=</span> 1<span style="color:#f92672">){</span>
+                c1<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span><span style="color:#75715e">//判断
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">=</span> 2<span style="color:#f92672">;</span><span style="color:#75715e">//干活
+</span><span style="color:#75715e"></span>            c2<span style="color:#f92672">.</span><span style="color:#a6e22e">signal</span><span style="color:#f92672">();</span><span style="color:#75715e">//通知
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print10</span><span style="color:#f92672">(){</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">!=</span> 2<span style="color:#f92672">){</span>
+                c2<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span><span style="color:#75715e">//判断
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">=</span> 3<span style="color:#f92672">;</span><span style="color:#75715e">//干活
+</span><span style="color:#75715e"></span>            c3<span style="color:#f92672">.</span><span style="color:#a6e22e">signal</span><span style="color:#f92672">();</span><span style="color:#75715e">//通知
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print15</span><span style="color:#f92672">(){</span>
+        lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>num <span style="color:#f92672">!=</span> 3<span style="color:#f92672">){</span>
+                c3<span style="color:#f92672">.</span><span style="color:#a6e22e">await</span><span style="color:#f92672">();</span><span style="color:#75715e">//判断
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            num <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span><span style="color:#75715e">//干活
+</span><span style="color:#75715e"></span>            c1<span style="color:#f92672">.</span><span style="color:#a6e22e">signal</span><span style="color:#f92672">();</span><span style="color:#75715e">//通知
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception e<span style="color:#f92672">){</span>
+            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span><span style="color:#66d9ef">finally</span> <span style="color:#f92672">{</span>
+            lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">();</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+<span style="color:#75715e">//测试
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Resource resource <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Resource<span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 10<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                resource<span style="color:#f92672">.</span><span style="color:#a6e22e">print5</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 10<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                resource<span style="color:#f92672">.</span><span style="color:#a6e22e">print10</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;B&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> 10<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+                resource<span style="color:#f92672">.</span><span style="color:#a6e22e">print15</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">},</span><span style="color:#e6db74">&#34;C&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/026/>https://wbmins.github.io/2020/026/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/programing/">
+                    #Programing</a></span>
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/java/">
+                    #Java</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/028/" class="prev" rel="prev" title="Java 集合"><i
+                class="iconfont icon-left"></i>&nbsp;Java 集合</a>
+        
+        
+        <a href="https://wbmins.github.io/2020/027/" class="next" rel="next"
+            title="JVM 和 GC">JVM 和 GC&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

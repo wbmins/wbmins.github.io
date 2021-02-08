@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/posts/</link>
+    <description>Recent content in Posts on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 20 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 动态代理</title>
+      <link>https://wbmins.github.io/2020/041/</link>
+      <pubDate>Thu, 20 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/041/</guid>
+      <description>1、类加载器 1.1、预定义类型 启动（Bootstrap）类加载器，负责将 &amp;lt;Java_Runtime_Home&amp;gt;/lib 下面的类库加载到内存中 扩展（Extension）类加载器 ExtCl</description>
+    </item>
+    
+    <item>
+      <title>Grub rescue 修复</title>
+      <link>https://wbmins.github.io/2020/040/</link>
+      <pubDate>Sat, 27 Jun 2020 00:03:14 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/040/</guid>
+      <description>大家在使用 Linux 系统，特别是双系统，因为在 windows 大版本更新后或者其他原因导致开机出现 grub rescue&amp;gt; 界面时，不要惊慌，可能并不是系统文件损坏，大家通过一些恢复手</description>
+    </item>
+    
+    <item>
+      <title>TCP/IP 理解</title>
+      <link>https://wbmins.github.io/2020/039/</link>
+      <pubDate>Thu, 28 May 2020 22:07:25 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/039/</guid>
+      <description>为什么要对入坑到入坟协议进行分层 简化问题难度和复杂度。由于各层之间独立，我们可以分割大问题为小问题 灵活性好。当其中一层的技术变化时，只要层间</description>
+    </item>
+    
+    <item>
+      <title>Nexus 搭建 maven 仓库</title>
+      <link>https://wbmins.github.io/2020/038/</link>
+      <pubDate>Tue, 26 May 2020 20:49:23 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/038/</guid>
+      <description>由于公司需要搭建一个 maven 私服，故记录一下 准备工作 搜索镜像 docker search nexus3 拉取镜像 docker pull sonatype/nexus3 创建文件 mkdir maven 启动仓库 docker run -d --name=nexus -p 8081:8081 -v /root/nexus-data:/var/nexus-data sonatype/nexus3:latest -d 容器后台运行 -p 容器端口和宿</description>
+    </item>
+    
+    <item>
+      <title>ArchLinux 传记</title>
+      <link>https://wbmins.github.io/2020/037/</link>
+      <pubDate>Thu, 14 May 2020 14:47:34 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/037/</guid>
+      <description>前言 仅以本文记录 win + arch 安装过程爬过的坑，当然最好的教程依然是 Arch Installation Guide。 准备 介质 Linux 使用dd 命令制作 Win 使用 rufus 磁盘 Linux 通过 fdisk 分出一块未分配的磁</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot 常用注解</title>
+      <link>https://wbmins.github.io/2020/036/</link>
+      <pubDate>Sat, 02 May 2020 09:25:56 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/036/</guid>
+      <description>1. @SpringBootApplication 项目的基石 @SpringBootApplication public class DemoApplication { public static void main(java.lang.String[] args) { SpringApplication.run(DemoApplication.class, args); } } 等价与 @Configuration、@EnableAutoConfiguration、@Comp</description>
+    </item>
+    
+    <item>
+      <title>为什么要努力读书?</title>
+      <link>https://wbmins.github.io/2020/035/</link>
+      <pubDate>Mon, 13 Apr 2020 08:41:26 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/035/</guid>
+      <description>摘自龙应台写给他儿子的一段话 &amp;ldquo;孩子,我要求你读书用功,不是因为我要你跟别人比成绩,而是因为,而是希望你将来会拥有选择的权利.选择</description>
+    </item>
+    
+    <item>
+      <title>MySQL 深入</title>
+      <link>https://wbmins.github.io/2020/034/</link>
+      <pubDate>Sat, 28 Mar 2020 16:52:07 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/034/</guid>
+      <description>1、join查询(七种) A B -- 1. A B 表 共有 select * from tablea a inner join tableb b on a.id = b.id; -- 2.A B 表 全Ａ select * from tablea a left join tableb b on a.id = b.id; -- 3.A B 表 全Ｂ select * from tablea a right join tableb b on a.id</description>
+    </item>
+    
+    <item>
+      <title>NIO 学习</title>
+      <link>https://wbmins.github.io/2020/033/</link>
+      <pubDate>Fri, 27 Mar 2020 19:37:52 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/033/</guid>
+      <description>1、简介 NIO支持面向缓冲区的、基于通道的IO操作. 2、与 IO 区别 IO NIO 面向流(Stream Oriented) 面向缓冲区(Buffer Oriented) 阻塞IO(Blockin</description>
+    </item>
+    
+    <item>
+      <title>Emoji 使用</title>
+      <link>https://wbmins.github.io/2020/032/</link>
+      <pubDate>Mon, 23 Mar 2020 15:27:23 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/032/</guid>
+      <description>使用 git commit -m &amp;quot;🎉 Initialize Repo&amp;quot; 指南 emoji 代码 说明 emoji 代码 说明 🎉 (庆祝) tada 初次提交 🆕 (全新) new 引入新功能 🔖 (书签) bookmark 发行/版本标签 🐛 (bug) bug 修复 bug 🚑 (急救</description>
+    </item>
+    
+    <item>
+      <title>Centos7 配置</title>
+      <link>https://wbmins.github.io/2020/031/</link>
+      <pubDate>Fri, 20 Mar 2020 23:43:22 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/031/</guid>
+      <description>1、软件 yum install xxx //安装xxx yum search xxx //搜索xxx yum localinstall xxx.rpm //安装本地xxx(网络不好使) docker 查找镜像支持的版本 https://hub.docker.com 配置源 配置 /etc/docker/daemon.json 注册阿里源 https://cr.console.aliyun.com/cn-qingdao/mirrors 写入阿里</description>
+    </item>
+    
+    <item>
+      <title>IDEA 配置</title>
+      <link>https://wbmins.github.io/2020/030/</link>
+      <pubDate>Wed, 18 Mar 2020 11:58:57 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/030/</guid>
+      <description>1、配置 方法间加分割线 File | Settings | Editor | General | Appearance | Show method separators 2、模板 类模板 File | Settings | Editor | File and Code Templates | File Header /** * @Classname ${NAME} * @Description TODO * @Date ${DATE} ${TIME} * @Created by ${USER} */ 方法模板 File | Settings | Editor |</description>
+    </item>
+    
+    <item>
+      <title>java 8 特性</title>
+      <link>https://wbmins.github.io/2020/029/</link>
+      <pubDate>Wed, 18 Mar 2020 10:16:51 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/029/</guid>
+      <description>速度更快,代码更少,便于并行,最大化减少空指针异常,Nashorn引擎,在jvm上可以运行js应用 1、Lambda表达式 (函数式接口一个实例</description>
+    </item>
+    
+    <item>
+      <title>JVM 和 GC</title>
+      <link>https://wbmins.github.io/2020/027/</link>
+      <pubDate>Tue, 17 Mar 2020 12:03:12 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/027/</guid>
+      <description>JVM 熟悉JVM架构与GC垃圾回收机制以及相应的堆参调优,有过在linux进行系统调优的经验 组成结构 JVM是运行在操作系统之上的,他与硬件没有直</description>
+    </item>
+    
+    <item>
+      <title>JUC 入门</title>
+      <link>https://wbmins.github.io/2020/026/</link>
+      <pubDate>Mon, 16 Mar 2020 20:08:40 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/026/</guid>
+      <description>volatile 当多个线程操作共享数据时,保证内存数据是可见的.相较于 synchronized 是一种轻量级的同步策略 多个线程操作共享数据时彼此不可见 解决一(同步锁) synchronized (myThread) { if (myThread.isFlag()) {</description>
+    </item>
+    
+    <item>
+      <title>Java 集合</title>
+      <link>https://wbmins.github.io/2020/028/</link>
+      <pubDate>Mon, 16 Mar 2020 15:46:20 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/028/</guid>
+      <description>集合 集合包最常用的有Collection和Map两个接口的实现类,Colleciton用于存放多个单对象,Map用于存放Key-Value形</description>
+    </item>
+    
+    <item>
+      <title>单例模式</title>
+      <link>https://wbmins.github.io/2020/025/</link>
+      <pubDate>Sun, 15 Mar 2020 16:05:01 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/025/</guid>
+      <description>保证一个类仅有一个实例,并提供一个访问它的全局访问点. 1、饿汉式(在类初始化直接创建不管你需不需要) 直接实例化(间接直观) /** * ①饿汉式 * 是否</description>
+    </item>
+    
+    <item>
+      <title>Config 和 Bus</title>
+      <link>https://wbmins.github.io/2020/024/</link>
+      <pubDate>Sat, 14 Mar 2020 15:57:32 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/024/</guid>
+      <description>Config 简介 一套集中式的动态的配置管理设施是必不可少的 Config为为服务架构中的为服务提供集中化的外部配置支持,配置服务器为各个微服务应用的所有</description>
+    </item>
+    
+    <item>
+      <title>Gateway</title>
+      <link>https://wbmins.github.io/2020/023/</link>
+      <pubDate>Sat, 14 Mar 2020 14:54:03 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/023/</guid>
+      <description>简介 提供统一的路由方式且基于Filter链的方式提供网关的基本功能,例如安全 监控指标和限流.使用webflux中的reactor-netty</description>
+    </item>
+    
+    <item>
+      <title>Hystrix</title>
+      <link>https://wbmins.github.io/2020/022/</link>
+      <pubDate>Sat, 14 Mar 2020 12:37:48 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/022/</guid>
+      <description>概述 处理分布式系统的延迟和容错的开源库,许多依赖不可避免的会调用失败 异常.Hystrix能够保证一个依赖出问题的情况下,不会导致整体服务失败</description>
+    </item>
+    
+    <item>
+      <title>Ribbon 和 OpenFeign</title>
+      <link>https://wbmins.github.io/2020/021/</link>
+      <pubDate>Sat, 14 Mar 2020 10:46:09 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/021/</guid>
+      <description>Ribbon 简介 ribbon提供客户端软件负载均衡算法和服务调用. Load Balance将用户的请求分配到多个服务上,从而达到系统哦你的HA高可用.常见负载</description>
+    </item>
+    
+    <item>
+      <title>Zookeeper 和 Consul</title>
+      <link>https://wbmins.github.io/2020/020/</link>
+      <pubDate>Sat, 14 Mar 2020 10:08:54 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/020/</guid>
+      <description>Zookeeper 引pom &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-cloud-starter-zookeeper-discovery&amp;lt;/artifactId&amp;gt; &amp;lt;/dependency&amp;gt; 改yml server: port: 80 spring: application: name: cloud-consumer-order cloud: #注册到zookeeper地址 zookeeper: connect-string: 192.168.111.144:2181 主启动 @EnableDiscoveryClient(注册中心注</description>
+    </item>
+    
+    <item>
+      <title>Eureka</title>
+      <link>https://wbmins.github.io/2020/019/</link>
+      <pubDate>Fri, 13 Mar 2020 14:43:28 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/019/</guid>
+      <description>服务治理 SpringCloud封装Netflix公司开发的Eureka模块来实现服务治理 在传统的rpc(远程过程调用,也就是说俩台服务器A,</description>
+    </item>
+    
+    <item>
+      <title>HAVING 子句</title>
+      <link>https://wbmins.github.io/2020/018/</link>
+      <pubDate>Thu, 12 Mar 2020 22:41:37 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/018/</guid>
+      <description>寻找缺失的编号 通常做法 对“连续编号”列按升序或者降序进行排序. 循环比较每一行和下一行的编号. -- 如果有查询结果,说明存在缺失的编号 SELECT &amp;#39;</description>
+    </item>
+    
+    <item>
+      <title>三值逻辑</title>
+      <link>https://wbmins.github.io/2020/017/</link>
+      <pubDate>Thu, 12 Mar 2020 22:23:45 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/017/</guid>
+      <description>小结 NULL 不是值. 因为 NULL 不是值,所以不能对其使用谓词. 对 NULL 使用谓词后的结果是 unknown . unknown 参与到逻辑运算时,SQL 的运行会和预想的不一样. 按步骤追踪 SQL 的</description>
+    </item>
+    
+    <item>
+      <title>微服务初识</title>
+      <link>https://wbmins.github.io/2020/016/</link>
+      <pubDate>Wed, 11 Mar 2020 23:08:22 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/016/</guid>
+      <description>微服务架构是一种架构模式,它提倡将单一的应用程序划分成一组小的服务,服务之间相互协调,为用户提供最终价值.每一个服务运行在i其独立的进程中,</description>
+    </item>
+    
+    <item>
+      <title>自连接</title>
+      <link>https://wbmins.github.io/2020/015/</link>
+      <pubDate>Mon, 09 Mar 2020 20:40:07 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/015/</guid>
+      <description>可重排列、排列、组合 -- 用于获取可重排列的SQL 语句 SELECT P1.name AS name_1, P2.name AS name_2 FROM Products P1, Products P2; -- 用于获取排列的SQL 语句 SELECT P1.name AS name_1, P2.name AS name_2 FROM Products P1, Products P2 WHERE P1.name &amp;lt;&amp;gt; P2.name; -- 用于获</description>
+    </item>
+    
+    <item>
+      <title>CASE表达式</title>
+      <link>https://wbmins.github.io/2020/014/</link>
+      <pubDate>Sun, 08 Mar 2020 19:39:49 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/014/</guid>
+      <description>基本写法 -- 简单CASE 表达式 CASE sex WHEN &amp;#39;1&amp;#39; THEN &amp;#39;男&amp;#39; WHEN &amp;#39;2&amp;#39; THEN &amp;#39;女&amp;#39; ELSE &amp;#39;其他&amp;#39; END -- 搜索CASE 表达式(主</description>
+    </item>
+    
+    <item>
+      <title>Github Actions</title>
+      <link>https://wbmins.github.io/2019/012/</link>
+      <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/012/</guid>
+      <description>Github Actions 本文主要演示使用 GitHub Actions 发布博客到 GitHub Pages 1、前言 GitHub Actions 是 GitHub 的持续集成服务,于2018年10月推出.相比 Travis CI 功能更多,毕竟是自家的东西. 2、简介 大</description>
+    </item>
+    
+    <item>
+      <title>Java基础整理</title>
+      <link>https://wbmins.github.io/2019/001/</link>
+      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/001/</guid>
+      <description>基本数据 整数：byte(1),short(2),int(4),long(8) byte：-128 ~ 127 short: -32768 ~ 32767 int: -2147483648 ~ 2147483647 long: -9223372036854775808 ~ 9223372036854775807 浮点：float(</description>
+    </item>
+    
+    <item>
+      <title>分布式 ID</title>
+      <link>https://wbmins.github.io/2019/011/</link>
+      <pubDate>Fri, 15 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/011/</guid>
+      <description>分布式ID** 在我们业务数据量不大的时候,单库单表完全可以支撑现有业务,数据再大一点搞个MySQL主从同步读写分离也能对付. 但随着数据日渐增</description>
+    </item>
+    
+    <item>
+      <title>了解Mybatis</title>
+      <link>https://wbmins.github.io/2019/013/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/013/</guid>
+      <description>Mybatis Mybatis是一个半ORM(对象关系映射)框架,它内部封装了JDBC,开发时只需要关注SQL语句本身,不需要花费精力去处理加载驱动、创建</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot Json</title>
+      <link>https://wbmins.github.io/2018/010/</link>
+      <pubDate>Tue, 12 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/010/</guid>
+      <description>SpringBoot中的Json 自定义ObjectMapper 我们都知道,在Spring中使用@ResponseBody注解可以将方法返回的</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot事物</title>
+      <link>https://wbmins.github.io/2018/009/</link>
+      <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/009/</guid>
+      <description>SpringBoot事物 说明 在Spring中,事务有两种实现方式,分别是编程式事务管理和声明式事务管理两种方式 编程式事务管理： 编程式事务管理</description>
+    </item>
+    
+    <item>
+      <title>SQL 基础</title>
+      <link>https://wbmins.github.io/2018/008/</link>
+      <pubDate>Fri, 16 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/008/</guid>
+      <description>SQL 准备工作 常用函数 count() 计数 sum() 求和 avg() 平均数 max() 最大值 min() 最小值 round(传入数值,保留位数) --建表 --学生表 CREATE TABLE `Student`( `s_id` VARCHAR(20), `s_name` VARCHAR(20) NOT NULL DEFAULT &amp;#39;&amp;#39;, `s_birth` VARCHAR(20) NOT NULL DEFAULT &amp;#39;&amp;#39;, `s_sex`</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot缓存</title>
+      <link>https://wbmins.github.io/2018/007/</link>
+      <pubDate>Sat, 06 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/007/</guid>
+      <description>Redis Redis 是完全开源免费的,遵守BSD协议,是一个高性能的key-value数据库 redis keys del key :key存在时删除key dump key :序列化key,返回序列化值</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot配置</title>
+      <link>https://wbmins.github.io/2017/006/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/006/</guid>
+      <description>SpringBoot 定制banner(SpringBoot启动图标) 关闭 public static void main(String[] args) { SpringApplication app = new SpringApplication(DemoApplication.class); app.setBannerMode(Mode.OFF); app.run(args); } 定制 在src/main/resources目录下新建ban</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot开启</title>
+      <link>https://wbmins.github.io/2017/005/</link>
+      <pubDate>Fri, 13 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/005/</guid>
+      <description>开启Spring Boot 通过Spring Boot,可以轻松地创建独立的,基于生产级别的基于Spring的应用程序,您可以“运行”它们. 我们对Spr</description>
+    </item>
+    
+    <item>
+      <title>人生苦短,我用 Manjaro</title>
+      <link>https://wbmins.github.io/2017/004/</link>
+      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/004/</guid>
+      <description>Manjaro是基于Arch的Linux发行版,因Arch完善的Wiki文档（通过Arch Wiki你甚至可以了解Linux的全貌,对使用其他</description>
+    </item>
+    
+    <item>
+      <title>Linux 初识</title>
+      <link>https://wbmins.github.io/2017/003/</link>
+      <pubDate>Sun, 10 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/003/</guid>
+      <description>1、命令 解压 tar 解包：tar xvf FileName.tar 打包：tar cvf FileName.tar DirName （注：tar是打包，不是压缩！） gz 解压1：gunzip FileName.gz 解压2：gzip -d FileName.gz 压缩：gzip FileName</description>
+    </item>
+    
+    <item>
+      <title>Git 和 Github</title>
+      <link>https://wbmins.github.io/2017/000/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/000/</guid>
+      <description>1、标识 HEAD ： 表示当前版本 HEAD^ : 表示上一个版本 HEAD^^ : 表示上俩个版本 HEAD～100 ： 表示往前100个版本 master ： 指向最新提交 2、命令 2.1、创建 git clone git@github.com:wbmins/xxx.git</description>
+    </item>
+    
+    <item>
+      <title>Hugo &#43; Github 搭建博客</title>
+      <link>https://wbmins.github.io/2017/002/</link>
+      <pubDate>Sat, 12 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/002/</guid>
+      <description>本着好奇搭建了一个自己的博客！本文主要记录一下我搭建静态博客的过程. 1、前言 Hugo 是一个静态模板生成引擎,可以把 Markdown 文档渲染成 Html . Github Pages 一个静态页面</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://wbmins.github.io/1/042/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/1/042/</guid>
+      <description>你好 你在干什么你是真的在游戏么9你是傻 你在干什么</description>
+    </item>
+    
+  </channel>
+</rss>

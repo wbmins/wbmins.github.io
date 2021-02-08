@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp" />
+  
+  <meta name="author" content="Pluto">
+  
+  <meta name="description" content="Pluto的博客">
+  
+  <meta name="keywords" content="blog, Hugo, Linux, Git, Manjaro">
+  
+  
+  <link rel="prev" href="https://wbmins.github.io/2020/038/" />
+  
+  <link rel="next" href="https://wbmins.github.io/2020/040/" />
+  <link rel="canonical" href="https://wbmins.github.io/2020/039/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#f5f5d5fff">
+  <title>
+    
+    
+    TCP/IP 理解 | Pluto`s Blog
+    
+  </title>
+  <meta name="title"
+    content="TCP/IP 理解 | Pluto`s Blog">
+    
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/wbmins.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "TCP\/IP 理解",
+    "headline" : "TCP\/IP 理解",
+    "description" : "为什么要对入坑到入坟协议进行分层 简化问题难度和复杂度。由于各层之间独立，我们可以分割大问题为小问题 灵活性好。当其中一层的技术变化时，只要层间",
+    "inLanguage" : "zh-cn",
+    "author" : "Pluto",
+    "creator" : "Pluto",
+    "publisher": "Pluto",
+    "accountablePerson" : "Pluto",
+    "copyrightHolder" : "Pluto",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-05-28 22:07:25 \u002b0800 \u002b0800",
+    "dateModified" : "2020-05-28 22:07:25 \u002b0800 \u002b0800",
+    "url" : "https:\/\/wbmins.github.io\/2020\/039\/",
+    "wordCount" : "2123",
+    "keywords" : [ "TCP\/IP", "Pluto`s Blog"]
+}
+</script>
+
+</head>
+
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header header-back2home-logo">
+            
+            <span class="logo_mark">➜$ </span>
+            <a href="https://wbmins.github.io">
+                <span class="logo_text">cd /home/ </span>
+                <span class="logo_cursor"></span>
+            </a>
+            
+        </div>
+        <div class="navbar-right">
+            
+            <span class="menu">
+                
+                <a class="menu-item"
+                    href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item"
+                    href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item"
+                    href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item"
+                    href="/about/" title="">About</a>
+                
+                <a class="menu-item"
+                    href="/mins/" title="">Mins</a>
+                
+            </span>
+            <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+    
+    <div class="top-scroll-bar"></div>
+    
+    <div class="container">
+        <div class="navbar-header">
+            <div class="header-logo">
+                
+                <span class="logo_mark">></span>
+                <a href="https://wbmins.github.io">
+                    <span class="logo_text">$ cd /home/ </span>
+                    <span class="logo_cursor"></span>
+                </a>
+                
+            </div>
+            <div class="navbar-right">
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-dark-mode"></i></a>
+                <div class="menu-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu" id="mobile-menu">
+            
+            
+            <a class="menu-item"
+                href="/posts/" title="">Blog</a>
+            
+            <a class="menu-item"
+                href="/categories/" title="">Categories</a>
+            
+            <a class="menu-item"
+                href="/tags/" title="">Tags</a>
+            
+            <a class="menu-item"
+                href="/about/" title="">About</a>
+            
+            <a class="menu-item"
+                href="/mins/" title="">Mins</a>
+            
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  
+  <div
+    class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么要对入坑到入坟协议进行分层">为什么要对入坑到入坟协议进行分层</a>
+      <ul>
+        <li><a href="#四层协议">四层协议</a></li>
+        <li><a href="#五层协议">五层协议</a></li>
+        <li><a href="#七层协议">七层协议</a></li>
+      </ul>
+    </li>
+    <li><a href="#tcpip-协议族">TCP/IP 协议族</a>
+      <ul>
+        <li><a href="#应用层">应用层</a></li>
+        <li><a href="#运输层">运输层</a></li>
+        <li><a href="#网络层">网络层</a></li>
+        <li><a href="#数据链路层">数据链路层</a></li>
+      </ul>
+    </li>
+    <li><a href="#三次握手">三次握手</a></li>
+    <li><a href="#四次挥手">四次挥手</a></li>
+    <li><a href="#参考连接">参考连接</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">TCP/IP 理解</h1>
+        <div class="post-meta">
+            Written by <a itemprop="name" href="https://wbmins.github.io"
+                rel="author">Pluto</a>
+            with ♥
+            <span class="post-time">
+                on <time datetime=2020-05-28
+                    itemprop="datePublished">May 28, 2020</time>
+            </span>
+            in
+            <i class="iconfont icon-folder"></i>
+            <span class="post-category">
+                <a href="https://wbmins.github.io/categories/%E5%85%A5%E5%9D%9F/"> 入坟 </a>
+                
+            </span>
+            <span class="post-word-count">,2123 words</span>
+            <span class="post-read-time">,read need 5 min</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <h2 id="为什么要对入坑到入坟协议进行分层">为什么要对入坑到入坟协议进行分层</h2>
+<ul>
+<li>
+<p>简化问题难度和复杂度。由于各层之间独立，我们可以分割大问题为小问题</p>
+</li>
+<li>
+<p>灵活性好。当其中一层的技术变化时，只要层间接口关系保持不变，其他层不受影响</p>
+</li>
+<li>
+<p>易于实现和维护</p>
+</li>
+<li>
+<p>促进标准化工作。分开后，每层功能可以相对简单地被描述</p>
+</li>
+</ul>
+<h3 id="四层协议">四层协议</h3>
+<ul>
+<li>TCP/IP是一个四层的体系结构，主要包括：应用层、运输层、网际层和网络接口层</li>
+</ul>
+<h3 id="五层协议">五层协议</h3>
+<ul>
+<li>五层协议的体系结构主要包括：应用层、运输层、网络层，数据链路层和物理层</li>
+</ul>
+<h3 id="七层协议">七层协议</h3>
+<ul>
+<li>OSI七层协议模型主要包括是：应用层（Application）、表示层（Presentation）、会话层（Session）、运输层（Transport）、网络层（Network）、数据链路层（Data Link）、物理层（Physical）</li>
+</ul>
+<blockquote>
+<p>五层协议的体系结构只是为了介绍网络原理而设计的，实际应用还是 TCP/IP 四层体系结构</p>
+</blockquote>
+<h2 id="tcpip-协议族">TCP/IP 协议族</h2>
+<blockquote>
+<p>TCP（传输控制协议）和IP（网际协议） 是最先定义的两个核心协议，所以才统称为TCP/IP协议族</p>
+</blockquote>
+<h3 id="应用层">应用层</h3>
+<ul>
+<li>
+<p>应用层( application-layer ）的任务是通过应用进程间的交互来完成特定网络应用。应用层协议定义的是应用进程（进程：主机中正在运行的程序）间的通信和交互的规则</p>
+</li>
+<li>
+<p>对于不同的网络应用需要不同的应用层协议。在互联网中应用层协议很多，如域名系统 DNS，支持万维网应用的 HTTP 协议，支持电子邮件的 SMTP 协议等等</p>
+</li>
+</ul>
+<h3 id="运输层">运输层</h3>
+<ul>
+<li>运输层(transport layer)的主要任务就是负责向两台主机进程之间的通信提供通用的数据传输服务。应用进程利用该服务传送应用层报文</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>UDP</th>
+<th>TCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连接</td>
+<td>无连接</td>
+<td>面向连接</td>
+</tr>
+<tr>
+<td>是否可靠</td>
+<td>不可靠传输，不适用流量和阻塞控制</td>
+<td>可靠传输，使用流量和阻塞控制</td>
+</tr>
+<tr>
+<td>连接对象个数</td>
+<td>一对一，一对多，多对一，多对多交互通信</td>
+<td>一对一</td>
+</tr>
+<tr>
+<td>传输方式</td>
+<td>面向报文</td>
+<td>面向字节流</td>
+</tr>
+<tr>
+<td>首部开销</td>
+<td>首部开销小，仅8字节</td>
+<td>首部最小20字节，最大60字节</td>
+</tr>
+<tr>
+<td>场景</td>
+<td>适用于实时应用（IP电话、视频会议、直播等）</td>
+<td>适用于要求可靠传输的应用，例如文件传输</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>每一个应用层（TCP/IP参考模型的最高层）协议一般都会使用到两个传输层协议之一</p>
+</blockquote>
+<h4 id="运行在-tcp-上协议">运行在 TCP 上协议</h4>
+<ul>
+<li>
+<p>HTTP（Hypertext Transfer Protocol，超文本传输协议），主要用于普通浏览</p>
+</li>
+<li>
+<p>HTTPS（HTTP over SSL，安全超文本传输协议）,HTTP协议的安全版本</p>
+</li>
+<li>
+<p>FTP（File Transfer Protocol，文件传输协议），用于文件传输</p>
+</li>
+<li>
+<p>POP3（Post Office Protocol, version 3，邮局协议），收邮件用</p>
+</li>
+<li>
+<p>SMTP（Simple Mail Transfer Protocol，简单邮件传输协议），用来发送电子邮件</p>
+</li>
+<li>
+<p>TELNET（Teletype over the Network，网络电传），通过一个终端（terminal）登陆到网络</p>
+</li>
+<li>
+<p>SSH（Secure Shell，用于替代安全性差的TELNET），用于加密安全登陆用</p>
+</li>
+</ul>
+<h4 id="运行在-udp-上协议">运行在 UDP 上协议</h4>
+<ul>
+<li>
+<p>BOOTP（Boot Protocol，启动协议），应用于无盘设备</p>
+</li>
+<li>
+<p>NTP（Network Time Protocol，网络时间协议），用于网络同步</p>
+</li>
+<li>
+<p>DHCP（Dynamic Host Configuration Protocol，动态主机配置协议），动态配置IP地址</p>
+</li>
+</ul>
+<h4 id="运行在-tcp和udp-上协议">运行在 TCP和UDP 上协议</h4>
+<p>DNS（Domain Name Service，域名服务），用于完成地址查找，邮件转发等工作</p>
+<h3 id="网络层">网络层</h3>
+<ul>
+<li>
+<p>网络层的任务就是选择合适的网间路由和交换结点，确保计算机通信的数据及时传送。在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 IP 协议，因此分组也叫 IP 数据报 ，简称数据报</p>
+</li>
+<li>
+<p>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Intert Prococol）和许多路由选择协议，因此互联网的网络层也叫做网际层或 IP 层</p>
+</li>
+</ul>
+<h3 id="数据链路层">数据链路层</h3>
+<ul>
+<li>
+<p>数据链路层(data link layer)通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议</p>
+</li>
+<li>
+<p>在两个相邻节点之间传送数据时，数据链路层将网络层交下来的 IP 数据报组装成帧，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）</p>
+</li>
+<li>
+<p>在接收数据时，控制信息使接收端能够知道一个帧从哪个比特开始和到哪个比特结束</p>
+</li>
+</ul>
+<h2 id="三次握手">三次握手</h2>
+<blockquote>
+<p>三次握手的本质是确认通信双方收发数据的能力</p>
+</blockquote>
+<ul>
+<li>
+<p>首先，我让信使运输一份信件给对方，对方收到了，那么他就知道了我的发件能力和他的收件能力是可以的。</p>
+</li>
+<li>
+<p>于是他给我回信，我若收到了，我便知我的发件能力和他的收件能力是可以的，并且他的发件能力和我的收件能力是可以。</p>
+</li>
+<li>
+<p>然而此时他还不知道他的发件能力和我的收件能力到底可不可以，于是我最后回馈一次，他若收到了，他便清楚了他的发件能力和我的收件能力是可以的</p>
+</li>
+</ul>
+<h2 id="四次挥手">四次挥手</h2>
+<blockquote>
+<p>四次挥手的目的是关闭一个连接</p>
+</blockquote>
+<ul>
+<li>因为只有在客户端和服务端都没有数据要发送的时候才能断开TCP。而客户端发出FIN报文时只能保证客户端没有数据发了，服务端还有没有数据发客户端是不知道的。而服务端收到客户端的FIN报文后只能先回复客户端一个确认报文来告诉客户端我服务端已经收到你的FIN报文了，但我服务端还有一些数据没发完，等这些数据发完了服务端才能给客户端发FIN报文(所以不能一次性将确认报文和FIN报文发给客户端，就是这里多出来了一次</li>
+</ul>
+<h2 id="参考连接">参考连接</h2>
+<ul>
+<li><a href="https://blog.csdn.net/ThinkWon/article/details/104903925">重学TCP/IP协议和三次握手四次挥手</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+        
+        <p class="copyright-item">
+            <span>Author:</span>
+            <span>Pluto </span>
+        </p>
+        
+
+        
+        <p class="copyright-item">
+            <span>Link:</span>
+            <a href=https://wbmins.github.io/2020/039/>https://wbmins.github.io/2020/039/</span>
+        </p>
+        
+        
+        <p class="copyright-item lincese">
+            本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+        </p>
+        
+    </div>
+
+
+    <div class="post-tags">
+        
+        <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://wbmins.github.io/tags/tcp/ip/">
+                    #TCP/IP</a></span>
+            
+        </section>
+        
+        <section>
+            <a href="javascript:window.history.back();">back</a></span> ·
+            <span><a href="https://wbmins.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://wbmins.github.io/2020/038/" class="prev" rel="prev" title="Nexus 搭建 maven 仓库"><i
+                class="iconfont icon-left"></i>&nbsp;Nexus 搭建 maven 仓库</a>
+        
+        
+        <a href="https://wbmins.github.io/2020/040/" class="next" rel="next"
+            title="Grub rescue 修复">Grub rescue 修复&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+        
+        
+        
+<script src="https://utteranc.es/client.js" repo="wbmins/blog-comment" issue-term="pathname" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+
+        
+        
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+   <div class="copyright">
+      &copy;
+      
+      <span itemprop="copyrightYear">2017 - 2021</span>
+      <span>&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="heart-icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;</span>
+
+      
+      <span class="author" itemprop="copyrightHolder"><a href="https://wbmins.github.io">Pluto</a> |
+      </span>
+      
+
+      
+      <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a
+            href="https://github.com/wbmins/violet" target="_blank" rel="external nofollow">Violet</a></span>
+   </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+<script> pangu.spacingPage();  </script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/vendor_no_gallery.min.js" async=""></script>
+
+
+
+
+
+     </div>
+  </body>
+</html>

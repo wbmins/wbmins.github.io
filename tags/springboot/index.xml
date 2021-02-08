@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SpringBoot on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/springboot/</link>
+    <description>Recent content in SpringBoot on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 May 2020 09:25:56 +0800</lastBuildDate><atom:link href="https://wbmins.github.io/tags/springboot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SpringBoot 常用注解</title>
+      <link>https://wbmins.github.io/2020/036/</link>
+      <pubDate>Sat, 02 May 2020 09:25:56 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/036/</guid>
+      <description>1. @SpringBootApplication 项目的基石 @SpringBootApplication public class DemoApplication { public static void main(java.lang.String[] args) { SpringApplication.run(DemoApplication.class, args); } } 等价与 @Configuration、@EnableAutoConfiguration、@Comp</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot Json</title>
+      <link>https://wbmins.github.io/2018/010/</link>
+      <pubDate>Tue, 12 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/010/</guid>
+      <description>SpringBoot中的Json 自定义ObjectMapper 我们都知道,在Spring中使用@ResponseBody注解可以将方法返回的</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot事物</title>
+      <link>https://wbmins.github.io/2018/009/</link>
+      <pubDate>Tue, 27 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/009/</guid>
+      <description>SpringBoot事物 说明 在Spring中,事务有两种实现方式,分别是编程式事务管理和声明式事务管理两种方式 编程式事务管理： 编程式事务管理</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot缓存</title>
+      <link>https://wbmins.github.io/2018/007/</link>
+      <pubDate>Sat, 06 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2018/007/</guid>
+      <description>Redis Redis 是完全开源免费的,遵守BSD协议,是一个高性能的key-value数据库 redis keys del key :key存在时删除key dump key :序列化key,返回序列化值</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot配置</title>
+      <link>https://wbmins.github.io/2017/006/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/006/</guid>
+      <description>SpringBoot 定制banner(SpringBoot启动图标) 关闭 public static void main(String[] args) { SpringApplication app = new SpringApplication(DemoApplication.class); app.setBannerMode(Mode.OFF); app.run(args); } 定制 在src/main/resources目录下新建ban</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot开启</title>
+      <link>https://wbmins.github.io/2017/005/</link>
+      <pubDate>Fri, 13 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2017/005/</guid>
+      <description>开启Spring Boot 通过Spring Boot,可以轻松地创建独立的,基于生产级别的基于Spring的应用程序,您可以“运行”它们. 我们对Spr</description>
+    </item>
+    
+  </channel>
+</rss>

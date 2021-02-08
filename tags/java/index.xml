@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/java/</link>
+    <description>Recent content in Java on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 20 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wbmins.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 动态代理</title>
+      <link>https://wbmins.github.io/2020/041/</link>
+      <pubDate>Thu, 20 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/041/</guid>
+      <description>1、类加载器 1.1、预定义类型 启动（Bootstrap）类加载器，负责将 &amp;lt;Java_Runtime_Home&amp;gt;/lib 下面的类库加载到内存中 扩展（Extension）类加载器 ExtCl</description>
+    </item>
+    
+    <item>
+      <title>NIO 学习</title>
+      <link>https://wbmins.github.io/2020/033/</link>
+      <pubDate>Fri, 27 Mar 2020 19:37:52 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/033/</guid>
+      <description>1、简介 NIO支持面向缓冲区的、基于通道的IO操作. 2、与 IO 区别 IO NIO 面向流(Stream Oriented) 面向缓冲区(Buffer Oriented) 阻塞IO(Blockin</description>
+    </item>
+    
+    <item>
+      <title>IDEA 配置</title>
+      <link>https://wbmins.github.io/2020/030/</link>
+      <pubDate>Wed, 18 Mar 2020 11:58:57 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/030/</guid>
+      <description>1、配置 方法间加分割线 File | Settings | Editor | General | Appearance | Show method separators 2、模板 类模板 File | Settings | Editor | File and Code Templates | File Header /** * @Classname ${NAME} * @Description TODO * @Date ${DATE} ${TIME} * @Created by ${USER} */ 方法模板 File | Settings | Editor |</description>
+    </item>
+    
+    <item>
+      <title>java 8 特性</title>
+      <link>https://wbmins.github.io/2020/029/</link>
+      <pubDate>Wed, 18 Mar 2020 10:16:51 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/029/</guid>
+      <description>速度更快,代码更少,便于并行,最大化减少空指针异常,Nashorn引擎,在jvm上可以运行js应用 1、Lambda表达式 (函数式接口一个实例</description>
+    </item>
+    
+    <item>
+      <title>JVM 和 GC</title>
+      <link>https://wbmins.github.io/2020/027/</link>
+      <pubDate>Tue, 17 Mar 2020 12:03:12 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/027/</guid>
+      <description>JVM 熟悉JVM架构与GC垃圾回收机制以及相应的堆参调优,有过在linux进行系统调优的经验 组成结构 JVM是运行在操作系统之上的,他与硬件没有直</description>
+    </item>
+    
+    <item>
+      <title>JUC 入门</title>
+      <link>https://wbmins.github.io/2020/026/</link>
+      <pubDate>Mon, 16 Mar 2020 20:08:40 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/026/</guid>
+      <description>volatile 当多个线程操作共享数据时,保证内存数据是可见的.相较于 synchronized 是一种轻量级的同步策略 多个线程操作共享数据时彼此不可见 解决一(同步锁) synchronized (myThread) { if (myThread.isFlag()) {</description>
+    </item>
+    
+    <item>
+      <title>Java 集合</title>
+      <link>https://wbmins.github.io/2020/028/</link>
+      <pubDate>Mon, 16 Mar 2020 15:46:20 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/028/</guid>
+      <description>集合 集合包最常用的有Collection和Map两个接口的实现类,Colleciton用于存放多个单对象,Map用于存放Key-Value形</description>
+    </item>
+    
+    <item>
+      <title>单例模式</title>
+      <link>https://wbmins.github.io/2020/025/</link>
+      <pubDate>Sun, 15 Mar 2020 16:05:01 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/025/</guid>
+      <description>保证一个类仅有一个实例,并提供一个访问它的全局访问点. 1、饿汉式(在类初始化直接创建不管你需不需要) 直接实例化(间接直观) /** * ①饿汉式 * 是否</description>
+    </item>
+    
+    <item>
+      <title>Java基础整理</title>
+      <link>https://wbmins.github.io/2019/001/</link>
+      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/001/</guid>
+      <description>基本数据 整数：byte(1),short(2),int(4),long(8) byte：-128 ~ 127 short: -32768 ~ 32767 int: -2147483648 ~ 2147483647 long: -9223372036854775808 ~ 9223372036854775807 浮点：float(</description>
+    </item>
+    
+    <item>
+      <title>分布式 ID</title>
+      <link>https://wbmins.github.io/2019/011/</link>
+      <pubDate>Fri, 15 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/011/</guid>
+      <description>分布式ID** 在我们业务数据量不大的时候,单库单表完全可以支撑现有业务,数据再大一点搞个MySQL主从同步读写分离也能对付. 但随着数据日渐增</description>
+    </item>
+    
+    <item>
+      <title>了解Mybatis</title>
+      <link>https://wbmins.github.io/2019/013/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wbmins.github.io/2019/013/</guid>
+      <description>Mybatis Mybatis是一个半ORM(对象关系映射)框架,它内部封装了JDBC,开发时只需要关注SQL语句本身,不需要花费精力去处理加载驱动、创建</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>centos7 on Pluto`s Blog</title>
+    <link>https://wbmins.github.io/tags/centos7/</link>
+    <description>Recent content in centos7 on Pluto`s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 20 Mar 2020 23:43:22 +0800</lastBuildDate><atom:link href="https://wbmins.github.io/tags/centos7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centos7 配置</title>
+      <link>https://wbmins.github.io/2020/031/</link>
+      <pubDate>Fri, 20 Mar 2020 23:43:22 +0800</pubDate>
+      
+      <guid>https://wbmins.github.io/2020/031/</guid>
+      <description>1、软件 yum install xxx //安装xxx yum search xxx //搜索xxx yum localinstall xxx.rpm //安装本地xxx(网络不好使) docker 查找镜像支持的版本 https://hub.docker.com 配置源 配置 /etc/docker/daemon.json 注册阿里源 https://cr.console.aliyun.com/cn-qingdao/mirrors 写入阿里</description>
+    </item>
+    
+  </channel>
+</rss>
